@@ -3,9 +3,9 @@
 
 #include "global.h"
 
-void InitTimerA(void);
+void TimerAInit(void);
 __interrupt void TimerAOverflow(void);
 
-extern volatile UINT32 now;
+extern volatile uint32_t now;
 
 #endif

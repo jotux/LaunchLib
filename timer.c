@@ -2,9 +2,9 @@
 #include "callback.h"
 #include "global.h"
 
-volatile UINT32 now = 0;
+volatile uint32_t now = 0;
 
-void InitTimerA(void)
+void TimerAInit(void)
 {
     TACCTL0 &= ~CCIE;           // disable ints
 	TACCR0 = INT_CNT_DCO;       // set the overflow
@@ -16,7 +16,7 @@ void InitTimerA(void)
 __interrupt void TimerAOverflow(void)
 {
     now++;
-    RunCallbacks(now);
+    CallbackService(now);
 }
 
 

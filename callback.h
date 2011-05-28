@@ -1,18 +1,9 @@
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 
-#include "global.h"
-
 typedef void (*SchedulerCallback)(void);
 
-#define MAX_CALLBACK_CNT 5
-
-#define _100micro  1
-#define _10milli   100
-#define _100milli  1000
-#define _second    10000
-#define _minute    600000
-#define _hour      36000000
+#define MAX_CALLBACK_CNT 3
 
 enum
 {
@@ -23,15 +14,15 @@ enum
 typedef struct
 {
     SchedulerCallback func;
-    UINT08 enabled;
-    UINT32 run_time;
-    UINT32 next_run_time;
-    UINT08 location;
+    uint8_t enabled;
+    uint32_t run_time;
+    uint32_t next_run_time;
+    uint8_t location;
 } ScheduledEvent;
 
-void RegisterCallback(SchedulerCallback callbackFunction, UINT08 enabled, UINT32 run_time);
-void RunCallbacks(UINT32 current_time);
-void EnableCallback(SchedulerCallback func);
-void DisableCallback(SchedulerCallback func);
+void CallbackRegister(SchedulerCallback callbackFunction, uint32_t run_time);
+void CallbackService(uint32_t current_time);
+void CallbackMode(SchedulerCallback func, uint8_t mode);
+void CallbackDisable(SchedulerCallback func);
 
 #endif

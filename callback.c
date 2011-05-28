@@ -1,16 +1,16 @@
+#include "global.h"
 #include "callback.h"
 #include "timer.h"
-#include "global.h"
 
-UINT08 event_count = 0;
+uint8_t event_count = 0;
 
 ScheduledEvent event_list[MAX_CALLBACK_CNT];
 
-void RegisterCallback(SchedulerCallback callbackFunction, UINT08 enabled, UINT32 run_time)
+void CallbackRegister(SchedulerCallback callbackFunction, uint32_t run_time)
 {
     if (event_count < sizeof(event_list)/sizeof(SchedulerCallback))
     {
-        event_list[event_count].enabled       = enabled;
+        event_list[event_count].enabled       = FALSE;
         event_list[event_count].func          = callbackFunction;
         event_list[event_count].run_time      = run_time;
         event_list[event_count].next_run_time = now + run_time;
@@ -18,9 +18,9 @@ void RegisterCallback(SchedulerCallback callbackFunction, UINT08 enabled, UINT32
     }
 }
 
-void RunCallbacks(unsigned long int current_time)
+void CallbackService(uint32_t current_time)
 {
-    UINT08 i = 0;
+    uint8_t i = 0;
     for (i = 0;i < event_count;i++)
     {
         if (event_list[i].enabled == TRUE && now == event_list[i].next_run_time)
@@ -31,28 +31,18 @@ void RunCallbacks(unsigned long int current_time)
     }
 }
 
-void EnableCallback(SchedulerCallback func)
+void CallbackMode(SchedulerCallback func, uint8_t mode)
 {
-    UINT08 i = 0;
+    uint8_t i = 0;
     for (i = 0;i < event_count;i++)
     {
         if (func == event_list[i].func)
         {
-            event_list[i].enabled = TRUE;
-            event_list[i].next_run_time = now + event_list[i].run_time;
-            break;
-        }
-    }
-}
-
-void DisableCallback(SchedulerCallback func)
-{
-    UINT08 i = 0;
-    for (i = 0;i < event_count;i++)
-    {
-        if (func == event_list[i].func)
-        {
-            event_list[i].enabled = FALSE;
+            event_list[i].enabled = mode;
+            if (mode)
+            {
+                event_list[i].next_run_time = now + event_list[i].run_time;
+            }
             break;
         }
     }

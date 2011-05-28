@@ -1,6 +1,6 @@
 #ifndef INIT_H
 #define INIT_H
 
-void InitHardware(void);
+void HardwareInit(void);
 
 #endif
