@@ -1,5 +1,3 @@
-A simple library for flexible task scheduling.
+A simple library for general peripheral control of MSP430 Launchpad populated with MSP430G2553.
 
-Current code works in IAR for MSP43fx2xx.
-
-To use register the function with CallbackRegister() and enabled it with CallbackMode(ptr, ENABLED). Make sure your timer is configured to 100microsecond period. If you change the timer period be sure to adjust the timing multipliers in global.h to match.
+Current code works in IAR and CCS.
