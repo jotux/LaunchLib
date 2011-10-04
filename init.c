@@ -4,8 +4,12 @@
 
 void HardwareInit(void)
 {
-    MAKE_OUTPUT(RED_LED_PORT, RED_LED_PIN);
-    MAKE_OUTPUT(GREEN_LED_PORT, GREEN_LED_PIN);
+    MAKE_OUTPUT(RED_LED);
     RED_LED_OFF();
-    GREEN_LED_OFF();
+    
+    MAKE_OUTPUT(PWM_0);
+    MAKE_SPECIAL(PWM_0);
+    
+    MAKE_OUTPUT(PWM_1);
+    MAKE_SPECIAL(PWM_1);
 }

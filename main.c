@@ -3,34 +3,37 @@
 #include "timer.h"
 #include "init.h"
 #include "callback.h"
+#include "pwm.h"
 
 void BlinkRedLed(void);
-void BlinkGreenLed(void);
+void Delay(uint32_t delay_time);
 
 void main(void)
 {
-     WD_STOP();
-    
-    TimerAInit();
+    WD_STOP();
+    SET_CLOCK(16);
+       
+    CallbackTimerInit();
     HardwareInit();
+    PwmInit(0,1023);
+    PwmInit(1,1023);
     
-    CallbackRegister(BlinkRedLed, 101ul * _millisecond);
-    CallbackRegister(BlinkGreenLed, 100ul * _millisecond);
-    
+    CallbackRegister(BlinkRedLed, 100ul * _millisecond);    
     CallbackMode(BlinkRedLed, ENABLED);
-    CallbackMode(BlinkGreenLed, ENABLED);
+    
+    PwmSet(0,0);
+    PwmSet(1,256);
     
     _EINT();
-    
-    while(1) { continue; }
+}
+
+void Delay(uint32_t delay_time)
+{
+    uint32_t start_time = now;
+    while(now < start_time + delay_time);
 }
 
 void BlinkRedLed(void)
 {
-    RED_LED_TOGGLE();
-}
-
-void BlinkGreenLed(void)
-{
-    GREEN_LED_TOGGLE();
+	RED_LED_TOGGLE();
 }

@@ -1,22 +1,20 @@
+#include "global.h"
+#include "hardware.h"
 #include "timer.h"
 #include "callback.h"
-#include "global.h"
 
 volatile uint32_t now = 0;
 
-void TimerAInit(void)
+void CallbackTimerInit(void)
 {
-    TACCTL0 &= ~CCIE;           // disable ints
-    TACCR0 = INT_CNT_DCO;       // set the overflow
-    TACTL = TASSEL_2 + MC_1;    // smclk, up to then overflow at ccr0
-    TACCTL0 = CCIE;             // enable ints
+    WDTCTL = WDT_MDLY_8;  // interval = 8ms @ 1Mhz, 500us @ 16Mhz
+    IE1 |= WDTIE;         // Enable WDT interrupt
 }
 
-#pragma vector = TIMERA0_VECTOR
-__interrupt void TimerAOverflow(void)
+#pragma vector = WDT_VECTOR;
+__interrupt void CallbackTimerOverflow(void)
 {
     now++;
     CallbackService(now);
 }
-
 

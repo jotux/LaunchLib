@@ -12,7 +12,7 @@ void CallbackRegister(SchedulerCallback callbackFunction, uint32_t run_time)
     {
         event_list[event_count].enabled       = FALSE;
         event_list[event_count].func          = callbackFunction;
-        event_list[event_count].run_time      = run_time;
+        event_list[event_count].run_time      = run_time - 1;
         event_list[event_count].next_run_time = now + run_time;
         event_count++;
     }

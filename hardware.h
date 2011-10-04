@@ -1,33 +1,30 @@
 #ifndef HARDWARE_H
 #define HARDWARE_H
 
-//macros
-#define st(x) do{x} while(__LINE__ == -1)
+// clock settings
+#define CLOCK_DCO   16000000   // DCO freq
+#define CLOCK_EXT   32768      // ext clock freq
 
-#define MAKE_OUTPUT(port,pin) IO_MAKE_OUTPUT(port,pin)
-#define MAKE_INPUT(port, pin) IO_MAKE_INPUT(port, pin)
-#define SET_HIGH(port,pin)    IO_SET_HIGH(port,pin)
-#define SET_LOW(port,pin)     IO_SET_LOW(port,pin)
-#define TOGGLE(port,pin)      IO_TOG(port,pin)
-#define READ_IN(port,pin)     IO_DIG_READ(port,pin)
+#define INT_CNT_DCO	((int)(0.0001 * CLOCK_DCO))
+#define INT_CNT_EXT	((int)(0.01 * CLOCK_EXT))
 
-#define IO_MAKE_OUTPUT(port,pin) st((P##port##DIR |=  _BV(pin));)
-#define IO_MAKE_INPUT(port, pin) st((P##port##DIR &= ~_BV(pin));)
-#define IO_SET_HIGH(port,pin)    st((P##port##OUT |=  _BV(pin));)
-#define IO_SET_LOW(port,pin)     st((P##port##OUT &= ~_BV(pin));)
-#define IO_TOG(port,pin)         st((P##port##OUT ^= _BV(pin));)
-#define IO_DIG_READ(port,pin)    !(P##port##IN & _BV(pin))
+// based on 0.5 millisecond timer period
+#define _millisecond   2
+#define _second        2000
+#define _minute        120000
+#define _hour          7200000
 
+// hardware config
 #define RED_LED_PORT  1
 #define RED_LED_PIN   0
-#define RED_LED_OFF()    SET_LOW(RED_LED_PORT, RED_LED_PIN);
-#define RED_LED_ON()     SET_HIGH(RED_LED_PORT, RED_LED_PIN);
-#define RED_LED_TOGGLE() TOGGLE(RED_LED_PORT, RED_LED_PIN);
+#define RED_LED_OFF()    SET_LOW(RED_LED);
+#define RED_LED_ON()     SET_HIGH(RED_LED);
+#define RED_LED_TOGGLE() TOGGLE(RED_LED);
 
-#define GREEN_LED_PORT  1
-#define GREEN_LED_PIN   6
-#define GREEN_LED_OFF()    SET_LOW(GREEN_LED_PORT, GREEN_LED_PIN);
-#define GREEN_LED_ON()     SET_HIGH(GREEN_LED_PORT, GREEN_LED_PIN);
-#define GREEN_LED_TOGGLE() TOGGLE(GREEN_LED_PORT, GREEN_LED_PIN);
+#define PWM_0_PORT 1
+#define PWM_0_PIN  2
+
+#define PWM_1_PORT 2
+#define PWM_1_PIN  1
 
 #endif

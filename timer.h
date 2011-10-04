@@ -3,8 +3,8 @@
 
 #include "global.h"
 
-void TimerAInit(void);
-__interrupt void TimerAOverflow(void);
+void CallbackTimerInit(void);
+__interrupt void CallbackTimerOverflow(void);
 
 extern volatile uint32_t now;
 
