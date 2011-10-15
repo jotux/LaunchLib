@@ -5,9 +5,6 @@
 #define CLOCK_DCO   16000000   // DCO freq
 #define CLOCK_EXT   32768      // ext clock freq
 
-#define INT_CNT_DCO	((int)(0.0001 * CLOCK_DCO))
-#define INT_CNT_EXT	((int)(0.01 * CLOCK_EXT))
-
 // based on 0.5 millisecond timer period
 #define _millisecond   2
 #define _second        2000

@@ -3,10 +3,10 @@
 ###Current Features:
  * Callbacks (driven from 2ms watchdog timer)
  * PWM generation on Timer0/1
+ * ADC
 
 ###TODO
  * I2C
- * ADC
  * UART
  * Interrupt handler
 

@@ -12,6 +12,9 @@
 
 // macros
 #define _BV(bit) (1<<bit)
+#define SET_BIT(reg,bit)    ((reg)|= _BV(bit))
+#define CLEAR_BIT(reg,bit)  ((reg)&=~_BV(bit))
+#define TOGGLE_BIT(reg,bit) ((reg)^= _BV(bit))
 #define WD_STOP() (WDTCTL = WDTPW + WDTHOLD)
 #define SET_CLOCK(N) BCSCTL1 = CALBC1_##N##MHZ; \
 	                 DCOCTL = CALDCO_##N##MHZ; 
