@@ -1,17 +1,20 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#define LINE_FOLLOWER_R1
+
 #include "msp430.h"
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+//#include <assert.h>
 
 #define TRUE 1
 #define FALSE 0
 
 // macros
-#define _BV(bit) (1<<bit)
+#define _BV(bit) (1<<(bit))
 #define SET_BIT(reg,bit)    ((reg)|= _BV(bit))
 #define CLEAR_BIT(reg,bit)  ((reg)&=~_BV(bit))
 #define TOGGLE_BIT(reg,bit) ((reg)^= _BV(bit))
@@ -44,7 +47,7 @@ typedef signed long int    int32_t;
 #define _SET_HIGH(port,pin)       st(__SET_HIGH(port,pin);)
 #define _SET_LOW(port,pin)        st(__SET_LOW(port,pin);)
 #define _TOGGLE(port,pin)         st(__TOGGGLE(port,pin);)
-#define _DIG_READ(port,pin)       st(__DIG_READ(port,pin);)
+#define _DIG_READ(port,pin)       __DIG_READ(port,pin)
 
 #define __MAKE_OUTPUT(port,pin)   st((P##port##DIR |=  _BV(pin));)
 #define __MAKE_INPUT(port, pin)   st((P##port##DIR &= ~_BV(pin));)

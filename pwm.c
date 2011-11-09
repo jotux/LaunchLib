@@ -27,35 +27,31 @@ void PwmInit(uint8_t channel)
 
 void PwmSetPeriod(uint8_t channel, uint16_t frequency)
 {
-	switch(channel)
-	{
-		case 0:
-		    pwm_out[channel].frequency = CLOCK_DCO / frequency;		    
-			TA0CCR0 = pwm_out[channel].frequency;
-			// now fix the duty cycle
-			
-			break;
-		case 1:
-		    pwm_out[channel].frequency = CLOCK_DCO / frequency;	
-			TA1CCR0 = pwm_out[channel].frequency;
-			break;
-		default:
-			break;
-	}	
+    uint16_t freq_to_set = CLOCK_DCO / frequency;
+    
+    pwm_out[channel].frequency = freq_to_set;
+    if (channel)
+    {    
+	    TA1CCR0 = freq_to_set;
+    }
+	else
+    {
+        TA0CCR0 = freq_to_set;
+    }
+    PwmSetDuty(channel,pwm_out[channel].duty);   // fix the duty cycle    
 }
 
 void PwmSetDuty(uint8_t channel, uint16_t duty)
 {
-	// duty is in percent
-	switch(channel)
-	{
-		case 0:
-		    pwm_out[channel].duty = duty;
-			break;
-		case 1:
-		    pwm_out[channel].duty = duty;
-			break;
-		default:
-			break;
-	}	
+    uint16_t duty_to_set = (pwm_out[channel].duty * pwm_out[channel].frequency) / 100;
+    
+	pwm_out[channel].duty = duty;
+    if (channel)
+    {
+        TA1CCR1 = duty_to_set;
+    }
+    else
+    {
+        TA0CCR1 = duty_to_set;
+    }
 }
