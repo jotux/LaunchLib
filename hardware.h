@@ -58,9 +58,42 @@
     #define MOTOR_2_DIR_2_PIN  3
     
     #define MOTOR_2_PWM_PORT 1
-    #define MOTOR_2_PWM_PIN  2
-    
+    #define MOTOR_2_PWM_PIN  2    
 #endif
 
+#ifdef LINE_FOLLOWER_R2
+    #define SW_1_PORT 2
+    #define SW_1_PIN  4
+    
+    #define IR_LEFT_CORNER_PORT 2
+    #define IR_LEFT_CORNER_PIN  3
+    
+    #define IR_LEFT_MIDDLE_PORT 2
+    #define IR_LEFT_MIDDLE_PIN  2
+        
+    #define IR_RIGHT_CORNER_PORT 1
+    #define IR_RIGHT_CORNER_PIN  0
+    
+    #define IR_RIGHT_MIDDLE_PORT 1
+    #define IR_RIGHT_MIDDLE_PIN  1
+    
+    #define MOTOR_1_DIR_1_PORT 1
+    #define MOTOR_1_DIR_1_PIN  5
+    
+    #define MOTOR_1_DIR_2_PORT 2
+    #define MOTOR_1_DIR_2_PIN  0
+    
+    #define MOTOR_1_PWM_PORT 2
+    #define MOTOR_1_PWM_PIN  1
+       
+    #define MOTOR_2_DIR_1_PORT 1
+    #define MOTOR_2_DIR_1_PIN  4
+    
+    #define MOTOR_2_DIR_2_PORT 1
+    #define MOTOR_2_DIR_2_PIN  3
+    
+    #define MOTOR_2_PWM_PORT 1
+    #define MOTOR_2_PWM_PIN  2  
+#endif
 
 #endif
