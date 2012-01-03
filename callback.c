@@ -1,17 +1,18 @@
 #include "global.h"
 #include "callback.h"
 #include "timer.h"
+#include "hardware.h"
 
 uint8_t event_count = 0;
-
 ScheduledEvent event_list[MAX_CALLBACK_CNT];
 
-void CallbackRegister(SchedulerCallback callbackFunction, uint32_t run_time)
+void CallbackRegister(SchedulerCallback callback_function, uint32_t run_time)
 {
     if (event_count < sizeof(event_list)/sizeof(SchedulerCallback))
     {
+        // Callbacks are initialized disabled
         event_list[event_count].enabled       = FALSE;
-        event_list[event_count].func          = callbackFunction;
+        event_list[event_count].func          = callback_function;
         event_list[event_count].run_time      = run_time - 1;
         event_list[event_count].next_run_time = now + run_time;
         event_count++;
@@ -31,7 +32,7 @@ void CallbackService(uint32_t current_time)
     }
 }
 
-void CallbackMode(SchedulerCallback func, uint8_t mode)
+void CallbackMode(SchedulerCallback func, enum callback_mode mode)
 {
     uint8_t i = 0;
     for (i = 0;i < event_count;i++)

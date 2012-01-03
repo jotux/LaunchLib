@@ -3,14 +3,8 @@
 
 typedef void (*SchedulerCallback)(void);
 
-#define MAX_CALLBACK_CNT 3
+enum callback_mode {DISABLED = 0, ENABLED = 1};
 
-enum
-{
-    DISABLED = 0,
-    ENABLED = 1
-};
-      
 typedef struct
 {
     SchedulerCallback func;
@@ -20,9 +14,9 @@ typedef struct
     uint8_t location;
 } ScheduledEvent;
 
-void CallbackRegister(SchedulerCallback callbackFunction, uint32_t run_time);
+void CallbackRegister(SchedulerCallback callback_function, uint32_t run_time);
 void CallbackService(uint32_t current_time);
-void CallbackMode(SchedulerCallback func, uint8_t mode);
+void CallbackMode(SchedulerCallback func, enum callback_mode mode);
 void CallbackDisable(SchedulerCallback func);
 
 #endif

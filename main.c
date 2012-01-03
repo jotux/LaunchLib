@@ -5,6 +5,8 @@
 #include "callback.h"
 #include "pwm.h"
 #include "adc.h"
+#include "interrupt.h"
+#include "delay.h"
 
 void BlinkRedLed(void);
 enum {MOTOR_STOP, MOTOR_FORWARD, MOTOR_REVERSE, MOTOR_BRAKE};

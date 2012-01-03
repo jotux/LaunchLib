@@ -7,11 +7,15 @@ volatile uint32_t now = 0;
 
 void CallbackTimerInit(void)
 {
-    WDTCTL = WDT_MDLY_8;  // interval = 8ms @ 1Mhz, 500us @ 16Mhz
+#ifdef __MSP430G2553__
+    WDTCTL = WDT_MDLY_8;  // interval = 500us @ 16Mhz
+#else
+	WDTCTL = WDT_MDLY_0_5; // interval = 500us @ 1Mhz
+#endif
     IE1 |= WDTIE;         // Enable WDT interrupt
 }
 
-#pragma vector = WDT_VECTOR;
+#pragma vector = WDT_VECTOR
 __interrupt void CallbackTimerOverflow(void)
 {
     now++;

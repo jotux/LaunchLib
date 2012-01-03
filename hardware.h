@@ -96,4 +96,13 @@
     #define MOTOR_2_PWM_PIN  2  
 #endif
 
+// interrupt config
+#ifdef __MSP430G2231__
+#define NUM_P1_INTS 8
+#endif
+#ifdef __MSP430G2553__
+#define NUM_P1_INTS 8
+#define NUM_P2_INTS 6
+#endif
+
 #endif
