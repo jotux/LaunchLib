@@ -5,6 +5,7 @@
  * PWM generation on Timer0/1
  * ADC
  * GPIO Interrupt handler
+ * Basic State machine handler
 
 ###TODO
  * I2C
