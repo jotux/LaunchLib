@@ -27,7 +27,6 @@ void AttachInterrupt(uint8_t port, uint8_t pin, InterruptFn func, enum edge_type
             P2IES |=  _BV(pin) & type;
             P2IFG &= ~_BV(pin);
             break;
-            break;
 #endif
         default:
             break;
@@ -49,7 +48,6 @@ void DetachInterrupt(uint8_t port, uint8_t pin)
             P2IE  &=  ~_BV(pin);
             P2IFG &= ~_BV(pin);
             break;
-            break;
 #endif
         default:
             break;
@@ -62,6 +60,7 @@ void DetachInterrupt(uint8_t port, uint8_t pin)
 #pragma vector = PORT1_VECTOR
 __interrupt void Port1(void)
 {
+	_DINT();
     uint8_t cnt = 0;
     while(cnt++ < NUM_P1_INTS)
     {
@@ -71,12 +70,14 @@ __interrupt void Port1(void)
             P1IFG &= ~_BV(cnt);
         }
     }
+    _EINT();
 }
 
 #ifdef __MSP430G2553__
 #pragma vector = PORT2_VECTOR
 __interrupt void Port2(void)
 {
+	_DINT();
     uint8_t cnt = 0;
     while(cnt++ < NUM_P2_INTS)
     {
@@ -86,5 +87,6 @@ __interrupt void Port2(void)
             P2IFG &= ~_BV(cnt);
         }
     }
+    _EINT();
 }
 #endif
