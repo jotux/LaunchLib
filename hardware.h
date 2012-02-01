@@ -19,6 +19,12 @@
     #define RED_LED_ON()     SET_HIGH(RED_LED);
     #define RED_LED_TOGGLE() TOGGLE(RED_LED);
     
+    #define GREEN_LED_PORT 1
+    #define GREEN_LED_PIN  6
+    #define GREEN_LED_OFF()    SET_LOW(GREEN_LED);
+    #define GREEN_LED_ON()     SET_HIGH(GREEN_LED);
+    #define GREEN_LED_TOGGLE() TOGGLE(GREEN_LED);
+    
     #define PWM_0_PORT 1
     #define PWM_0_PIN  2
     
