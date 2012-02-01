@@ -19,4 +19,5 @@ void CallbackService(uint32_t current_time);
 void CallbackMode(SchedulerCallback func, enum callback_mode mode);
 void CallbackDisable(SchedulerCallback func);
 
+#define MAX_CALLBACK_CNT 3
 #endif
