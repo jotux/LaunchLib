@@ -3,6 +3,8 @@
 
 typedef void (*State)(uint8_t);
 
+#define MAX_EVENT_NUM 16
+
 typedef struct
 {
     State   current_state;
@@ -10,12 +12,11 @@ typedef struct
     State   next_state;
 }transition;
 
+void StateMachineInit(transition *state_transitions, uint8_t size);
 uint8_t CheckEventQueue(void);
 void    QueueEvent(uint8_t event);
-State LookupTransition(State state, uint8_t event, transition t[], uint8_t t_size);
+State LookupTransition(State state, uint8_t event);
 int8_t  EnqueueEvent(uint8_t event);
-int8_t  DequeueEvent(uint8_t event);
-
-extern int event;
+uint8_t  DequeueEvent(void);
 
 #endif

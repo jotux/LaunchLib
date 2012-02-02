@@ -1,7 +1,7 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-#define LINE_FOLLOWER_R1
+#define BARE_LAUNCHPAD
 
 #include "msp430.h"
 #include <stdarg.h>
