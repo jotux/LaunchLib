@@ -2,7 +2,7 @@
 #include "pwm.h"
 #include "hardware.h"
 
-PwmOutput pwm_out[2];
+PwmOutput pwm_out[NUM_PWM_CHANNELS];
 
 void PwmInit(uint8_t channel)
 {
@@ -27,8 +27,13 @@ void PwmInit(uint8_t channel)
 	}
 }
 
-void PwmSetPeriod(uint8_t channel, uint16_t frequency)
+
+// Max frequency is DCO/1 but the duty cycle is between 1-100, which means if
+// you run faster than 100/DCO your duty cycle resolution will suffer. Max
+// frequecy for 1% resolution is DCO/100 = 160KHz
+void PwmSetPeriod(uint8_t channel, uint32_t frequency)
 {
+    // calculate the frequency based on the DCO speed
     uint16_t freq_to_set = CLOCK_DCO / frequency;
 
     pwm_out[channel].frequency = freq_to_set;
@@ -42,12 +47,17 @@ void PwmSetPeriod(uint8_t channel, uint16_t frequency)
     {
         TA0CCR0 = freq_to_set;
     }
-    PwmSetDuty(channel,pwm_out[channel].duty);   // fix the duty cycle
+    // fix the duty cycle
+    PwmSetDuty(channel,pwm_out[channel].duty);
 }
 
-void PwmSetDuty(uint8_t channel, uint16_t duty)
+// Duty cycle resolution = ((frequency * 100) / DCO) %
+// Example 1, f = 10kHz,  DCO = 16MHz, (10kHz * 100)  / 16MHz = 0.0625% ~ 10bit
+//         2, f = 160kHz, DCO = 16MHz, (160kHz * 100) / 16MHz = 1%      ~  6bit
+//         3, f = 500kHz, DCO = 16MHz, (500kHz * 100) / 16MHz = 3.125%  ~  5bit
+void PwmSetDuty(uint8_t channel, uint8_t duty)
 {
-    uint16_t duty_to_set = (pwm_out[channel].duty * pwm_out[channel].frequency) / 100;
+    uint32_t duty_to_set = (duty * pwm_out[channel].frequency) / 100;
 
 	pwm_out[channel].duty = duty;
 #ifdef __MSP430G2553__

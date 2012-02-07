@@ -1,7 +1,9 @@
 #include "global.h"
 #include "callback.h"
-#include "timer.h"
 #include "hardware.h"
+
+// global time
+volatile uint32_t now = 0;
 
 uint8_t event_count = 0;
 ScheduledEvent event_list[MAX_CALLBACK_CNT];
@@ -32,7 +34,7 @@ void CallbackService(uint32_t current_time)
     }
 }
 
-void CallbackMode(SchedulerCallback func, enum callback_mode mode)
+void CallbackMode(SchedulerCallback func, enum IoMode mode)
 {
     uint8_t i = 0;
     for (i = 0;i < event_count;i++)
@@ -47,4 +49,21 @@ void CallbackMode(SchedulerCallback func, enum callback_mode mode)
             break;
         }
     }
+}
+
+void CallbackTimerInit(void)
+{
+#ifdef __MSP430G2553__
+    WDTCTL = WDT_MDLY_8;  // interval = 500us @ 16Mhz
+#else
+	WDTCTL = WDT_MDLY_0_5; // interval = 500us @ 1Mhz
+#endif
+    IE1 |= WDTIE;         // Enable WDT interrupt
+}
+
+#pragma vector = CALLBACK_VECTOR
+__interrupt void CallbackTimerOverflow(void)
+{
+    now++;
+    CallbackService(now);
 }

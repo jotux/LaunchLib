@@ -1,9 +1,8 @@
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 
+#define CALLBACK_VECTOR WDT_VECTOR
 typedef void (*SchedulerCallback)(void);
-
-enum callback_mode {DISABLED = 0, ENABLED = 1};
 
 typedef struct
 {
@@ -11,13 +10,17 @@ typedef struct
     uint8_t enabled;
     uint32_t run_time;
     uint32_t next_run_time;
-    uint8_t location;
 } ScheduledEvent;
 
 void CallbackRegister(SchedulerCallback callback_function, uint32_t run_time);
 void CallbackService(uint32_t current_time);
-void CallbackMode(SchedulerCallback func, enum callback_mode mode);
+void CallbackMode(SchedulerCallback func, enum IoMode mode);
 void CallbackDisable(SchedulerCallback func);
+void CallbackTimerInit(void);
+__interrupt void CallbackTimerOverflow(void);
 
-#define MAX_CALLBACK_CNT 3
+extern volatile uint32_t now;
+
+#define MAX_CALLBACK_CNT 1
+
 #endif

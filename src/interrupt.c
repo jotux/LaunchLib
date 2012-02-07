@@ -10,7 +10,7 @@ InterruptFn p2_int_table[NUM_P2_INTS];
 // Note: functions called from GPIO interrupts have no access to timer-based
 // facilities (like the global "now" variable used for timing). The current
 // Delay() implementation will also not work as it relies on timers.
-void AttachInterrupt(uint8_t port, uint8_t pin, InterruptFn func, enum edge_type type)
+void AttachInterrupt(uint8_t port, uint8_t pin, InterruptFn func, enum IoEdge type)
 {
     switch (port)
     {

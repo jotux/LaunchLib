@@ -54,12 +54,6 @@ void main(void)
 void state_idle(uint8_t event)
 {
     state = LookupTransition(state, event);
-            CallbackMode(TimerTick, ENABLED);
-            break;
-        default:
-            break;
-    }
-    state = LookupTransition(state, event);
 }
 
 void state_blink_red(uint8_t event)
