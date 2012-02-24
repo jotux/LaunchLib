@@ -1,10 +1,3 @@
-
-
-#I2C Protocol
-##Joe Brown
-##Rev 1
-
-
 ##Command Format
 The I2C protocol will consists of three (3) parts:
 
@@ -17,15 +10,15 @@ In this document it will be assumed that the Read() and Write() Commands automat
 ###Calculating Command Read/Write time
 Every I2C transaction has the same flow:
 
-    Start(1)->(Address(7)+R/W(1))->Ack(1)->Register(8)->Ack(1)->Data(8)->Ack(1)->Stop(1)
+    Start(1)->(Address(7)+W(1))->Ack(1)->Register(8)->Ack(1)->Start(1)->(Address(7)+R/W(1))->Ack(1)->Data(8)->Ack(1)->Stop(1)
 
 >Note: The Data byte may be read or written depending on the polarity of the R/W bit
 
 Using this we can calculate the transaction time for every transaction using the clock speed of the bus:
 
-    Transaction time = 29 * (1 / Clock Rate)
+    Transaction time = 39 * (1 / Clock Rate)
 
-For a standard 400 kHz I2C bus the time will be 73 microseconds.
+For a standard 400 kHz I2C bus the time will be 97 microseconds.
 
 ##Register Map Summary
 
