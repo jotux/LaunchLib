@@ -6,25 +6,25 @@ PwmOutput pwm_out[NUM_PWM_CHANNELS];
 
 void PwmInit(uint8_t channel)
 {
-	switch(channel)
-	{
-		case 0:
-			TA0CCR0 = 0; // period
-			TA0CCTL1 = OUTMOD_7;
-			TA0CCR1 = 0; // duty
-			TA0CTL = TASSEL_2 + MC_1;
-			break;
+    switch(channel)
+    {
+        case 0:
+            TA0CCR0 = 0; // period
+            TA0CCTL1 = OUTMOD_7;
+            TA0CCR1 = 0; // duty
+            TA0CTL = TASSEL_2 + MC_1;
+            break;
 #ifdef __MSP430G2553__
-		case 1:
-			TA1CCR0 = 0;
-			TA1CCTL1 = OUTMOD_7;
-			TA1CCR1 = 0;
-			TA1CTL = TASSEL_2 + MC_1;
-			break;
+        case 1:
+            TA1CCR0 = 0;
+            TA1CCTL1 = OUTMOD_7;
+            TA1CCR1 = 0;
+            TA1CTL = TASSEL_2 + MC_1;
+            break;
 #endif
-		default:
-			break;
-	}
+        default:
+            break;
+    }
 }
 
 
@@ -40,9 +40,9 @@ void PwmSetPeriod(uint8_t channel, uint32_t frequency)
 #ifdef __MSP430G2553__
     if (channel)
     {
-	    TA1CCR0 = freq_to_set;
+        TA1CCR0 = freq_to_set;
     }
-	else
+    else
 #endif
     {
         TA0CCR0 = freq_to_set;
@@ -59,7 +59,7 @@ void PwmSetDuty(uint8_t channel, uint8_t duty)
 {
     uint32_t duty_to_set = (duty * pwm_out[channel].frequency) / 100;
 
-	pwm_out[channel].duty = duty;
+    pwm_out[channel].duty = duty;
 #ifdef __MSP430G2553__
     if (channel)
     {

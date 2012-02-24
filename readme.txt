@@ -8,7 +8,6 @@
         -12b ram
         -184b flash
     * ADC
-        -n/a ram
         -88b flash
     * GPIO Interrupt handler
         -28b ram

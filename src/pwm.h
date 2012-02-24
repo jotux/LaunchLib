@@ -8,8 +8,8 @@ void PwmSetDuty(uint8_t channel, uint8_t duty);
 
 typedef struct
 {
-	uint32_t frequency;
-	uint8_t duty;
+    uint32_t frequency;
+    uint8_t duty;
 } PwmOutput;
 
 #endif //PWM_H
