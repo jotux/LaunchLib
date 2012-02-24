@@ -16,15 +16,29 @@ void AttachInterrupt(uint8_t port, uint8_t pin, InterruptFn func, enum IoEdge ty
     {
         case 1:
             p1_int_table[pin] = func;   // save the function pointer
-            P1IE  |=  _BV(pin);         // interrupt enabled
-            P1IES |=  _BV(pin) & type;  // rising/falling edge
+            P1IE |= _BV(pin);           // interrupt enabled
+            if (type == FALLING_EDGE)
+            {
+                P1IES |= _BV(pin);
+            }
+            else
+            {
+                P1IES &= ~_BV(pin);
+            }
             P1IFG &= ~_BV(pin);         // clear the flag
             break;
 #ifdef __MSP430G2553__
         case 2:
             p2_int_table[pin] = func;
-            P2IE  |=  _BV(pin);
-            P2IES |=  _BV(pin) & type;
+            P2IE |= _BV(pin);
+            if (type == FALLING_EDGE)
+            {
+                P2IES |= _BV(pin);
+            }
+            else
+            {
+                P2IES &= ~_BV(pin);
+            }
             P2IFG &= ~_BV(pin);
             break;
 #endif
@@ -60,7 +74,7 @@ void DetachInterrupt(uint8_t port, uint8_t pin)
 #pragma vector = PORT1_VECTOR
 __interrupt void Port1(void)
 {
-	_DINT();
+    _DINT();
     uint8_t cnt = 0;
     while(cnt++ < NUM_P1_INTS)
     {
@@ -77,7 +91,7 @@ __interrupt void Port1(void)
 #pragma vector = PORT2_VECTOR
 __interrupt void Port2(void)
 {
-	_DINT();
+    _DINT();
     uint8_t cnt = 0;
     while(cnt++ < NUM_P2_INTS)
     {
