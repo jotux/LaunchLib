@@ -9,8 +9,9 @@
 void QueueButton(void);
 void TimerTick(void);
 
-// Event definitions (do NOT explicitly set values)
-enum EVENT {DEFAULT_EVENTS, BUTTON_DOWN, TIMER_TICK};
+// Event definitions
+// do NOT explicitly set values and DEFAULT_EVENTS must be first
+enum Event {DEFAULT_EVENTS, BUTTON_DOWN, TIMER_TICK};
 
 // State functions (functions that consume events)
 void state_idle(uint8_t event);
@@ -28,7 +29,7 @@ transition rules[] =
 };
 
 // Current state pointer
-State state;
+State state = state_idle;
 
 void main(void)
 {
@@ -37,30 +38,28 @@ void main(void)
     CallbackTimerInit();
     HardwareInit();
 
-    AttachInterrupt(1,3,QueueButton,FALLING_EDGE);
+    AttachInterrupt(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
     CallbackRegister(TimerTick, 500ul * _millisecond);
     StateMachineInit(rules, sizeof(rules));
     _EINT();
 
-    // initial state
-    state = state_idle;
-
     while (1)
     {
-        state(CheckEventQueue(state));
+        StateRun(&state);
     }
 }
 
-void state_idle(uint8_t event)
+void QueueButton(void)
 {
-    state = LookupTransition(state, event);
-            CallbackMode(TimerTick, ENABLED);
-            break;
-        default:
-            break;
-    }
-    state = LookupTransition(state, event);
+    EnqueueEvent(BUTTON_DOWN);
 }
+
+void TimerTick(void)
+{
+    EnqueueEvent(TIMER_TICK);
+}
+
+void state_idle(uint8_t event){}
 
 void state_blink_red(uint8_t event)
 {
@@ -75,10 +74,7 @@ void state_blink_red(uint8_t event)
         case EXIT:
             RED_LED_OFF();
             break;
-        default:
-            break;
     }
-    state = LookupTransition(state, event);
 }
 
 void state_blink_green(uint8_t event)
@@ -91,10 +87,7 @@ void state_blink_green(uint8_t event)
         case EXIT:
             GREEN_LED_OFF();
             break;
-        default:
-            break;
     }
-    state = LookupTransition(state, event);
 }
 
 void state_blink_both(uint8_t event)
@@ -110,17 +103,5 @@ void state_blink_both(uint8_t event)
             RED_LED_OFF();
             CallbackMode(TimerTick, DISABLED);
             break;
-        default:
-            break;
     }
-    state = LookupTransition(state, event);
-}
-
-void QueueButton(void)
-{
-    EnqueueEvent(BUTTON_DOWN);
-}
-void TimerTick(void)
-{
-    EnqueueEvent(TIMER_TICK);
 }

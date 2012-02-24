@@ -23,5 +23,6 @@ State   LookupTransition(State state, uint8_t event);
 int8_t  EnqueueEvent(uint8_t event);
 uint8_t DequeueEvent(void);
 uint8_t DequeueTransitionEvent(void);
+void    StateRun(State* state);
 
 #endif

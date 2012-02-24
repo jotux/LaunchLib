@@ -10,10 +10,10 @@ uint8_t index = 0;
 uint8_t size  = 0;
 uint8_t queue[MAX_EVENT_NUM];
 
-// enum events local to this module so we can pass them out
+// enum default events local to this module so we can pass them out
 enum stuff {DEFAULT_EVENTS};
 
-// An event transition status flag is kept to handle EXIT/ENTER event indication
+// An event transition variable is kept to handle EXIT/ENTER event indication.
 uint8_t transition_event = IDLE;
 
 void StateMachineInit(transition *state_transitions, uint8_t t_size)
@@ -39,20 +39,22 @@ uint8_t CheckEventQueue(State state)
             if (state != LookupTransition(state, QueuePeek()))
             {
                 // if a transition will happen, return the EXIT event
-                transition_event = EXIT;
-                ret_event = transition_event;
+                ret_event = transition_event = EXIT;
             }
             else
             {
+                // if a transition will not happen, dequeue events normally
                 ret_event = DequeueEvent();
             }
             break;
         case ENTER:
-            transition_event--;
+            // return ENTER and switch transition event to IDLE
             ret_event = ENTER;
+            transition_event = IDLE;
             break;
         case EXIT:
-            transition_event--;
+            // switch transition event to ENTER but return queued event
+            transition_event = ENTER;
             ret_event = DequeueEvent();
             break;
     }
@@ -62,11 +64,7 @@ uint8_t CheckEventQueue(State state)
 
 uint8_t QueuePeek(void)
 {
-    if (size)
-    {
-        return queue[index];
-    }
-    return IDLE;
+    return size ? queue[index] : IDLE;
 }
 
 int8_t EnqueueEvent(uint8_t event)
@@ -79,6 +77,8 @@ int8_t EnqueueEvent(uint8_t event)
         queue[((index + size) == MAX_EVENT_NUM) ? 0 : (index + size)] = event;
         // adjust the size
         size++;
+        // return success
+        ret = 0;
     }
     return ret;
 }
@@ -96,25 +96,36 @@ uint8_t DequeueEvent(void)
         // adjust the size
         size--;
     }
-	return ret;
+    return ret;
 }
 
 State LookupTransition(State state, uint8_t event)
 {
-	uint8_t cnt;
+    uint8_t i = 0;
     State ret_state = state;
     // if the event is idle or enter/exit just return state)
     if (event > EXIT)
     {
         // if event is a new event find the transition
-        for (cnt = 0;cnt < transition_table_size;cnt++)
+        for (i = 0;i < transition_table_size;i++)
         {
-            if (transition_table[cnt].current_state == state &&
-                transition_table[cnt].event_code    == event)
+            if (transition_table[i].current_state == state &&
+                transition_table[i].event_code    == event)
             {
-                ret_state = transition_table[cnt].next_state;
+                ret_state = transition_table[i].next_state;
+                break;
             }
         }
     }
     return ret_state;
+}
+
+void StateRun(State* state)
+{
+    // get the next event
+    uint8_t event = CheckEventQueue(*state);
+    // run the state
+    (*state)(event);
+    // check for state transitions
+    *state = LookupTransition(*state, event);
 }
