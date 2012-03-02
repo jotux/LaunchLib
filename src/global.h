@@ -16,16 +16,16 @@ enum {FALSE = 0, TRUE = 1};
 #define CLR_BIT(reg,bit)    ((reg)&=~_BV(bit))
 #define TOG_BIT(reg,bit)    ((reg)^= _BV(bit))
 #define WD_STOP()           (WDTCTL = WDTPW + WDTHOLD)
-#define SET_CLOCK(N) BCSCTL1 = CALBC1_##N##MHZ; \
-                     DCOCTL = CALDCO_##N##MHZ;
+#define SET_CLOCK(N)        BCSCTL1 = CALBC1_##N##MHZ; \
+                            DCOCTL  = CALDCO_##N##MHZ;
 
 //types
-typedef unsigned char      uint8_t;
-typedef signed char        int8_t;
-typedef unsigned short int uint16_t;
-typedef signed short int   int16_t;
-typedef unsigned long int  uint32_t;
-typedef signed long int    int32_t;
+typedef unsigned char       uint8_t;
+typedef signed char         int8_t;
+typedef unsigned short int  uint16_t;
+typedef signed short int    int16_t;
+typedef unsigned long int   uint32_t;
+typedef signed long int     int32_t;
 
 //macros for IO config (with preprocessor abuse)
 #define st(x) do{x} while(__LINE__ == -1)
@@ -55,6 +55,17 @@ enum IoFunction {IO = 0, SPECIAL = 1};
                                         {\
                                             st((P##port##SEL &= ~_BV(pin)););\
                                         }
+
+#define IO_AUX_FUNCTION(name,fun)        _IO_AUX_FUNCTION(name##_PORT,name##_PIN,fun)
+#define _IO_AUX_FUNCTION(port, pin,fun)  st(__IO_AUX_FUNCTION(port,pin,fun);)
+#define __IO_AUX_FUNCTION(port, pin,fun) if (fun)\
+                                         {\
+                                             st((P##port##SEL2 |= _BV(pin)););\
+                                         }\
+                                         else\
+                                         {\
+                                             st((P##port##SEL2 &= ~_BV(pin)););\
+                                         }
 
 enum IoState {LOW = 0, HIGH = 1, TOGGLE = 2};
 // Set pin output high or low, also used for pullup/down selection (page 321)
@@ -96,19 +107,6 @@ enum IoResistorState {PULL_DOWN = 0, PULL_UP = 1};
                                         else\
                                         {\
                                             IO_SET(name,LOW);\
-                                        }
-
-
-enum IoStrength {REDUCED = 0, FULL = 1};
-#define IO_DRIVE(name,ds)               _IO_DRIVE(name##_PORT,name##_PIN,ds)
-#define _IO_DRIVE(port,pin,ds)          st(__IO_DRIVE(port,pin,ds);)
-#define __IO_DRIVE(port,pin,ds)         if (ds)\
-                                        {\
-                                            st((P##port##DS |= _BV(pin)););\
-                                        }\
-                                        else\
-                                        {\
-                                            st((P##port##DS &= ~_BV(pin)););\
                                         }
 
 #define IO_IN(name)                     _IO_IN(name##_PORT,name##_PIN)
