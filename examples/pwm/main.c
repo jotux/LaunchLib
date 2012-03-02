@@ -1,7 +1,17 @@
 #include "src/global.h"
 #include "src/hardware.h"
-#include "src/init.h"
 #include "src/pwm.h"
+
+void HardwareInit(void)
+{
+    IO_DIRECTION(SW1,INPUT);
+
+    IO_DIRECTION(PWM_0,OUTPUT);
+    IO_FUNCTION(PWM_0,SPECIAL);
+
+    IO_DIRECTION(PWM_1,OUTPUT);
+    IO_FUNCTION(PWM_1,SPECIAL);
+}
 
 void main(void)
 {
@@ -24,7 +34,7 @@ void main(void)
     {
         // if P1.3 switch is down sweep frequency up to 100kHz while maintaining
         // 50% duty cycle
-        if (READ_IN(SW1) && cnt < 100000)
+        if (IO_IN(SW1) && cnt < 100000)
         {
             cnt++;
         }

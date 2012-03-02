@@ -1,6 +1,5 @@
 #include "src/global.h"
 #include "src/hardware.h"
-#include "src/init.h"
 #include "src/adc.h"
 
 void main(void)

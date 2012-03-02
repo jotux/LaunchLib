@@ -1,10 +1,18 @@
 #include "src/global.h"
 #include "src/hardware.h"
-#include "src/callback.h"
-#include "src/init.h"
+#include "src/schedule.h"
 
 void BlinkRedLed(void);
 void BlinkGreenLed(void);
+
+void HardwareInit(void)
+{
+    IO_DIRECTION(RED_LED,OUTPUT);
+    RED_LED_OFF();
+
+    IO_DIRECTION(GREEN_LED,OUTPUT);
+    GREEN_LED_OFF();
+}
 
 void main(void)
 {
@@ -12,8 +20,8 @@ void main(void)
     SET_CLOCK(16);
     HardwareInit();
 
-    // Init the timer run from the watchdog
-    CallbackTimerInit();
+    // Init the timer
+    ScheduleTimerInit();
     // register functions and define their period
     CallbackRegister(BlinkRedLed,   100ul * _millisecond);
     CallbackRegister(BlinkGreenLed, 101ul * _millisecond);

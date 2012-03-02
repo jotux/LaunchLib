@@ -1,9 +1,16 @@
 #include "src/global.h"
 #include "src/hardware.h"
-#include "src/init.h"
 #include "src/interrupt.h"
 
 void ToggleRedLed(void);
+
+void HardwareInit(void)
+{
+    IO_DIRECTION(RED_LED,OUTPUT);
+    RED_LED_OFF();
+
+    IO_DIRECTION(SW1,INPUT);
+}
 
 void main(void)
 {
