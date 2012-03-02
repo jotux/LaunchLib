@@ -1,7 +1,6 @@
 #include "src/global.h"
 #include "src/hardware.h"
-#include "src/init.h"
-#include "src/callback.h"
+#include "src/schedule.h"
 #include "src/interrupt.h"
 #include "src/state.h"
 
@@ -11,7 +10,7 @@ void TimerTick(void);
 
 // Event definitions
 // do NOT explicitly set values and DEFAULT_EVENTS must be first
-enum Event {DEFAULT_EVENTS, BUTTON_DOWN, TIMER_TICK};
+enum Event {DEFAULT_EVENTS, BUTTON_DOWN, TIMER_TICK, TICK_EXPIRE};
 
 // State functions (functions that consume events)
 void state_idle(uint8_t event);
@@ -20,22 +19,35 @@ void state_blink_green(uint8_t event);
 void state_blink_both(uint8_t event);
 
 // Transition rules
-transition rules[] =
+Transition rules[] =
 {
     {state_idle,        BUTTON_DOWN, state_blink_red  },
     {state_blink_red,   BUTTON_DOWN, state_blink_green},
-    {state_blink_green, BUTTON_DOWN, state_blink_both },
+    {state_blink_green, TICK_EXPIRE, state_blink_both },
     {state_blink_both,  BUTTON_DOWN, state_idle       }
 };
 
+
+
 // Current state pointer
 State state = state_idle;
+
+void HardwareInit(void)
+{
+    IO_DIRECTION(RED_LED,OUTPUT);
+    RED_LED_OFF();
+
+    IO_DIRECTION(GREEN_LED,OUTPUT);
+    GREEN_LED_OFF();
+
+    IO_DIRECTION(SW1,INPUT);
+}
 
 void main(void)
 {
     WD_STOP();
     SET_CLOCK(16);
-    CallbackTimerInit();
+    ScheduleTimerInit();
     HardwareInit();
 
     AttachInterrupt(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
@@ -79,12 +91,22 @@ void state_blink_red(uint8_t event)
 
 void state_blink_green(uint8_t event)
 {
+    static uint8_t tick_cnt = 0;
     switch(event)
     {
+        case ENTER:
+            DetachInterrupt(SW1_PORT, SW1_PIN);
+            break;
         case TIMER_TICK:
             GREEN_LED_TOGGLE();
+            if (tick_cnt++ > 4)
+            {
+                tick_cnt = 0;
+                EnqueueEvent(TICK_EXPIRE);
+            }
             break;
         case EXIT:
+            AttachInterrupt(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
             GREEN_LED_OFF();
             break;
     }
