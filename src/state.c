@@ -1,32 +1,33 @@
 #include "global.h"
+#include "hardware.h"
 #include "state.h"
 
 // A pointer to the transition table along with a size is saved locally
-transition* transition_table;
-uint8_t transition_table_size;
+static Transition* transition_table;
+static uint8_t transition_table_size;
 
 // The event queue is a FIFO implemented as a circular buffer
-uint8_t index = 0;
-uint8_t size  = 0;
-uint8_t queue[MAX_EVENT_NUM];
+static uint8_t index = 0;
+static uint8_t size  = 0;
+static uint8_t queue[MAX_EVENT_NUM];
 
 // enum default events local to this module so we can pass them out
-enum stuff {DEFAULT_EVENTS};
+enum {DEFAULT_EVENTS};
 
 // An event transition variable is kept to handle EXIT/ENTER event indication.
-uint8_t transition_event = IDLE;
+static uint8_t transition_event = IDLE;
 
-void StateMachineInit(transition *state_transitions, uint8_t t_size)
+void StateMachineInit(Transition *state_transitions, uint8_t t_size)
 {
     // save a pointer to the state transition table
     transition_table = state_transitions;
     // save it's size so we can search it
-    transition_table_size = (t_size / sizeof(transition));
+    transition_table_size = (t_size / sizeof(Transition));
     // enqueue an enter event to start the idle state
     EnqueueEvent(ENTER);
 }
 
-uint8_t CheckEventQueue(State state)
+static uint8_t CheckEventQueue(State state)
 {
     uint8_t ret_event = IDLE;
 
@@ -62,7 +63,7 @@ uint8_t CheckEventQueue(State state)
     return ret_event;
 }
 
-uint8_t QueuePeek(void)
+static uint8_t QueuePeek(void)
 {
     return size ? queue[index] : IDLE;
 }
@@ -83,7 +84,7 @@ int8_t EnqueueEvent(uint8_t event)
     return ret;
 }
 
-uint8_t DequeueEvent(void)
+static uint8_t DequeueEvent(void)
 {
     int8_t ret = IDLE;
     // are there any events?
@@ -99,7 +100,7 @@ uint8_t DequeueEvent(void)
     return ret;
 }
 
-State LookupTransition(State state, uint8_t event)
+static State LookupTransition(State state, uint8_t event)
 {
     uint8_t i = 0;
     State ret_state = state;
@@ -107,7 +108,7 @@ State LookupTransition(State state, uint8_t event)
     if (event > EXIT)
     {
         // if event is a new event find the transition
-        for (i = 0;i < transition_table_size;i++)
+        for(i = 0;i < transition_table_size;i++)
         {
             if (transition_table[i].current_state == state &&
                 transition_table[i].event_code    == event)
