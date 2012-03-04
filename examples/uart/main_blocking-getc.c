@@ -20,16 +20,7 @@ void main(void)
     UartInit(115200);
 
     _EINT();
-    UartPrintf("\n\nThis is %s\n",        "a string");
-    UartPrintf("Hex number(16): 0x%x\n",  60000);
-    UartPrintf("Hex number(32): 0x%x\n",  100000);
-    UartPrintf("Char: %c\n",              'x');
-    UartPrintf("Unsigned short: %u\n",    100);
-    UartPrintf("Signed short: %i\n",     -100);
-    UartPrintf("Unsigned long: %n\n",     250000);
-    UartPrintf("Signed long: %l\n",      -250000);
-
-
+    // Make sure NON_BLOCKING_UART_RX is commented out in hardware.h
     UartPrintf("\n\nEnter your name: ");
     static uint8_t buf[20];
     uint8_t* cur_char = &buf[0];

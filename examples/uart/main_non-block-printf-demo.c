@@ -20,32 +20,16 @@ void main(void)
     UartInit(115200);
 
     _EINT();
+    // Make sure NON_BLOCKING_UART_RX is defined in hardware.h and
+    // MAX_UART_TX_BUF_CNT is large enough to support the inrush of characters
+    // MAX_UART_TX_BUF_CNT = 200 will work well for this demo
     UartPrintf("\n\nThis is %s\n",        "a string");
     UartPrintf("Hex number(16): 0x%x\n",  60000);
     UartPrintf("Hex number(32): 0x%x\n",  100000);
     UartPrintf("Char: %c\n",              'x');
     UartPrintf("Unsigned short: %u\n",    100);
     UartPrintf("Signed short: %i\n",     -100);
-    UartPrintf("Unsigned long: %n\n",     250000);
-    UartPrintf("Signed long: %l\n",      -250000);
-
-
-    UartPrintf("\n\nEnter your name: ");
-    static uint8_t buf[30];
-    uint8_t* cur_char = &buf[0];
-    while(1)
-    {
-        // poll the rx buffer for new data
-        if (get_uart_rx_buf_size())
-        {
-            // pull the data out one byte at a time
-            UartRxBufferDequeue(cur_char++,1);
-            // was the last character a carriage return?
-            if (*(cur_char - 1) == '\r')
-            {
-                UartPrintf("\nHello %s",buf);
-            }
-        }
-    }
-
+    UartPrintf("Unsigned long: %lu\n",    250000);
+    UartPrintf("Signed long: %li\n",     -250000);
+    LPM0;
 }
