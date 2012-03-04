@@ -68,9 +68,14 @@ static int8_t UartRxBufferEnqueue(uint8_t data)
     }
 
     // stuff the data
-    rx_buf[((rx_start + rx_size) == MAX_UART_RX_BUF_CNT) ?
-                                    0 :
-                                    (rx_start + rx_size)] = data;
+    if((rx_start + rx_size) == MAX_UART_RX_BUF_CNT)
+    {
+        rx_buf[0] = data;
+    }
+    else
+    {
+        rx_buf[(rx_start + rx_size)] = data;
+    }
 
     // adjust the buf size
     rx_size++;
@@ -113,9 +118,14 @@ uint8_t UartRxBufferDequeue(uint8_t *in, uint16_t len)
     }
 
     // adjust the start index
-    rx_start = ((rx_start + rx_size) >= MAX_UART_RX_BUF_CNT) ?
-               ((rx_start + len_to_read) - MAX_UART_RX_BUF_CNT) :
-                (rx_start + len_to_read);
+    if((rx_start + rx_size) >= MAX_UART_RX_BUF_CNT)
+    {
+        rx_start = ((rx_start + len_to_read) - MAX_UART_RX_BUF_CNT);
+    }
+    else
+    {
+        rx_start = (rx_start + len_to_read);
+    }
 
     // adjust the size
     rx_size -= len_to_read;
@@ -267,7 +277,7 @@ static const uint32_t hex_table[] =
 };
 
 
-static void UartPutAToI(uint32_t value, enum NUMBER_BASE base)
+static void UartPutIToA(uint32_t value, enum NUMBER_BASE base)
 {
     uint32_t position = 0;
     uint8_t index = 0;
@@ -276,7 +286,7 @@ static void UartPutAToI(uint32_t value, enum NUMBER_BASE base)
     const uint32_t* selected_table;
     selected_table = (base == HEX) ? hex_table : decimal_table;
 
-    // work out way down to the current decade within that table
+    // work our way down to the current decade within that table
     while (value < *selected_table)
     {
         selected_table++;
@@ -314,35 +324,42 @@ void UartPrintf(uint8_t *format, ...)
                 case 'c':   // Char
                     UartPutC(va_arg(arg_list, uint8_t));
                     break;
+                case 'l':   // 32 bit
+                    switch(current_char = *format++)
+                    {
+                        case 'd':   // 32 bit signed
+                        case 'i':   // 32 bit signed
+                        case 'u':   // 32 bit unsigned
+                            current_long_int = va_arg(arg_list, uint32_t);
+                            // if we're negative
+                            if(current_char != 'u' && current_long_int < 0)
+                            {
+                                // add the negative sign
+                                UartPutC('-');
+                                // swap the value to positive to print
+                                current_long_int = -current_long_int;
+                            }
+                            UartPutIToA(current_long_int, DECIMAL);
+                            break;
+                    }
+                    break;
+                case 'd':   // 16 bit signed
                 case 'i':   // 16 bit signed
                 case 'u':   // 16 bit unsigned
                     current_short_int = va_arg(arg_list, uint16_t);
                     // if we're negative
-                    if(current_char == 'i' && current_short_int < 0)
+                    if(current_char != 'u' && current_short_int < 0)
                     {
                         // add the negative sign
                         UartPutC('-');
                         // swap the value to positive to print
                         current_short_int = -current_short_int;
-
                     }
-                    UartPutAToI(current_short_int, DECIMAL);
-                    break;
-                case 'l':   // 32 bit signed
-                case 'n':   // 32 bit unsigned
-                    current_long_int = va_arg(arg_list, uint32_t);
-                    if(current_char == 'l' &&  current_long_int < 0)
-                    {
-                        // add the negative sign
-                        UartPutC('-');
-                        // swap the value to positive to print
-                        current_long_int = -current_long_int;
-                    }
-                    UartPutAToI(current_long_int, DECIMAL);
+                    UartPutIToA(current_short_int, DECIMAL);
                     break;
                 case 'x':   // 16 or 32 bit hex
                     current_long_int = va_arg(arg_list, uint32_t);
-                    UartPutAToI(current_long_int, HEX);
+                    UartPutIToA(current_long_int, HEX);
                     break;
                 case 0:
                     return;

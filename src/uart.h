@@ -32,7 +32,7 @@ __interrupt void UartTxInt(void);
 
 static void UartPutC(uint8_t data);
 static void UartPutS(uint8_t *s);
-static void UartPutAToI(uint32_t value, enum NUMBER_BASE base);
+static void UartPutIToA(uint32_t value, enum NUMBER_BASE base);
 extern void UartPrintf(uint8_t *format, ...);
 
 
