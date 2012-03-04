@@ -108,7 +108,7 @@ static State LookupTransition(State state, uint8_t event)
     if (event > EXIT)
     {
         // if event is a new event find the transition
-        for(i = 0;i < transition_table_size;i++)
+        for(i = 0; i < transition_table_size;i++)
         {
             if (transition_table[i].current_state == state &&
                 transition_table[i].event_code    == event)

@@ -4,7 +4,7 @@
 typedef void (*State)(uint8_t);
 
 // events (the following line is preprocessor sin)
-#define DEFAULT_EVENTS IDLE=0,ENTER=1,EXIT=2
+#define DEFAULT_EVENTS IDLE,ENTER,EXIT
 
 typedef struct
 {
