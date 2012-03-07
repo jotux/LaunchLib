@@ -4,6 +4,15 @@
 ### MSP430G2553 currently required to use all functionality.
 
 ##Docs can be found [here](http://jotux.github.com/LaunchLib/docs/index.html)
+
+##Getting started
+
+ - Get most recent Code Composer Studio (CCS) [here](http://processors.wiki.ti.com/index.php/Download_CCS)
+ - Clone the Code
+ - Create a new CCS project
+ - Copy examples files to the top level directory and rename to main.c
+ - Enjoy
+
 ##Current Features:
 ### - Scheduling mechanism
   - driven from 2ms watchdog timer
@@ -30,9 +39,6 @@
 ### - Uart
    - Selectable blocking/non-blocking RX/TX
    - Built-in compact printf functionality
-
-##Examples
-  - To run examples copy the example file to the top level directory and rename it to main.c.
  
 ##TODO
  - I<sup>2</sup>C
