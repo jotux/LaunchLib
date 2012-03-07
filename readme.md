@@ -1,4 +1,4 @@
-y##An easy-to-use library to help kickstart your launchpad development.
+##An easy-to-use library to help kickstart your launchpad development.
 ![Pew Pew Pew](http://jotux.github.com/LaunchLib/logo.png)
 
 ### MSP430G2553 currently required to use all functionality.
