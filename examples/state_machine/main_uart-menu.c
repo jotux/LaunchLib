@@ -9,8 +9,7 @@
 void TimerTick(void);
 void UartRxPoll(void);
 
-// Event definitions
-// do NOT explicitly set values and DEFAULT_EVENTS must be first
+// Event definitions (DEFAULT_EVENTS must be included)
 enum
 {
     DEFAULT_EVENTS,
@@ -28,7 +27,7 @@ void state_blink_red(uint8_t event);
 void state_blink_green(uint8_t event);
 void state_read_adc(uint8_t event);
 
-// Transition rules
+//Rules
 Transition rules[] =
 {
     {state_idle,        GO_BLINK_RED,   state_blink_red  },
@@ -43,7 +42,7 @@ Transition rules[] =
 State state = state_idle;
 
 // Current char in rx buffer
-static uint8_t current_command = 0;
+static uint8_t current_command;
 
 void HardwareInit(void)
 {
@@ -81,23 +80,23 @@ void main(void)
     _EINT();
     while (1)
     {
-        StateRun(&state);
+        StateMachineRun(&state);
     }
 }
 
 void TimerTick(void)
 {
-    EnqueueEvent(TIMER_TICK);
+    StateMachinePublishEvent(TIMER_TICK);
 }
 
 void UartRxPoll(void)
 {
-    // if there are any characters pending
-    if (get_uart_rx_buf_size())
+    // if there is a character pending
+    if (!UartBufEmpty())
     {
-        // stick them in the current command buffer
-        UartRxBufferDequeue(&current_command,1);
-        EnqueueEvent(RECIEVED_COMMAND);
+        // stick it in the current command buffer
+        UartRead(&current_command,1);
+        StateMachinePublishEvent(RECIEVED_COMMAND);
     }
 }
 
@@ -119,13 +118,13 @@ void state_idle(uint8_t event)
             switch(current_command)
             {
                 case '1':
-                    EnqueueEvent(GO_BLINK_RED);
+                    StateMachinePublishEvent(GO_BLINK_RED);
                     break;
                 case '2':
-                    EnqueueEvent(GO_BLINK_GREEN);
+                    StateMachinePublishEvent(GO_BLINK_GREEN);
                     break;
                 case '3':
-                    EnqueueEvent(GO_READ_ADC);
+                    StateMachinePublishEvent(GO_READ_ADC);
                     break;
             }
             break;
@@ -145,7 +144,7 @@ void state_blink_red(uint8_t event)
         case RECIEVED_COMMAND:
             if(current_command == '\r')
             {
-                EnqueueEvent(RETURN_TO_IDLE);
+                StateMachinePublishEvent(RETURN_TO_IDLE);
             }
             break;
         case TIMER_TICK:
@@ -167,7 +166,7 @@ void state_blink_green(uint8_t event)
         case RECIEVED_COMMAND:
             if(current_command == '\r')
             {
-                EnqueueEvent(RETURN_TO_IDLE);
+                StateMachinePublishEvent(RETURN_TO_IDLE);
             }
             break;
         case TIMER_TICK:
@@ -186,7 +185,7 @@ void state_read_adc(uint8_t event)
         case RECIEVED_COMMAND:
             if(current_command == '\r')
             {
-                EnqueueEvent(RETURN_TO_IDLE);
+                StateMachinePublishEvent(RETURN_TO_IDLE);
             }
             break;
         case TIMER_TICK:

@@ -50,25 +50,25 @@ void main(void)
     ScheduleTimerInit();
     HardwareInit();
 
-    AttachInterrupt(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
+    InterruptAttach(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
     CallbackRegister(TimerTick, 500ul * _millisecond);
     StateMachineInit(rules, sizeof(rules));
     _EINT();
 
     while (1)
     {
-        StateRun(&state);
+        StateMachineRun(&state);
     }
 }
 
 void QueueButton(void)
 {
-    EnqueueEvent(BUTTON_DOWN);
+    StateMachinePublishEvent(BUTTON_DOWN);
 }
 
 void TimerTick(void)
 {
-    EnqueueEvent(TIMER_TICK);
+    StateMachinePublishEvent(TIMER_TICK);
 }
 
 void state_idle(uint8_t event){}
@@ -95,18 +95,18 @@ void state_blink_green(uint8_t event)
     switch(event)
     {
         case ENTER:
-            DetachInterrupt(SW1_PORT, SW1_PIN);
+            InterruptDetach(SW1_PORT, SW1_PIN);
             break;
         case TIMER_TICK:
             GREEN_LED_TOGGLE();
             if (tick_cnt++ > 4)
             {
                 tick_cnt = 0;
-                EnqueueEvent(TICK_EXPIRE);
+                StateMachinePublishEvent(TICK_EXPIRE);
             }
             break;
         case EXIT:
-            AttachInterrupt(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
+            InterruptAttach(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
             GREEN_LED_OFF();
             break;
     }

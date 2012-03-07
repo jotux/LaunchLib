@@ -50,7 +50,7 @@ void main(void)
     ScheduleTimerInit();
     HardwareInit();
 
-    AttachInterrupt(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
+    InterruptAttach(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
     CallbackRegister(TimerTick, 500ul * _millisecond);
     StateMachineInit(rules, sizeof(rules));
     _EINT();
@@ -95,7 +95,7 @@ void state_blink_green(uint8_t event)
     switch(event)
     {
         case ENTER:
-            DetachInterrupt(SW1_PORT, SW1_PIN);
+            InterruptDetach(SW1_PORT, SW1_PIN);
             break;
         case TIMER_TICK:
             GREEN_LED_TOGGLE();
@@ -106,7 +106,7 @@ void state_blink_green(uint8_t event)
             }
             break;
         case EXIT:
-            AttachInterrupt(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
+            InterruptAttach(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
             GREEN_LED_OFF();
             break;
     }

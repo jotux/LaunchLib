@@ -19,7 +19,7 @@ void main(void)
     HardwareInit();
 
     // attach function to SW1 falling edge interrupt
-    AttachInterrupt(SW1_PORT,SW1_PIN,ToggleRedLed,FALLING_EDGE);
+    InterruptAttach(SW1_PORT,SW1_PIN,ToggleRedLed,FALLING_EDGE);
 
     _EINT();
     LPM0;

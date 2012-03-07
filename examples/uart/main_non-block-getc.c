@@ -27,10 +27,10 @@ void main(void)
     while(1)
     {
         // poll the rx buffer for new data
-        if (get_uart_rx_buf_size())
+        if (!UartBufEmpty())
         {
             // pull the data out one byte at a time
-            UartRxBufferDequeue(cur_char++,1);
+            UartRead(cur_char++,1);
             // was the last character a carriage return?
             if (*(cur_char - 1) == '\r')
             {
@@ -38,5 +38,4 @@ void main(void)
             }
         }
     }
-
 }
