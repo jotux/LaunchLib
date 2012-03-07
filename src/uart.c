@@ -1,3 +1,8 @@
+/** 
+@file uart.c
+@brief Blocking and non-blocking UART interface
+@author Joe Brown
+*/
 #include "global.h"
 #include "uart.h"
 #include "hardware.h"
@@ -6,6 +11,7 @@
 //                              INIT
 ////////////////////////////////////////////////////////////////////////////////
 // see userguide table 15-5
+/** @brief baud rate lookup table */
 static const BaudRateConfig rate_table[5] = {{  9600, 16000000, 104, 0,  3},
                                              { 19200, 16000000,  52, 0,  1},
                                              { 38400, 16000000,  26, 0,  1},
@@ -55,11 +61,14 @@ void UartInit(uint32_t baud_rate)
 //                              Receive Queueing
 ////////////////////////////////////////////////////////////////////////////////
 #ifdef NON_BLOCKING_UART_RX
-#if MAX_UART_RX_BUF_CNT > 0
+/** @brief start index for rx circular buffer */
 static uint8_t rx_start = 0;
+/** @brief size of rx circular buffer */
 static uint8_t rx_size  = 0;
+/** @brief rx buffer */
 static uint8_t rx_buf[MAX_UART_RX_BUF_CNT];
-static int8_t UartRxBufferEnqueue(uint8_t data)
+
+int8_t RxBufferEnqueue(uint8_t data)
 {
     // is the buffer full?
     if (rx_size == MAX_UART_RX_BUF_CNT)
@@ -80,12 +89,12 @@ static int8_t UartRxBufferEnqueue(uint8_t data)
     // adjust the buf size
     rx_size++;
 
-    return (1);
+    return (0);
 error:
     return (-1);
 }
 
-uint8_t UartRxBufferDequeue(uint8_t *in, uint16_t len)
+uint8_t RxBufferDequeue(uint8_t *in, uint16_t len)
 {
     uint8_t len_to_read;
     _DINT();
@@ -137,34 +146,25 @@ error:
     return (0);
 }
 
-uint8_t get_uart_rx_buf_size(void)
-{
-    return rx_size;
-}
-
 #pragma vector=USCIAB0RX_VECTOR
 __interrupt void UartRxInt(void)
 {
-    UartRxBufferEnqueue(UCA0RXBUF);
+    RxBufferEnqueue(UCA0RXBUF);
 }
+#endif // NON_BLOCKING_UART_TX
 
-#endif // MAX_UART_RX_BUF_CNT > 0
-#else  // NON_BLOCKING_UART_RX
-uint8_t UartGetC(void)
-{
-    while (!(IFG2 & UCA0RXIFG));
-    return UCA0RXBUF;
-}
-#endif // NON_BLOCKING_UART_RX
 ////////////////////////////////////////////////////////////////////////////////
 //                              Transmit Queueing
 ////////////////////////////////////////////////////////////////////////////////
-#if MAX_UART_TX_BUF_CNT > 0
 #ifdef NON_BLOCKING_UART_TX
+/** @brief start index for tx circular buffer */
 static uint8_t tx_start = 0;
+/** @brief size of tx circular buffer */
 static uint8_t tx_size  = 0;
+/** @brief tx buffer */
 static uint8_t tx_buf[MAX_UART_TX_BUF_CNT];
-static int8_t UartTxBufferEnqueue(uint8_t data)
+
+int8_t TxBufferEnqueue(uint8_t data)
 {
     _DINT();
     // is the buffer full?
@@ -191,13 +191,13 @@ static int8_t UartTxBufferEnqueue(uint8_t data)
     tx_size++;
 
     _EINT();
-    return (1);
+    return (0);
 error:
     _EINT();
     return (-1);
 }
 
-static uint8_t UartTxBufferDequeue(void)
+uint8_t TxBufferDequeue(void)
 {
     uint8_t ret = 0;
     // is the buffer empty?
@@ -216,35 +216,14 @@ static uint8_t UartTxBufferDequeue(void)
 #pragma vector = USCIAB0TX_VECTOR
 __interrupt void UartTxInt(void)
 {
-    UCA0TXBUF = UartTxBufferDequeue();
+    UCA0TXBUF = TxBufferDequeue();
 }
-
 #endif //NON_BLOCKING_UART_TX
-#endif //MAX_UART_TX_BUF_CNT > 0
-
 ////////////////////////////////////////////////////////////////////////////////
 //                              Printf implementation
 ////////////////////////////////////////////////////////////////////////////////
 // Code adapted from 43oh.com forums
-
-static void UartPutC(uint8_t data)
-{
-#ifdef NON_BLOCKING_UART_TX
-    UartTxBufferEnqueue(data);
-#else
-    while (!(IFG2 & UCA0TXIFG));    // TX buffer ready?
-    UCA0TXBUF = data;
-#endif
-}
-
-static void UartPutS(uint8_t *s)
-{
-    while(*s)
-    {
-        UartPutC(*s++);
-    }
-}
-
+/** @brief decimal value lookup table */
 static const uint32_t decimal_table[] =
 {
     1000000000, // +0
@@ -261,8 +240,11 @@ static const uint32_t decimal_table[] =
 };
 
 #define hex(m) char_table[m & 0x0F]
-const uint8_t char_table[] = "0123456789ABCDEF";
 
+/** @brief character lookup table */
+static const uint8_t char_table[] = "0123456789ABCDEF";
+
+/** @brief hex value lookup table */
 static const uint32_t hex_table[] =
 {
     0x10000000,
@@ -277,7 +259,7 @@ static const uint32_t hex_table[] =
 };
 
 
-static void UartPutIToA(uint32_t value, enum NUMBER_BASE base)
+void UartPutIToA(uint32_t value, enum NUMBER_BASE base)
 {
     uint32_t position = 0;
     uint8_t index = 0;
@@ -304,6 +286,9 @@ static void UartPutIToA(uint32_t value, enum NUMBER_BASE base)
     } while(position > 1);
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//                              Public interface
+////////////////////////////////////////////////////////////////////////////////
 void UartPrintf(uint8_t *format, ...)
 {
     uint8_t current_char;
@@ -341,6 +326,8 @@ void UartPrintf(uint8_t *format, ...)
                             }
                             UartPutIToA(current_long_int, DECIMAL);
                             break;
+                        default:
+                            goto bad_fmt;
                     }
                     break;
                 case 'd':   // 16 bit signed
@@ -375,3 +362,64 @@ bad_fmt:
     }
     va_end(arg_list);
 }
+
+uint8_t UartRead(uint8_t *in, uint16_t len)
+{
+#ifdef NON_BLOCKING_UART_RX
+    return RxBufferDequeue(in, len);
+#else
+    in[0] = UartGetC();
+    return (1);
+#endif
+}
+
+void UartWrite(uint8_t *in, uint16_t len)
+{
+    uint8_t i = 0;
+    for(i = 0;i < len;i++)
+    {
+#ifdef NON_BLOCKING_UART_TX
+        TxBufferEnqueue(in[i]);
+#else
+        UartPutC(in[i]);
+#endif
+    }
+}
+
+uint8_t UartGetC(void)
+{
+#ifdef NON_BLOCKING_UART_RX
+    uint8_t buf = 0;
+    RxBufferDequeue(&buf,1);
+    return buf;
+#else
+    while (!(IFG2 & UCA0RXIFG));    // RX a byte?
+    return UCA0RXBUF;
+#endif
+
+}
+
+void UartPutC(uint8_t data)
+{
+#ifdef NON_BLOCKING_UART_TX
+    TxBufferEnqueue(data);
+#else
+    while (!(IFG2 & UCA0TXIFG));    // TX buffer ready?
+    UCA0TXBUF = data;
+#endif
+}
+
+void UartPutS(uint8_t *s)
+{
+    while(*s)
+    {
+        UartPutC(*s++);
+    }
+}
+
+#ifdef NON_BLOCKING_UART_RX
+uint8_t UartBufEmpty(void)
+{
+    return !(rx_size);
+}
+#endif

@@ -35,11 +35,7 @@
 #define GREEN_LED_TOGGLE()  IO_SET(GREEN_LED,TOGGLE);
 
 // PWM
-#ifdef __MSP430G2553__
 #define NUM_PWM_CHANNELS    2
-#else
-#define NUM_PWM_CHANNELS    1
-#endif
 
 #define PWM_0_PORT          1
 #define PWM_0_PIN           2
@@ -49,14 +45,10 @@
 
 // interrupt config
 #define NUM_P1_INTS         8
-#ifdef __MSP430G2553__
 #define NUM_P2_INTS         6
-#endif
 
 // I2C
 #define I2C_ADDRESS         0x0F
-#define I2C_CLOCK_RATE      400000
-#define I2C_CLOCK_DIV       (CLOCK_DCO / I2C_CLOCK_RATE)
 
 #define I2C_DAT_PORT        1
 #define I2C_DAT_PIN         7
@@ -73,7 +65,7 @@
 //#define NON_BLOCKING_UART_TX
 //#define NON_BLOCKING_UART_RX
 #define MAX_UART_RX_BUF_CNT 20
-#define MAX_UART_TX_BUF_CNT 20
+#define MAX_UART_TX_BUF_CNT 200
 
 #define UART_TX_PORT        1
 #define UART_TX_PIN         1

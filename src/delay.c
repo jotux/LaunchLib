@@ -1,3 +1,8 @@
+/** 
+@file delay.c
+@brief Simple delay using global timer
+@author Joe Brown
+*/
 #include "global.h"
 #include "delay.h"
 #include "schedule.h"

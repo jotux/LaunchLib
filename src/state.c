@@ -1,20 +1,30 @@
+/**
+@file state.c
+@brief Simple state machine handler
+@author Joe Brown
+*/
 #include "global.h"
 #include "hardware.h"
 #include "state.h"
 
-// A pointer to the transition table along with a size is saved locally
+/** @brief A pointer to the transition table */
 static Transition* transition_table;
+/** @brief The size of the transrition table */
 static uint8_t transition_table_size;
 
 // The event queue is a FIFO implemented as a circular buffer
-static uint8_t index = 0;
-static uint8_t size  = 0;
+/** @brief beginning index of the circular buffer holding events */
+static uint8_t start;
+/** @brief number of events in the circular event buffer */
+static uint8_t size;
+/** @brief published events are stored here */
 static uint8_t queue[MAX_EVENT_NUM];
 
-// enum default events local to this module so we can pass them out
-enum {DEFAULT_EVENTS};
 
-// An event transition variable is kept to handle EXIT/ENTER event indication.
+/** @brief event queue (published events are stored here) */
+enum LocalDefaults {DEFAULT_EVENTS};
+
+/** @brief indicator kept to store EXIT/ENTER events */
 static uint8_t transition_event = IDLE;
 
 void StateMachineInit(Transition *state_transitions, uint8_t t_size)
@@ -24,10 +34,10 @@ void StateMachineInit(Transition *state_transitions, uint8_t t_size)
     // save it's size so we can search it
     transition_table_size = (t_size / sizeof(Transition));
     // enqueue an enter event to start the idle state
-    EnqueueEvent(ENTER);
+    StateMachinePublishEvent(ENTER);
 }
 
-static uint8_t CheckEventQueue(State state)
+uint8_t CheckEventQueue(State state)
 {
     uint8_t ret_event = IDLE;
 
@@ -63,19 +73,19 @@ static uint8_t CheckEventQueue(State state)
     return ret_event;
 }
 
-static uint8_t QueuePeek(void)
+uint8_t QueuePeek(void)
 {
-    return size ? queue[index] : IDLE;
+    return size ? queue[start] : IDLE;
 }
 
-int8_t EnqueueEvent(uint8_t event)
+int8_t StateMachinePublishEvent(uint8_t event)
 {
     int8_t ret = -1;
     // event queue full?
     if (size < MAX_EVENT_NUM)
     {
         // add event to queue
-        queue[((index + size) == MAX_EVENT_NUM) ? 0 : (index + size)] = event;
+        queue[((start + size) == MAX_EVENT_NUM) ? 0 : (start + size)] = event;
         // adjust the size
         size++;
         // return success
@@ -84,23 +94,23 @@ int8_t EnqueueEvent(uint8_t event)
     return ret;
 }
 
-static uint8_t DequeueEvent(void)
+uint8_t DequeueEvent(void)
 {
     int8_t ret = IDLE;
     // are there any events?
     if (size)
     {
         // save the value we will return
-        ret = queue[index];
-        // adjust the index
-        index = (index == (MAX_EVENT_NUM - 1)) ? 0 : (index + 1);
+        ret = queue[start];
+        // adjust the start
+        start = (start == (MAX_EVENT_NUM - 1)) ? 0 : (start + 1);
         // adjust the size
         size--;
     }
     return ret;
 }
 
-static State LookupTransition(State state, uint8_t event)
+State LookupTransition(State state, uint8_t event)
 {
     uint8_t i = 0;
     State ret_state = state;
@@ -108,7 +118,7 @@ static State LookupTransition(State state, uint8_t event)
     if (event > EXIT)
     {
         // if event is a new event find the transition
-        for(i = 0; i < transition_table_size;i++)
+        for(i = 0;i < transition_table_size;i++)
         {
             if (transition_table[i].current_state == state &&
                 transition_table[i].event_code    == event)
@@ -121,7 +131,7 @@ static State LookupTransition(State state, uint8_t event)
     return ret_state;
 }
 
-void StateRun(State* state)
+void StateMachineRun(State* state)
 {
     // get the next event
     uint8_t event = CheckEventQueue(*state);

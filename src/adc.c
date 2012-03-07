@@ -1,3 +1,8 @@
+/** 
+@file adc.c
+@brief Analog-to-digital conversion
+@author Joe Brown
+*/
 #include "global.h"
 #include "adc.h"
 

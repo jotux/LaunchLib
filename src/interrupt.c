@@ -1,16 +1,21 @@
+/** 
+@file interrupt.c
+@brief GPIO interrupt handler
+@author Joe Brown
+*/
 #include "global.h"
 #include "interrupt.h"
 #include "hardware.h"
 
+/** @brief table of function pointers attached to port1 GPIO pins*/
 static InterruptFn p1_int_table[NUM_P1_INTS];
-#ifdef __MSP430G2553__
+/** @brief table of function pointers attached to port2 GPIO pins*/
 static InterruptFn p2_int_table[NUM_P2_INTS];
-#endif
 
 // Note: functions called from GPIO interrupts have no access to timer-based
 // facilities (like the global "now" variable used for timing). The current
 // Delay() implementation will also not work as it relies on timers.
-void AttachInterrupt(uint8_t port, uint8_t pin, InterruptFn func, enum IoEdge type)
+void InterruptAttach(uint8_t port, uint8_t pin, InterruptFn func, enum IoEdge type)
 {
     switch (port)
     {
@@ -27,7 +32,6 @@ void AttachInterrupt(uint8_t port, uint8_t pin, InterruptFn func, enum IoEdge ty
                 P1IES &= ~_BV(pin);
             }
             break;
-#ifdef __MSP430G2553__
         case 2:
             p2_int_table[pin] = func;
             P2IFG &= ~_BV(pin);
@@ -41,13 +45,12 @@ void AttachInterrupt(uint8_t port, uint8_t pin, InterruptFn func, enum IoEdge ty
                 P2IES &= ~_BV(pin);
             }
             break;
-#endif
         default:
             break;
     }
 }
 
-void DetachInterrupt(uint8_t port, uint8_t pin)
+void InterruptDetach(uint8_t port, uint8_t pin)
 {
     switch (port)
     {
@@ -56,13 +59,11 @@ void DetachInterrupt(uint8_t port, uint8_t pin)
             P1IE  &= ~_BV(pin);         // interrupt disabled
             P1IFG &= ~_BV(pin);         // clear the flag
             break;
-#ifdef __MSP430G2553__
         case 2:
             p2_int_table[pin] = NULL;
             P2IE  &=  ~_BV(pin);
             P2IFG &= ~_BV(pin);
             break;
-#endif
         default:
             break;
     }
@@ -87,7 +88,6 @@ __interrupt void Port1(void)
     _EINT();
 }
 
-#ifdef __MSP430G2553__
 #pragma vector = PORT2_VECTOR
 __interrupt void Port2(void)
 {
@@ -103,4 +103,3 @@ __interrupt void Port2(void)
     }
     _EINT();
 }
-#endif

@@ -1,3 +1,8 @@
+/** 
+@file schedule.c
+@brief Generic scheduling mechanisms
+@author Joe Brown
+*/
 #include "global.h"
 #include "schedule.h"
 #include "hardware.h"
@@ -5,36 +10,38 @@
 // global time
 volatile uint32_t now = 0;
 
+/** @brief number of registered callouts*/
 static uint8_t event_count = 0;
-static ScheduledEvent callback_store[MAX_CALLBACK_CNT];
+/** @brief configured callback list*/
+static CallbackEvent callback_store[MAX_CALLBACK_CNT];
 
-static uint8_t callout_map;
+/** @brief bit array represending occupied or vacant callouts*/
+static uint8_t callout_map = 0;
+/** @brief Array of function callouts. If a callout is enabled it will have a
+function pointer stored and if it is disabled the pointer will be replaced
+with a null*/
 static CalloutEvent callout_store[MAX_CALLOUT_CNT];
 
 void ScheduleTimerInit(void)
 {
-#ifdef __MSP430G2553__
     WDTCTL = WDT_MDLY_8;  // interval = 500us @ 16Mhz
-#else
-    WDTCTL = WDT_MDLY_0_5; // interval = 500us @ 1Mhz
-#endif
     IE1 |= WDTIE;         // Enable WDT interrupt
 }
 
-void CallbackRegister(CallbackFn callback_function, uint32_t run_time)
+void CallbackRegister(CallbackFn func, uint32_t run_time)
 {
     if (event_count < sizeof(callback_store)/sizeof(CallbackFn))
     {
         // Callbacks are initialized disabled
         callback_store[event_count].enabled       = FALSE;
-        callback_store[event_count].func          = callback_function;
+        callback_store[event_count].func          = func;
         callback_store[event_count].run_time      = run_time - 1;
         callback_store[event_count].next_run_time = now + run_time;
         event_count++;
     }
 }
 
-static void CallbackService(uint32_t current_time)
+void CallbackService(uint32_t current_time)
 {
     uint8_t i = 0;
     for (i = 0;i < event_count;i++)
@@ -93,7 +100,22 @@ int8_t CalloutRegister(CalloutFn func, uint32_t run_time)
     return ret;
 }
 
-static uint8_t get_callout_map_size(void)
+void CalloutCancel(CalloutFn func)
+{
+    uint8_t i = 0;
+    for (i = 0;i < MAX_CALLOUT_CNT;i++)
+    {
+        // find the slot
+        if (callout_store[i].func == func)
+        {
+            // clear
+            callout_map &= ~_BV(i);
+            break;
+        }
+    }
+}
+
+uint8_t get_callout_map_size(void)
 {
     uint8_t sum = 0;
     uint8_t map = callout_map;
@@ -104,7 +126,7 @@ static uint8_t get_callout_map_size(void)
     return sum;
 }
 
-static void CalloutService(uint32_t current_time)
+void CalloutService(uint32_t current_time)
 {
     uint8_t i = 0;
     for (i = 0;i < MAX_CALLOUT_CNT;i++)
