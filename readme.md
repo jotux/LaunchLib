@@ -1,4 +1,4 @@
-##An easy-to-use library to help kickstart your launchpad development.
+y##An easy-to-use library to help kickstart your launchpad development.
 ![Pew Pew Pew](http://jotux.github.com/LaunchLib/logo.png)
 
 ### MSP430G2553 currently required to use all functionality.
@@ -32,7 +32,7 @@
    - Built-in compact printf functionality
 
 ##Examples
-  - To run examples copy the example file to the top level director and rename it to main.c.
+  - To run examples copy the example file to the top level directory and rename it to main.c.
  
 ##TODO
  - I<sup>2</sup>C
