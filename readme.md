@@ -1,5 +1,9 @@
-##A simple library for general peripheral control of MSP430 Launchpad populated with MSP430G2553.
+##An easy-to-use library to help kickstart your launchpad development.
+![Pew Pew Pew](http://jotux.github.com/LaunchLib/logo.png)
 
+### MSP430G2553 currently required to use all functionality.
+
+##Docs can be found [here](http://jotux.github.com/LaunchLib/docs/index.html)
 ##Current Features:
 ### - Scheduling mechanism
   - driven from 2ms watchdog timer
@@ -26,9 +30,12 @@
 ### - Uart
    - Selectable blocking/non-blocking RX/TX
    - Built-in compact printf functionality
+
+##Examples
+  - To run examples copy the example file to the top level director and rename it to main.c.
  
 ##TODO
- - I2C
+ - I<sup>2</sup>C
  - SPI
 
 Code compatible with CCS and IAR.
