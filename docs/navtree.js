@@ -1,6 +1,9 @@
 var NAVTREE =
 [
   [ "LaunchLib", "index.html", [
+    [ "Related Pages", "pages.html", [
+      [ "Todo List", "todo.html", null ]
+    ] ],
     [ "Data Structures", "annotated.html", [
       [ "BaudRateConfig", "struct_baud_rate_config.html", null ],
       [ "CallbackEvent", "struct_callback_event.html", null ],
@@ -13,6 +16,7 @@ var NAVTREE =
     [ "File List", "files.html", [
       [ "adc.c", "adc_8c.html", null ],
       [ "adc.h", "adc_8h.html", null ],
+      [ "clock.h", "clock_8h.html", null ],
       [ "delay.c", "delay_8c.html", null ],
       [ "delay.h", "delay_8h.html", null ],
       [ "global.h", "global_8h.html", null ],

@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
@@ -145,12 +146,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="adc_8h.html#a3416b39e4841b9e27bb2e8e490cecf5b">adc.h</a>
 </li>
 <li>AdcInit()
-: <a class="el" href="adc_8h.html#aab97a8c2dfad0bcdb3d7a601dd189967">adc.h</a>
-, <a class="el" href="adc_8c.html#aab97a8c2dfad0bcdb3d7a601dd189967">adc.c</a>
+: <a class="el" href="adc_8c.html#a5ac508fc2087ee41c1458b98f0f4e475">adc.c</a>
+, <a class="el" href="adc_8h.html#a5ac508fc2087ee41c1458b98f0f4e475">adc.h</a>
 </li>
 <li>AdcRead()
 : <a class="el" href="adc_8c.html#ae38573006cc3c71375ad49d88a43ac2c">adc.c</a>
 , <a class="el" href="adc_8h.html#ae38573006cc3c71375ad49d88a43ac2c">adc.h</a>
+</li>
+<li>ATTACH_CASE
+: <a class="el" href="interrupt_8c.html#aec04df2d952793de2489346cc67159d8">interrupt.c</a>
 </li>
 </ul>
 
@@ -178,8 +182,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="schedule_8h.html#a1c02760ad032ffd6ebc2b0a01d474f0d">schedule.h</a>
 </li>
 <li>CalloutRegister()
-: <a class="el" href="schedule_8c.html#ac7515403c92ea393f971b6688aa5b87b">schedule.c</a>
-, <a class="el" href="schedule_8h.html#ac7515403c92ea393f971b6688aa5b87b">schedule.h</a>
+: <a class="el" href="schedule_8h.html#ac7515403c92ea393f971b6688aa5b87b">schedule.h</a>
+, <a class="el" href="schedule_8c.html#ac7515403c92ea393f971b6688aa5b87b">schedule.c</a>
 </li>
 <li>CalloutService()
 : <a class="el" href="schedule_8c.html#a69a9c59f9d987a53d8b418c851373bb9">schedule.c</a>
@@ -195,6 +199,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>CLOCK_EXT
 : <a class="el" href="hardware_8h.html#a1a82366ed2e45cc92570203685cd9caf">hardware.h</a>
+</li>
+<li>ClockConfig()
+: <a class="el" href="clock_8h.html#afa002073487babf6a0336e5aa9a9f624">clock.h</a>
 </li>
 <li>CLR_BIT
 : <a class="el" href="global_8h.html#a50ef806053a11c75cd2570f58e742de4">global.h</a>
@@ -215,6 +222,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>DequeueEvent()
 : <a class="el" href="state_8c.html#a49030034414372bdab6cf8e469be38fe">state.c</a>
+</li>
+<li>DETACH_CASE
+: <a class="el" href="interrupt_8c.html#a9ca78782700f80b4ebb6476ebbaf0900">interrupt.c</a>
 </li>
 <li>DISABLED
 : <a class="el" href="global_8h.html#aace9e950edab699a0fa0e281503ee4daa40f39385238042f6ec0cbac821a19fc4">global.h</a>
@@ -249,21 +259,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>get_callout_map_size()
 : <a class="el" href="schedule_8c.html#aff0bd22b0eece12f7fc20a6516712f66">schedule.c</a>
 </li>
-<li>GREEN_LED_OFF
-: <a class="el" href="hardware_8h.html#a003fab2684ce160efc1eccc7df9997a8">hardware.h</a>
-</li>
-<li>GREEN_LED_ON
-: <a class="el" href="hardware_8h.html#aad1d460393cd8eb8359e3707de497a56">hardware.h</a>
-</li>
-<li>GREEN_LED_PIN
-: <a class="el" href="hardware_8h.html#a8131714b6d25634105b1122f222dca26">hardware.h</a>
-</li>
-<li>GREEN_LED_PORT
-: <a class="el" href="hardware_8h.html#a7a7e13c1844041c68db27ac80d987592">hardware.h</a>
-</li>
-<li>GREEN_LED_TOGGLE
-: <a class="el" href="hardware_8h.html#ae889e886f0c4e4810f19986d00161c0e">hardware.h</a>
-</li>
 </ul>
 
 
@@ -281,21 +276,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
-<li>I2C_ADDRESS
-: <a class="el" href="hardware_8h.html#a770f0c15acd838afca500d56b792c6b5">hardware.h</a>
-</li>
-<li>I2C_CLK_PIN
-: <a class="el" href="hardware_8h.html#a5d38feda605ac813a343415863a3d11b">hardware.h</a>
-</li>
-<li>I2C_CLK_PORT
-: <a class="el" href="hardware_8h.html#ab1fbc95dde0983eda972066096b9b772">hardware.h</a>
-</li>
-<li>I2C_DAT_PIN
-: <a class="el" href="hardware_8h.html#a652727afaefea3dd3681060d4994882b">hardware.h</a>
-</li>
-<li>I2C_DAT_PORT
-: <a class="el" href="hardware_8h.html#aa58384025be7c89fe1ee95190678aa45">hardware.h</a>
-</li>
 <li>IDLE
 : <a class="el" href="state_8c.html#a6e06d4f4914d3d22da439a47a8fa4675afd6a0e4343048b10646dd2976cc5ad18">state.c</a>
 </li>
@@ -321,6 +301,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>InterruptFn
 : <a class="el" href="interrupt_8h.html#a765ab02db2ed47b4ab85d918609d9974">interrupt.h</a>
+</li>
+<li>InterruptRunOnPort()
+: <a class="el" href="interrupt_8c.html#a3da3cee7c974de9f423e39145590ebe5">interrupt.c</a>
 </li>
 <li>IO
 : <a class="el" href="global_8h.html#a8022d1476b06f738a3f7637769369237aedd9974ef2207e0a03e0717dcb9e2269">global.h</a>
@@ -380,6 +363,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_l"></a>- l -</h3><ul>
+<li>LED_OFF
+: <a class="el" href="hardware_8h.html#a60818aa70b9dd98a051b5db95d6ae64a">hardware.h</a>
+</li>
+<li>LED_ON
+: <a class="el" href="hardware_8h.html#a172569ab1797c73bd3e69d9cbefa8f18">hardware.h</a>
+</li>
+<li>LED_TOGGLE
+: <a class="el" href="hardware_8h.html#a97684fd1f91f7f20577d0671ff706a84">hardware.h</a>
+</li>
 <li>LocalDefaults
 : <a class="el" href="state_8c.html#a6e06d4f4914d3d22da439a47a8fa4675">state.c</a>
 </li>
@@ -399,8 +391,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>MAX_CALLOUT_CNT
 : <a class="el" href="hardware_8h.html#a633e51fd220983033afe28f559b9243f">hardware.h</a>
 </li>
-<li>MAX_EVENT_NUM
-: <a class="el" href="hardware_8h.html#af29e264eca72320836bc5e71ea6b596b">hardware.h</a>
+<li>MAX_EVENT_CNT
+: <a class="el" href="hardware_8h.html#a4ca719fc38491bd0082e84b9e5dbe778">hardware.h</a>
 </li>
 <li>MAX_UART_RX_BUF_CNT
 : <a class="el" href="hardware_8h.html#a63e46c67d118f74da8f5cf4ea5092599">hardware.h</a>
@@ -412,18 +404,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_n"></a>- n -</h3><ul>
+<li>NON_BLOCKING_UART_RX
+: <a class="el" href="hardware_8h.html#acd1e0bb38a89747a30909b2dbdcead39">hardware.h</a>
+</li>
 <li>now
 : <a class="el" href="schedule_8c.html#a7446a6cae82b017d6e65871b3c805eb1">schedule.c</a>
 , <a class="el" href="schedule_8h.html#a7446a6cae82b017d6e65871b3c805eb1">schedule.h</a>
-</li>
-<li>NUM_P1_INTS
-: <a class="el" href="hardware_8h.html#aeafcf9fddd4a98dc8bc340730de2fd30">hardware.h</a>
-</li>
-<li>NUM_P2_INTS
-: <a class="el" href="hardware_8h.html#a9eb0f2cf56184647ba5718140208a09c">hardware.h</a>
-</li>
-<li>NUM_PWM_CHANNELS
-: <a class="el" href="hardware_8h.html#aa911e2dbc7cd820aad4976e29191c32a">hardware.h</a>
 </li>
 <li>NUMBER_BASE
 : <a class="el" href="uart_8h.html#a361986379210db4bedbdf16eb780a8c0">uart.h</a>
@@ -447,23 +433,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interrupt_8h.html#a635c67d4a49a7da65aecafcfb826d9b6">interrupt.h</a>
 , <a class="el" href="interrupt_8c.html#a635c67d4a49a7da65aecafcfb826d9b6">interrupt.c</a>
 </li>
+<li>PORT_CASE
+: <a class="el" href="interrupt_8c.html#a0056c30dd76c2af1029b78075cc82ef2">interrupt.c</a>
+</li>
 <li>PULL_DOWN
 : <a class="el" href="global_8h.html#a3a9eaeb4f9b102b16e0b7002621581aba0351276972489e49e38c22116a9b88be">global.h</a>
 </li>
 <li>PULL_UP
 : <a class="el" href="global_8h.html#a3a9eaeb4f9b102b16e0b7002621581aba6d031447a3a4f4a8bd019caae5a8eefd">global.h</a>
-</li>
-<li>PWM_0_PIN
-: <a class="el" href="hardware_8h.html#a6525c45f26350958565c1d9adbf8b25f">hardware.h</a>
-</li>
-<li>PWM_0_PORT
-: <a class="el" href="hardware_8h.html#ab189f501486fad91a63c500c2a19812d">hardware.h</a>
-</li>
-<li>PWM_1_PIN
-: <a class="el" href="hardware_8h.html#adb7905e09ae2b13668d7a61fff492ce1">hardware.h</a>
-</li>
-<li>PWM_1_PORT
-: <a class="el" href="hardware_8h.html#a55f212c3d5edb32283a16d1a5cc1179d">hardware.h</a>
 </li>
 <li>PwmInit()
 : <a class="el" href="pwm_8c.html#ab60d04617af55996eab515c3a73f39ef">pwm.c</a>
@@ -474,8 +451,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="pwm_8h.html#a39081d09530a640772f04056a4b073aa">pwm.h</a>
 </li>
 <li>PwmSetPeriod()
-: <a class="el" href="pwm_8h.html#a661bb96200343184e2e9c8f449b20d0b">pwm.h</a>
-, <a class="el" href="pwm_8c.html#a661bb96200343184e2e9c8f449b20d0b">pwm.c</a>
+: <a class="el" href="pwm_8c.html#a661bb96200343184e2e9c8f449b20d0b">pwm.c</a>
+, <a class="el" href="pwm_8h.html#a661bb96200343184e2e9c8f449b20d0b">pwm.h</a>
 </li>
 </ul>
 
@@ -488,23 +465,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
-<li>RED_LED_OFF
-: <a class="el" href="hardware_8h.html#a2cf40c0fd9c5724a06052ab02de7ae5e">hardware.h</a>
-</li>
-<li>RED_LED_ON
-: <a class="el" href="hardware_8h.html#a56abff74f243015a90e03db989a2235a">hardware.h</a>
-</li>
-<li>RED_LED_PIN
-: <a class="el" href="hardware_8h.html#ab16f55d54417647f44dca8b11d988f02">hardware.h</a>
-</li>
-<li>RED_LED_PORT
-: <a class="el" href="hardware_8h.html#a8847973f9ad81a2c2c4e09ef244191c4">hardware.h</a>
-</li>
-<li>RED_LED_TOGGLE
-: <a class="el" href="hardware_8h.html#ac9fa214a95690722bc98bcfed1ab0f1a">hardware.h</a>
-</li>
 <li>RISING_EDGE
 : <a class="el" href="global_8h.html#a9310ad1f83a1ab633ed64ab199fd8603a86445853271053ed37f404b9ca4fa434">global.h</a>
+</li>
+<li>RxBufferDequeue()
+: <a class="el" href="uart_8c.html#a9e8df6c118f41ae2a77b8bdafa1d4dfa">uart.c</a>
+</li>
+<li>RxBufferEnqueue()
+: <a class="el" href="uart_8c.html#abf0bcd299654dc45edff357876635f14">uart.c</a>
 </li>
 </ul>
 
@@ -523,9 +491,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>SET_BIT
 : <a class="el" href="global_8h.html#a62af7cb8bfabd5a9f6ea45582e08843b">global.h</a>
-</li>
-<li>SET_CLOCK
-: <a class="el" href="global_8h.html#a3dbf287f18c78e45b3d765cdb66c9ee2">global.h</a>
 </li>
 <li>SPECIAL
 : <a class="el" href="global_8h.html#a8022d1476b06f738a3f7637769369237aaa5259d84d06214a7b0503d636790465">global.h</a>
@@ -548,16 +513,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="state_8c.html#a940f2f18dae4f0f2c0fca4a02444c3d9">state.c</a>
 , <a class="el" href="state_8h.html#a940f2f18dae4f0f2c0fca4a02444c3d9">state.h</a>
 </li>
-<li>SW1_PIN
-: <a class="el" href="hardware_8h.html#a3b206753e7f7b2e482816b53c6b8600c">hardware.h</a>
-</li>
-<li>SW1_PORT
-: <a class="el" href="hardware_8h.html#ab8e25427647939c5e1d5db170d2e585a">hardware.h</a>
-</li>
 </ul>
 
 
 <h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
+<li>TA_INIT_CASE
+: <a class="el" href="pwm_8c.html#a7599ec0c84869189f856123f23cf6c6f">pwm.c</a>
+</li>
+<li>TACCR0_CASE
+: <a class="el" href="pwm_8c.html#aee33147a1368956eb379ddf6b4ec0a7b">pwm.c</a>
+</li>
+<li>TACCR1_CASE
+: <a class="el" href="pwm_8c.html#ae678eeafe55e94967235bfe18a38dde3">pwm.c</a>
+</li>
 <li>TOG_BIT
 : <a class="el" href="global_8h.html#ad6d89aeec3157e9422d92480d4bd9343">global.h</a>
 </li>
@@ -571,32 +539,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
-<li>UART_RX_PIN
-: <a class="el" href="hardware_8h.html#aa37eca6fe61f6938d925975dff27c8fd">hardware.h</a>
-</li>
-<li>UART_RX_PORT
-: <a class="el" href="hardware_8h.html#a151b6aa11aa5aad16c7468122af3b3a3">hardware.h</a>
-</li>
-<li>UART_TX_PIN
-: <a class="el" href="hardware_8h.html#a6c82a6844388a551e8f06d249598989e">hardware.h</a>
-</li>
-<li>UART_TX_PORT
-: <a class="el" href="hardware_8h.html#a8b2ea1898f38cfe1f20ca4e2e155e2bd">hardware.h</a>
-</li>
 <li>UartBufEmpty()
-: <a class="el" href="uart_8h.html#af6888b94959a921ae8ff29952df28462">uart.h</a>
+: <a class="el" href="uart_8c.html#af6888b94959a921ae8ff29952df28462">uart.c</a>
+, <a class="el" href="uart_8h.html#af6888b94959a921ae8ff29952df28462">uart.h</a>
 </li>
 <li>UartGetC()
-: <a class="el" href="uart_8c.html#af40579990e2a31d25a57dc24f2f048dd">uart.c</a>
-, <a class="el" href="uart_8h.html#af40579990e2a31d25a57dc24f2f048dd">uart.h</a>
+: <a class="el" href="uart_8h.html#af40579990e2a31d25a57dc24f2f048dd">uart.h</a>
+, <a class="el" href="uart_8c.html#af40579990e2a31d25a57dc24f2f048dd">uart.c</a>
 </li>
 <li>UartInit()
 : <a class="el" href="uart_8c.html#a845320ee4b3a5233eef0ecc496803361">uart.c</a>
 , <a class="el" href="uart_8h.html#a845320ee4b3a5233eef0ecc496803361">uart.h</a>
 </li>
 <li>UartPrintf()
-: <a class="el" href="uart_8c.html#a5d1403cfde04c92b8accf2a99daa850e">uart.c</a>
-, <a class="el" href="uart_8h.html#a5d1403cfde04c92b8accf2a99daa850e">uart.h</a>
+: <a class="el" href="uart_8h.html#a5d1403cfde04c92b8accf2a99daa850e">uart.h</a>
+, <a class="el" href="uart_8c.html#a5d1403cfde04c92b8accf2a99daa850e">uart.c</a>
 </li>
 <li>UartPutC()
 : <a class="el" href="uart_8c.html#af7b647a92a39dbbc1e4db990a51d1b5f">uart.c</a>
@@ -606,12 +563,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="uart_8c.html#a86ba3f4bf17f71004694a266847bf661">uart.c</a>
 </li>
 <li>UartPutS()
-: <a class="el" href="uart_8h.html#ad49030c86f6964b5589c7248c7536917">uart.h</a>
-, <a class="el" href="uart_8c.html#ad49030c86f6964b5589c7248c7536917">uart.c</a>
+: <a class="el" href="uart_8c.html#ad49030c86f6964b5589c7248c7536917">uart.c</a>
+, <a class="el" href="uart_8h.html#ad49030c86f6964b5589c7248c7536917">uart.h</a>
 </li>
 <li>UartRead()
-: <a class="el" href="uart_8c.html#a2f66e34777bf9859318aaeb076d3dcf9">uart.c</a>
-, <a class="el" href="uart_8h.html#a2f66e34777bf9859318aaeb076d3dcf9">uart.h</a>
+: <a class="el" href="uart_8h.html#a2f66e34777bf9859318aaeb076d3dcf9">uart.h</a>
+, <a class="el" href="uart_8c.html#a2f66e34777bf9859318aaeb076d3dcf9">uart.c</a>
 </li>
 <li>UartRxInt()
 : <a class="el" href="uart_8h.html#a8814d60848cbd78b3615cfcc681cf896">uart.h</a>
@@ -623,9 +580,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="uart_8c.html#ac73e0a24fb3a76b33f178608b1961cbc">uart.c</a>
 , <a class="el" href="uart_8h.html#ac73e0a24fb3a76b33f178608b1961cbc">uart.h</a>
 </li>
-<li>UCBRS_OFFSET
-: <a class="el" href="uart_8h.html#af2ed13448b75b5c273523a1bd4980fab">uart.h</a>
-</li>
 <li>uint16_t
 : <a class="el" href="global_8h.html#adf4d876453337156dde61095e1f20223">global.h</a>
 </li>
@@ -634,9 +588,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>uint8_t
 : <a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">global.h</a>
-</li>
-<li>USBRF_OFFSET
-: <a class="el" href="uart_8h.html#a3b372b024deb6cafa3065bac4e243e80">uart.h</a>
 </li>
 </ul>
 
@@ -650,7 +601,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="footer">Generated on Tue Mar 6 2012 22:38:40 for LaunchLib by&#160;
+      <li class="footer">Generated on Wed Mar 7 2012 23:14:24 for LaunchLib by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

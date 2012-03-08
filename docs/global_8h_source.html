@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
@@ -101,156 +102,176 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00021"></a><a class="code" href="global_8h.html#a50ef806053a11c75cd2570f58e742de4">00021</a> <span class="preprocessor"></span><span class="preprocessor">#define CLR_BIT(reg,bit)    ((reg)&amp;=~_BV(bit))</span>
 <a name="l00022"></a><a class="code" href="global_8h.html#ad6d89aeec3157e9422d92480d4bd9343">00022</a> <span class="preprocessor"></span><span class="preprocessor">#define TOG_BIT(reg,bit)    ((reg)^= _BV(bit))</span>
 <a name="l00023"></a><a class="code" href="global_8h.html#a1e05505dd9b781e521fdf52525e2307c">00023</a> <span class="preprocessor"></span><span class="preprocessor">#define WD_STOP()           (WDTCTL = WDTPW + WDTHOLD)</span>
-<a name="l00024"></a><a class="code" href="global_8h.html#a3dbf287f18c78e45b3d765cdb66c9ee2">00024</a> <span class="preprocessor"></span><span class="preprocessor">#define SET_CLOCK(N)        BCSCTL1 = CALBC1_##N##MHZ; \</span>
-<a name="l00025"></a>00025 <span class="preprocessor">                            DCOCTL  = CALDCO_##N##MHZ;</span>
-<a name="l00026"></a>00026 <span class="preprocessor"></span>
-<a name="l00027"></a>00027 <span class="comment">//types</span>
-<a name="l00028"></a><a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">00028</a> <span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>       <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a>;
-<a name="l00029"></a><a class="code" href="global_8h.html#aef44329758059c91c76d334e8fc09700">00029</a> <span class="keyword">typedef</span> <span class="keywordtype">signed</span> <span class="keywordtype">char</span>         <a class="code" href="global_8h.html#aef44329758059c91c76d334e8fc09700">int8_t</a>;
-<a name="l00030"></a><a class="code" href="global_8h.html#adf4d876453337156dde61095e1f20223">00030</a> <span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span>  <a class="code" href="global_8h.html#adf4d876453337156dde61095e1f20223">uint16_t</a>;
-<a name="l00031"></a><a class="code" href="global_8h.html#aa5ad9bec438b7cf669efb1ca064e79f5">00031</a> <span class="keyword">typedef</span> <span class="keywordtype">signed</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span>    <a class="code" href="global_8h.html#aa5ad9bec438b7cf669efb1ca064e79f5">int16_t</a>;
-<a name="l00032"></a><a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">00032</a> <span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span>   <a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a>;
-<a name="l00033"></a><a class="code" href="global_8h.html#adb828ef50c2dbb783109824e94cf6c47">00033</a> <span class="keyword">typedef</span> <span class="keywordtype">signed</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span>     <a class="code" href="global_8h.html#adb828ef50c2dbb783109824e94cf6c47">int32_t</a>;
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035 <span class="comment">//macros for IO config (with preprocessor abuse)</span>
-<a name="l00036"></a><a class="code" href="global_8h.html#a2e8173b720a3eed301262ae808ee976d">00036</a> <span class="preprocessor">#define st(x) do{x} while(__LINE__ == -1)</span>
-<a name="l00037"></a>00037 <span class="preprocessor"></span>
-<a name="l00038"></a><a class="code" href="global_8h.html#a8936995a6e57593bcaeb4bc6ad2c7cc0a2ab08d3e103968f5f4f26b66a52e99d6">00038</a> <span class="keyword">enum</span> <a class="code" href="global_8h.html#a8936995a6e57593bcaeb4bc6ad2c7cc0">IoDirection</a> {<a class="code" href="global_8h.html#a8936995a6e57593bcaeb4bc6ad2c7cc0ae310c909d76b003d016bef8bdf16936a">INPUT</a> = 0, <a class="code" href="global_8h.html#a8936995a6e57593bcaeb4bc6ad2c7cc0a2ab08d3e103968f5f4f26b66a52e99d6">OUTPUT</a> = 1};
-<a name="l00040"></a><a class="code" href="global_8h.html#a28634c27f6e177383bf608011717b5dd">00040</a> <span class="preprocessor">#define IO_DIRECTION(name,dir)          _IO_DIRECTION(name##_PORT,name##_PIN,dir)</span>
-<a name="l00041"></a>00041 <span class="preprocessor"></span>
-<a name="l00042"></a>00042 <span class="preprocessor">#define _IO_DIRECTION(port,pin,dir)     st(__IO_DIRECTION(port,pin,dir);)</span>
-<a name="l00043"></a>00043 <span class="preprocessor"></span><span class="preprocessor">#define __IO_DIRECTION(port,pin,dir)    if (dir)\</span>
-<a name="l00044"></a>00044 <span class="preprocessor">                                        {\</span>
-<a name="l00045"></a>00045 <span class="preprocessor">                                            st((P##port##DIR |= _BV(pin)););\</span>
-<a name="l00046"></a>00046 <span class="preprocessor">                                        }\</span>
-<a name="l00047"></a>00047 <span class="preprocessor">                                        else\</span>
-<a name="l00048"></a>00048 <span class="preprocessor">                                        {\</span>
-<a name="l00049"></a>00049 <span class="preprocessor">                                            st((P##port##DIR &amp;= ~_BV(pin)););\</span>
-<a name="l00050"></a>00050 <span class="preprocessor">                                        }</span>
-<a name="l00051"></a>00051 <span class="preprocessor"></span>
-<a name="l00053"></a><a class="code" href="global_8h.html#a8022d1476b06f738a3f7637769369237aaa5259d84d06214a7b0503d636790465">00053</a> <span class="keyword">enum</span> <a class="code" href="global_8h.html#a8022d1476b06f738a3f7637769369237">IoFunction</a> {<a class="code" href="global_8h.html#a8022d1476b06f738a3f7637769369237aedd9974ef2207e0a03e0717dcb9e2269">IO</a> = 0, <a class="code" href="global_8h.html#a8022d1476b06f738a3f7637769369237aaa5259d84d06214a7b0503d636790465">SPECIAL</a> = 1};
-<a name="l00055"></a><a class="code" href="global_8h.html#ab79758b5fde6520f7fef836e5f9c8a15">00055</a> <span class="preprocessor">#define IO_FUNCTION(name,fun)           _IO_FUNCTION(name##_PORT,name##_PIN,fun)</span>
-<a name="l00056"></a>00056 <span class="preprocessor"></span>
-<a name="l00057"></a>00057 <span class="preprocessor">#define _IO_FUNCTION(port, pin,fun)     st(__IO_FUNCTION(port,pin,fun);)</span>
-<a name="l00058"></a>00058 <span class="preprocessor"></span><span class="preprocessor">#define __IO_FUNCTION(port, pin,fun)    if (fun)\</span>
-<a name="l00059"></a>00059 <span class="preprocessor">                                        {\</span>
-<a name="l00060"></a>00060 <span class="preprocessor">                                            st((P##port##SEL |= _BV(pin)););\</span>
-<a name="l00061"></a>00061 <span class="preprocessor">                                        }\</span>
-<a name="l00062"></a>00062 <span class="preprocessor">                                        else\</span>
-<a name="l00063"></a>00063 <span class="preprocessor">                                        {\</span>
-<a name="l00064"></a>00064 <span class="preprocessor">                                            st((P##port##SEL &amp;= ~_BV(pin)););\</span>
-<a name="l00065"></a>00065 <span class="preprocessor">                                        }</span>
-<a name="l00066"></a>00066 <span class="preprocessor"></span>
-<a name="l00070"></a><a class="code" href="global_8h.html#a1281eaa5684d0ed095ce56347b3c4040">00070</a> <span class="preprocessor">#define IO_AUX_FUNCTION(name,fun)        _IO_AUX_FUNCTION(name##_PORT,name##_PIN,fun)</span>
-<a name="l00071"></a>00071 <span class="preprocessor"></span>
-<a name="l00072"></a>00072 <span class="preprocessor">#define _IO_AUX_FUNCTION(port, pin,fun)  st(__IO_AUX_FUNCTION(port,pin,fun);)</span>
-<a name="l00073"></a>00073 <span class="preprocessor"></span><span class="preprocessor">#define __IO_AUX_FUNCTION(port, pin,fun) if (fun)\</span>
-<a name="l00074"></a>00074 <span class="preprocessor">                                         {\</span>
-<a name="l00075"></a>00075 <span class="preprocessor">                                             st((P##port##SEL2 |= _BV(pin)););\</span>
-<a name="l00076"></a>00076 <span class="preprocessor">                                         }\</span>
-<a name="l00077"></a>00077 <span class="preprocessor">                                         else\</span>
-<a name="l00078"></a>00078 <span class="preprocessor">                                         {\</span>
-<a name="l00079"></a>00079 <span class="preprocessor">                                             st((P##port##SEL2 &amp;= ~_BV(pin)););\</span>
-<a name="l00080"></a>00080 <span class="preprocessor">                                         }</span>
-<a name="l00081"></a>00081 <span class="preprocessor"></span>
-<a name="l00083"></a><a class="code" href="global_8h.html#aa236d4a5511350f67d843aefdffa85cfa4acfde02350139a12fcef53ff7289aa7">00083</a> <span class="keyword">enum</span> <a class="code" href="global_8h.html#aa236d4a5511350f67d843aefdffa85cf">IoState</a> {<a class="code" href="global_8h.html#aa236d4a5511350f67d843aefdffa85cfa6a226f4143ca3b18999551694cdb72a8">LOW</a> = 0, <a class="code" href="global_8h.html#aa236d4a5511350f67d843aefdffa85cfa0c3a1dacf94061154b3ee354359c5893">HIGH</a> = 1, <a class="code" href="global_8h.html#aa236d4a5511350f67d843aefdffa85cfa4acfde02350139a12fcef53ff7289aa7">TOGGLE</a> = 2};
-<a name="l00085"></a><a class="code" href="global_8h.html#ab281fb055cadccee525531fa7e552eda">00085</a> <span class="preprocessor">#define IO_SET(name,val)                _IO_SET(name##_PORT,name##_PIN,val)</span>
-<a name="l00086"></a>00086 <span class="preprocessor"></span>
-<a name="l00087"></a>00087 <span class="preprocessor">#define _IO_SET(port,pin,val)           st(__IO_SET(port,pin,val);)</span>
-<a name="l00088"></a>00088 <span class="preprocessor"></span><span class="preprocessor">#define __IO_SET(port,pin,val)          if (val == TOGGLE)\</span>
-<a name="l00089"></a>00089 <span class="preprocessor">                                        {\</span>
-<a name="l00090"></a>00090 <span class="preprocessor">                                            st((P##port##OUT ^= _BV(pin)););\</span>
-<a name="l00091"></a>00091 <span class="preprocessor">                                        }\</span>
-<a name="l00092"></a>00092 <span class="preprocessor">                                        else if (val == HIGH)\</span>
-<a name="l00093"></a>00093 <span class="preprocessor">                                        {\</span>
-<a name="l00094"></a>00094 <span class="preprocessor">                                            st((P##port##OUT |= _BV(pin)););\</span>
-<a name="l00095"></a>00095 <span class="preprocessor">                                        }\</span>
-<a name="l00096"></a>00096 <span class="preprocessor">                                        else\</span>
-<a name="l00097"></a>00097 <span class="preprocessor">                                        {\</span>
-<a name="l00098"></a>00098 <span class="preprocessor">                                            st((P##port##OUT &amp;= ~_BV(pin)););\</span>
-<a name="l00099"></a>00099 <span class="preprocessor">                                        }</span>
-<a name="l00100"></a>00100 <span class="preprocessor"></span>
-<a name="l00102"></a><a class="code" href="global_8h.html#aace9e950edab699a0fa0e281503ee4da">00102</a> <span class="keyword">enum</span> <a class="code" href="global_8h.html#aace9e950edab699a0fa0e281503ee4da">IoMode</a> {<a class="code" href="global_8h.html#aace9e950edab699a0fa0e281503ee4daa40f39385238042f6ec0cbac821a19fc4">DISABLED</a> = 0, <a class="code" href="global_8h.html#aace9e950edab699a0fa0e281503ee4daa99788d1f27bac42d0c7bac63026c5959">ENABLED</a> = 1};
-<a name="l00104"></a><a class="code" href="global_8h.html#a1c44ab11d225e8b1ff17eadc89297bb8">00104</a> <span class="preprocessor">#define IO_RESISTOR(name,ren)           _IO_RESISTOR(name##_PORT,name##_PIN,ren)</span>
-<a name="l00105"></a>00105 <span class="preprocessor"></span>
-<a name="l00106"></a>00106 <span class="preprocessor">#define _IO_RESISTOR(port,pin,ren)      st(__IO_RESISTOR(port,pin,ren);)</span>
-<a name="l00107"></a>00107 <span class="preprocessor"></span><span class="preprocessor">#define __IO_RESISTOR(port,pin,ren)     if (ren)\</span>
-<a name="l00108"></a>00108 <span class="preprocessor">                                        {\</span>
-<a name="l00109"></a>00109 <span class="preprocessor">                                            st((P##port##REN |= _BV(pin)););\</span>
-<a name="l00110"></a>00110 <span class="preprocessor">                                        }\</span>
-<a name="l00111"></a>00111 <span class="preprocessor">                                        else\</span>
-<a name="l00112"></a>00112 <span class="preprocessor">                                        {\</span>
-<a name="l00113"></a>00113 <span class="preprocessor">                                            st((P##port##REN &amp;= ~_BV(pin)););\</span>
-<a name="l00114"></a>00114 <span class="preprocessor">                                        }</span>
-<a name="l00115"></a>00115 <span class="preprocessor"></span>
-<a name="l00117"></a><a class="code" href="global_8h.html#a3a9eaeb4f9b102b16e0b7002621581aba6d031447a3a4f4a8bd019caae5a8eefd">00117</a> <span class="keyword">enum</span> <a class="code" href="global_8h.html#a3a9eaeb4f9b102b16e0b7002621581ab">IoResistorState</a> {<a class="code" href="global_8h.html#a3a9eaeb4f9b102b16e0b7002621581aba0351276972489e49e38c22116a9b88be">PULL_DOWN</a> = 0, <a class="code" href="global_8h.html#a3a9eaeb4f9b102b16e0b7002621581aba6d031447a3a4f4a8bd019caae5a8eefd">PULL_UP</a> = 1};
-<a name="l00118"></a>00118 <span class="comment">// Set pin as input before calling this macro</span>
-<a name="l00120"></a><a class="code" href="global_8h.html#ab5939c05cfd0af92aa0b1877517b76d4">00120</a> <span class="comment"></span><span class="preprocessor">#define IO_PULL(name,up)                IO_RESISTOR(name,ENABLED);\</span>
-<a name="l00121"></a>00121 <span class="preprocessor">                                        if (up)\</span>
-<a name="l00122"></a>00122 <span class="preprocessor">                                        {\</span>
-<a name="l00123"></a>00123 <span class="preprocessor">                                            IO_SET(name,HIGH);\</span>
-<a name="l00124"></a>00124 <span class="preprocessor">                                        }\</span>
-<a name="l00125"></a>00125 <span class="preprocessor">                                        else\</span>
-<a name="l00126"></a>00126 <span class="preprocessor">                                        {\</span>
-<a name="l00127"></a>00127 <span class="preprocessor">                                            IO_SET(name,LOW);\</span>
-<a name="l00128"></a>00128 <span class="preprocessor">                                        }</span>
-<a name="l00129"></a>00129 <span class="preprocessor"></span>
-<a name="l00131"></a><a class="code" href="global_8h.html#a202888a9ab5b474d03bea2771227d3a5">00131</a> <span class="preprocessor">#define IO_IN(name)                     _IO_IN(name##_PORT,name##_PIN)</span>
-<a name="l00132"></a>00132 <span class="preprocessor"></span>
-<a name="l00133"></a>00133 <span class="preprocessor">#define _IO_IN(port,pin)                __IO_IN(port,pin)</span>
-<a name="l00134"></a>00134 <span class="preprocessor"></span><span class="preprocessor">#define __IO_IN(port,pin)               !(P##port##IN &amp; _BV(pin))</span>
+<a name="l00024"></a>00024 <span class="preprocessor"></span>
+<a name="l00025"></a>00025 <span class="comment">//types</span>
+<a name="l00026"></a><a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">00026</a> <span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>       <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a>;
+<a name="l00027"></a><a class="code" href="global_8h.html#aef44329758059c91c76d334e8fc09700">00027</a> <span class="keyword">typedef</span> <span class="keywordtype">signed</span> <span class="keywordtype">char</span>         <a class="code" href="global_8h.html#aef44329758059c91c76d334e8fc09700">int8_t</a>;
+<a name="l00028"></a><a class="code" href="global_8h.html#adf4d876453337156dde61095e1f20223">00028</a> <span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span>  <a class="code" href="global_8h.html#adf4d876453337156dde61095e1f20223">uint16_t</a>;
+<a name="l00029"></a><a class="code" href="global_8h.html#aa5ad9bec438b7cf669efb1ca064e79f5">00029</a> <span class="keyword">typedef</span> <span class="keywordtype">signed</span> <span class="keywordtype">short</span> <span class="keywordtype">int</span>    <a class="code" href="global_8h.html#aa5ad9bec438b7cf669efb1ca064e79f5">int16_t</a>;
+<a name="l00030"></a><a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">00030</a> <span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span>   <a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a>;
+<a name="l00031"></a><a class="code" href="global_8h.html#adb828ef50c2dbb783109824e94cf6c47">00031</a> <span class="keyword">typedef</span> <span class="keywordtype">signed</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span>     <a class="code" href="global_8h.html#adb828ef50c2dbb783109824e94cf6c47">int32_t</a>;
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 <span class="comment">//macros for IO config (with preprocessor abuse)</span>
+<a name="l00034"></a><a class="code" href="global_8h.html#a2e8173b720a3eed301262ae808ee976d">00034</a> <span class="preprocessor">#define st(x) do{x} while(__LINE__ == -1)</span>
+<a name="l00035"></a>00035 <span class="preprocessor"></span>
+<a name="l00036"></a><a class="code" href="global_8h.html#a8936995a6e57593bcaeb4bc6ad2c7cc0a2ab08d3e103968f5f4f26b66a52e99d6">00036</a> <span class="keyword">enum</span> <a class="code" href="global_8h.html#a8936995a6e57593bcaeb4bc6ad2c7cc0">IoDirection</a> {<a class="code" href="global_8h.html#a8936995a6e57593bcaeb4bc6ad2c7cc0ae310c909d76b003d016bef8bdf16936a">INPUT</a> = 0, <a class="code" href="global_8h.html#a8936995a6e57593bcaeb4bc6ad2c7cc0a2ab08d3e103968f5f4f26b66a52e99d6">OUTPUT</a> = 1};
+<a name="l00038"></a><a class="code" href="global_8h.html#a28634c27f6e177383bf608011717b5dd">00038</a> <span class="preprocessor">#define IO_DIRECTION(name,dir)          _IO_DIRECTION(name##_PORT,name##_PIN,dir)</span>
+<a name="l00039"></a>00039 <span class="preprocessor"></span>
+<a name="l00040"></a>00040 <span class="preprocessor">#define _IO_DIRECTION(port,pin,dir)     st(__IO_DIRECTION(port,pin,dir);)</span>
+<a name="l00041"></a>00041 <span class="preprocessor"></span><span class="preprocessor">#define __IO_DIRECTION(port,pin,dir)    if (dir)\</span>
+<a name="l00042"></a>00042 <span class="preprocessor">                                        {\</span>
+<a name="l00043"></a>00043 <span class="preprocessor">                                            st((P##port##DIR |= _BV(pin)););\</span>
+<a name="l00044"></a>00044 <span class="preprocessor">                                        }\</span>
+<a name="l00045"></a>00045 <span class="preprocessor">                                        else\</span>
+<a name="l00046"></a>00046 <span class="preprocessor">                                        {\</span>
+<a name="l00047"></a>00047 <span class="preprocessor">                                            st((P##port##DIR &amp;= ~_BV(pin)););\</span>
+<a name="l00048"></a>00048 <span class="preprocessor">                                        }</span>
+<a name="l00049"></a>00049 <span class="preprocessor"></span>
+<a name="l00051"></a><a class="code" href="global_8h.html#a8022d1476b06f738a3f7637769369237aaa5259d84d06214a7b0503d636790465">00051</a> <span class="keyword">enum</span> <a class="code" href="global_8h.html#a8022d1476b06f738a3f7637769369237">IoFunction</a> {<a class="code" href="global_8h.html#a8022d1476b06f738a3f7637769369237aedd9974ef2207e0a03e0717dcb9e2269">IO</a> = 0, <a class="code" href="global_8h.html#a8022d1476b06f738a3f7637769369237aaa5259d84d06214a7b0503d636790465">SPECIAL</a> = 1};
+<a name="l00053"></a><a class="code" href="global_8h.html#ab79758b5fde6520f7fef836e5f9c8a15">00053</a> <span class="preprocessor">#define IO_FUNCTION(name,fun)           _IO_FUNCTION(name##_PORT,name##_PIN,fun)</span>
+<a name="l00054"></a>00054 <span class="preprocessor"></span>
+<a name="l00055"></a>00055 <span class="preprocessor">#define _IO_FUNCTION(port, pin,fun)     st(__IO_FUNCTION(port,pin,fun);)</span>
+<a name="l00056"></a>00056 <span class="preprocessor"></span><span class="preprocessor">#ifdef __MSP430G2553__</span>
+<a name="l00057"></a>00057 <span class="preprocessor"></span><span class="preprocessor">#define __IO_FUNCTION(port, pin,fun)    if (fun)\</span>
+<a name="l00058"></a>00058 <span class="preprocessor">                                        {\</span>
+<a name="l00059"></a>00059 <span class="preprocessor">                                            st((P##port##SEL |= _BV(pin)););\</span>
+<a name="l00060"></a>00060 <span class="preprocessor">                                        }\</span>
+<a name="l00061"></a>00061 <span class="preprocessor">                                        else\</span>
+<a name="l00062"></a>00062 <span class="preprocessor">                                        {\</span>
+<a name="l00063"></a>00063 <span class="preprocessor">                                            st((P##port##SEL &amp;= ~_BV(pin)););\</span>
+<a name="l00064"></a>00064 <span class="preprocessor">                                        }</span>
+<a name="l00065"></a>00065 <span class="preprocessor"></span><span class="preprocessor">#elif __MSP430FR5739__</span>
+<a name="l00066"></a>00066 <span class="preprocessor"></span><span class="preprocessor">#define __IO_FUNCTION(port, pin,fun)    if (fun)\</span>
+<a name="l00067"></a>00067 <span class="preprocessor">                                        {\</span>
+<a name="l00068"></a>00068 <span class="preprocessor">                                            st((P##port##SEL0 |= _BV(pin)););\</span>
+<a name="l00069"></a>00069 <span class="preprocessor">                                        }\</span>
+<a name="l00070"></a>00070 <span class="preprocessor">                                        else\</span>
+<a name="l00071"></a>00071 <span class="preprocessor">                                        {\</span>
+<a name="l00072"></a>00072 <span class="preprocessor">                                            st((P##port##SEL0 &amp;= ~_BV(pin)););\</span>
+<a name="l00073"></a>00073 <span class="preprocessor">                                        }</span>
+<a name="l00074"></a>00074 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00075"></a>00075 <span class="preprocessor"></span>
+<a name="l00079"></a><a class="code" href="global_8h.html#a1281eaa5684d0ed095ce56347b3c4040">00079</a> <span class="preprocessor">#define IO_AUX_FUNCTION(name,fun)        _IO_AUX_FUNCTION(name##_PORT,name##_PIN,fun)</span>
+<a name="l00080"></a>00080 <span class="preprocessor"></span>
+<a name="l00081"></a>00081 <span class="preprocessor">#define _IO_AUX_FUNCTION(port, pin,fun)  st(__IO_AUX_FUNCTION(port,pin,fun);)</span>
+<a name="l00082"></a>00082 <span class="preprocessor"></span><span class="preprocessor">#ifdef __MSP430G2553__</span>
+<a name="l00083"></a>00083 <span class="preprocessor"></span><span class="preprocessor">#define __IO_AUX_FUNCTION(port, pin,fun) if (fun)\</span>
+<a name="l00084"></a>00084 <span class="preprocessor">                                         {\</span>
+<a name="l00085"></a>00085 <span class="preprocessor">                                             st((P##port##SEL2 |= _BV(pin)););\</span>
+<a name="l00086"></a>00086 <span class="preprocessor">                                         }\</span>
+<a name="l00087"></a>00087 <span class="preprocessor">                                         else\</span>
+<a name="l00088"></a>00088 <span class="preprocessor">                                         {\</span>
+<a name="l00089"></a>00089 <span class="preprocessor">                                             st((P##port##SEL2 &amp;= ~_BV(pin)););\</span>
+<a name="l00090"></a>00090 <span class="preprocessor">                                         }</span>
+<a name="l00091"></a>00091 <span class="preprocessor"></span><span class="preprocessor">#elif __MSP430FR5739__</span>
+<a name="l00092"></a>00092 <span class="preprocessor"></span><span class="preprocessor">#define __IO_AUX_FUNCTION(port, pin,fun) if (fun)\</span>
+<a name="l00093"></a>00093 <span class="preprocessor">                                         {\</span>
+<a name="l00094"></a>00094 <span class="preprocessor">                                             st((P##port##SEL1 |= _BV(pin)););\</span>
+<a name="l00095"></a>00095 <span class="preprocessor">                                         }\</span>
+<a name="l00096"></a>00096 <span class="preprocessor">                                         else\</span>
+<a name="l00097"></a>00097 <span class="preprocessor">                                         {\</span>
+<a name="l00098"></a>00098 <span class="preprocessor">                                             st((P##port##SEL1 &amp;= ~_BV(pin)););\</span>
+<a name="l00099"></a>00099 <span class="preprocessor">                                         }</span>
+<a name="l00100"></a>00100 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00101"></a>00101 <span class="preprocessor"></span>
+<a name="l00103"></a><a class="code" href="global_8h.html#aa236d4a5511350f67d843aefdffa85cfa4acfde02350139a12fcef53ff7289aa7">00103</a> <span class="keyword">enum</span> <a class="code" href="global_8h.html#aa236d4a5511350f67d843aefdffa85cf">IoState</a> {<a class="code" href="global_8h.html#aa236d4a5511350f67d843aefdffa85cfa6a226f4143ca3b18999551694cdb72a8">LOW</a> = 0, <a class="code" href="global_8h.html#aa236d4a5511350f67d843aefdffa85cfa0c3a1dacf94061154b3ee354359c5893">HIGH</a> = 1, <a class="code" href="global_8h.html#aa236d4a5511350f67d843aefdffa85cfa4acfde02350139a12fcef53ff7289aa7">TOGGLE</a> = 2};
+<a name="l00105"></a><a class="code" href="global_8h.html#ab281fb055cadccee525531fa7e552eda">00105</a> <span class="preprocessor">#define IO_SET(name,val)                _IO_SET(name##_PORT,name##_PIN,val)</span>
+<a name="l00106"></a>00106 <span class="preprocessor"></span>
+<a name="l00107"></a>00107 <span class="preprocessor">#define _IO_SET(port,pin,val)           st(__IO_SET(port,pin,val);)</span>
+<a name="l00108"></a>00108 <span class="preprocessor"></span><span class="preprocessor">#define __IO_SET(port,pin,val)          if (val == TOGGLE)\</span>
+<a name="l00109"></a>00109 <span class="preprocessor">                                        {\</span>
+<a name="l00110"></a>00110 <span class="preprocessor">                                            st((P##port##OUT ^= _BV(pin)););\</span>
+<a name="l00111"></a>00111 <span class="preprocessor">                                        }\</span>
+<a name="l00112"></a>00112 <span class="preprocessor">                                        else if (val == HIGH)\</span>
+<a name="l00113"></a>00113 <span class="preprocessor">                                        {\</span>
+<a name="l00114"></a>00114 <span class="preprocessor">                                            st((P##port##OUT |= _BV(pin)););\</span>
+<a name="l00115"></a>00115 <span class="preprocessor">                                        }\</span>
+<a name="l00116"></a>00116 <span class="preprocessor">                                        else\</span>
+<a name="l00117"></a>00117 <span class="preprocessor">                                        {\</span>
+<a name="l00118"></a>00118 <span class="preprocessor">                                            st((P##port##OUT &amp;= ~_BV(pin)););\</span>
+<a name="l00119"></a>00119 <span class="preprocessor">                                        }</span>
+<a name="l00120"></a>00120 <span class="preprocessor"></span>
+<a name="l00122"></a><a class="code" href="global_8h.html#aace9e950edab699a0fa0e281503ee4da">00122</a> <span class="keyword">enum</span> <a class="code" href="global_8h.html#aace9e950edab699a0fa0e281503ee4da">IoMode</a> {<a class="code" href="global_8h.html#aace9e950edab699a0fa0e281503ee4daa40f39385238042f6ec0cbac821a19fc4">DISABLED</a> = 0, <a class="code" href="global_8h.html#aace9e950edab699a0fa0e281503ee4daa99788d1f27bac42d0c7bac63026c5959">ENABLED</a> = 1};
+<a name="l00124"></a><a class="code" href="global_8h.html#a1c44ab11d225e8b1ff17eadc89297bb8">00124</a> <span class="preprocessor">#define IO_RESISTOR(name,ren)           _IO_RESISTOR(name##_PORT,name##_PIN,ren)</span>
+<a name="l00125"></a>00125 <span class="preprocessor"></span>
+<a name="l00126"></a>00126 <span class="preprocessor">#define _IO_RESISTOR(port,pin,ren)      st(__IO_RESISTOR(port,pin,ren);)</span>
+<a name="l00127"></a>00127 <span class="preprocessor"></span><span class="preprocessor">#define __IO_RESISTOR(port,pin,ren)     if (ren)\</span>
+<a name="l00128"></a>00128 <span class="preprocessor">                                        {\</span>
+<a name="l00129"></a>00129 <span class="preprocessor">                                            st((P##port##REN |= _BV(pin)););\</span>
+<a name="l00130"></a>00130 <span class="preprocessor">                                        }\</span>
+<a name="l00131"></a>00131 <span class="preprocessor">                                        else\</span>
+<a name="l00132"></a>00132 <span class="preprocessor">                                        {\</span>
+<a name="l00133"></a>00133 <span class="preprocessor">                                            st((P##port##REN &amp;= ~_BV(pin)););\</span>
+<a name="l00134"></a>00134 <span class="preprocessor">                                        }</span>
 <a name="l00135"></a>00135 <span class="preprocessor"></span>
-<a name="l00138"></a><a class="code" href="global_8h.html#a98758514dd269a8589df9b6a9ea9e446">00138</a> <span class="preprocessor">#define IO_INT_EN(name,en)              _IO_INT_EN(name##_PORT,name##_PIN,en)</span>
-<a name="l00139"></a>00139 <span class="preprocessor"></span>
-<a name="l00140"></a>00140 <span class="preprocessor">#define _IO_INT_EN(port,pin,en)         st(__IO_INT_EN(port,pin,en);)</span>
-<a name="l00141"></a>00141 <span class="preprocessor"></span><span class="preprocessor">#define __IO_INT_EN(port,pin,en)        if (en)\</span>
+<a name="l00137"></a><a class="code" href="global_8h.html#a3a9eaeb4f9b102b16e0b7002621581aba6d031447a3a4f4a8bd019caae5a8eefd">00137</a> <span class="keyword">enum</span> <a class="code" href="global_8h.html#a3a9eaeb4f9b102b16e0b7002621581ab">IoResistorState</a> {<a class="code" href="global_8h.html#a3a9eaeb4f9b102b16e0b7002621581aba0351276972489e49e38c22116a9b88be">PULL_DOWN</a> = 0, <a class="code" href="global_8h.html#a3a9eaeb4f9b102b16e0b7002621581aba6d031447a3a4f4a8bd019caae5a8eefd">PULL_UP</a> = 1};
+<a name="l00138"></a>00138 <span class="comment">// Set pin as input before calling this macro</span>
+<a name="l00140"></a><a class="code" href="global_8h.html#ab5939c05cfd0af92aa0b1877517b76d4">00140</a> <span class="comment"></span><span class="preprocessor">#define IO_PULL(name,up)                IO_RESISTOR(name,ENABLED);\</span>
+<a name="l00141"></a>00141 <span class="preprocessor">                                        if (up)\</span>
 <a name="l00142"></a>00142 <span class="preprocessor">                                        {\</span>
-<a name="l00143"></a>00143 <span class="preprocessor">                                            st((P##port##IE |= _BV(pin)););\</span>
+<a name="l00143"></a>00143 <span class="preprocessor">                                            IO_SET(name,HIGH);\</span>
 <a name="l00144"></a>00144 <span class="preprocessor">                                        }\</span>
 <a name="l00145"></a>00145 <span class="preprocessor">                                        else\</span>
 <a name="l00146"></a>00146 <span class="preprocessor">                                        {\</span>
-<a name="l00147"></a>00147 <span class="preprocessor">                                            st((P##port##IE &amp;= ~_BV(pin)););\</span>
+<a name="l00147"></a>00147 <span class="preprocessor">                                            IO_SET(name,LOW);\</span>
 <a name="l00148"></a>00148 <span class="preprocessor">                                        }</span>
 <a name="l00149"></a>00149 <span class="preprocessor"></span>
-<a name="l00151"></a><a class="code" href="global_8h.html#a9310ad1f83a1ab633ed64ab199fd8603a86445853271053ed37f404b9ca4fa434">00151</a> <span class="keyword">enum</span> <a class="code" href="global_8h.html#a9310ad1f83a1ab633ed64ab199fd8603">IoEdge</a> {<a class="code" href="global_8h.html#a9310ad1f83a1ab633ed64ab199fd8603a86445853271053ed37f404b9ca4fa434">RISING_EDGE</a> = 0, <a class="code" href="global_8h.html#a9310ad1f83a1ab633ed64ab199fd8603ab88c132109a78c131815f270b8bef045">FALLING_EDGE</a> = 1};
-<a name="l00153"></a><a class="code" href="global_8h.html#a577ea44f5a6da30d3424f865500ee969">00153</a> <span class="preprocessor">#define IO_INT_EDGE(name,ed)            _IO_INT_EDGE(name##_PORT,name##_PIN,ed)</span>
-<a name="l00154"></a>00154 <span class="preprocessor"></span>
-<a name="l00155"></a>00155 <span class="preprocessor">#define _IO_INT_EDGE(port,pin,ed)       st(__IO_INT_EDGE(port,pin,ed);)</span>
-<a name="l00156"></a>00156 <span class="preprocessor"></span><span class="preprocessor">#define __IO_INT_EDGE(port,pin,ed)      if (ed)\</span>
-<a name="l00157"></a>00157 <span class="preprocessor">                                        {\</span>
-<a name="l00158"></a>00158 <span class="preprocessor">                                            st((P##port##IES |= _BV(pin)););\</span>
-<a name="l00159"></a>00159 <span class="preprocessor">                                        }\</span>
-<a name="l00160"></a>00160 <span class="preprocessor">                                        else\</span>
-<a name="l00161"></a>00161 <span class="preprocessor">                                        {\</span>
-<a name="l00162"></a>00162 <span class="preprocessor">                                            st((P##port##IES &amp;= ~_BV(pin)););\</span>
-<a name="l00163"></a>00163 <span class="preprocessor">                                        }</span>
-<a name="l00164"></a>00164 <span class="preprocessor"></span>
-<a name="l00166"></a><a class="code" href="global_8h.html#adfc25cfa0517dac3232c7bcde5df3a1f">00166</a> <span class="preprocessor">#define CLEARED 1</span>
-<a name="l00167"></a>00167 <span class="preprocessor"></span>
-<a name="l00168"></a><a class="code" href="global_8h.html#ae4080a780c08c6a196b596d3f4ade163">00168</a> <span class="preprocessor">#define IO_INT_FLAG(name,fl)            _IO_INT_FLAG(name##_PORT,name##_PIN,fl)</span>
+<a name="l00151"></a><a class="code" href="global_8h.html#a202888a9ab5b474d03bea2771227d3a5">00151</a> <span class="preprocessor">#define IO_IN(name)                     _IO_IN(name##_PORT,name##_PIN)</span>
+<a name="l00152"></a>00152 <span class="preprocessor"></span>
+<a name="l00153"></a>00153 <span class="preprocessor">#define _IO_IN(port,pin)                __IO_IN(port,pin)</span>
+<a name="l00154"></a>00154 <span class="preprocessor"></span><span class="preprocessor">#define __IO_IN(port,pin)               !(P##port##IN &amp; _BV(pin))</span>
+<a name="l00155"></a>00155 <span class="preprocessor"></span>
+<a name="l00158"></a><a class="code" href="global_8h.html#a98758514dd269a8589df9b6a9ea9e446">00158</a> <span class="preprocessor">#define IO_INT_EN(name,en)              _IO_INT_EN(name##_PORT,name##_PIN,en)</span>
+<a name="l00159"></a>00159 <span class="preprocessor"></span>
+<a name="l00160"></a>00160 <span class="preprocessor">#define _IO_INT_EN(port,pin,en)         st(__IO_INT_EN(port,pin,en);)</span>
+<a name="l00161"></a>00161 <span class="preprocessor"></span><span class="preprocessor">#define __IO_INT_EN(port,pin,en)        if (en)\</span>
+<a name="l00162"></a>00162 <span class="preprocessor">                                        {\</span>
+<a name="l00163"></a>00163 <span class="preprocessor">                                            st((P##port##IE |= _BV(pin)););\</span>
+<a name="l00164"></a>00164 <span class="preprocessor">                                        }\</span>
+<a name="l00165"></a>00165 <span class="preprocessor">                                        else\</span>
+<a name="l00166"></a>00166 <span class="preprocessor">                                        {\</span>
+<a name="l00167"></a>00167 <span class="preprocessor">                                            st((P##port##IE &amp;= ~_BV(pin)););\</span>
+<a name="l00168"></a>00168 <span class="preprocessor">                                        }</span>
 <a name="l00169"></a>00169 <span class="preprocessor"></span>
-<a name="l00170"></a>00170 <span class="preprocessor">#define _IO_INT_FLAG(port,pin,fl)       st(__IO_INT_FLAG(port,pin,fl);)</span>
-<a name="l00171"></a>00171 <span class="preprocessor"></span><span class="preprocessor">#define __IO_INT_FLAG(port,pin,fl)      if (fl)\</span>
-<a name="l00172"></a>00172 <span class="preprocessor">                                        {\</span>
-<a name="l00173"></a>00173 <span class="preprocessor">                                            st((P##port##IFG &amp;= ~_BV(pin)););\</span>
-<a name="l00174"></a>00174 <span class="preprocessor">                                        }\</span>
-<a name="l00175"></a>00175 <span class="preprocessor">                                        else\</span>
-<a name="l00176"></a>00176 <span class="preprocessor">                                        {\</span>
-<a name="l00177"></a>00177 <span class="preprocessor">                                            st((P##port##IFG |= _BV(pin)););\</span>
-<a name="l00178"></a>00178 <span class="preprocessor">                                        }</span>
-<a name="l00179"></a>00179 <span class="preprocessor"></span>
-<a name="l00182"></a><a class="code" href="global_8h.html#a510f21084abb49c19bbd703b991a1f2d">00182</a> <span class="preprocessor">#define IO_INT_STAT(name)               _IO_INT_STAT(name##_PORT,name##_PIN)</span>
-<a name="l00183"></a>00183 <span class="preprocessor"></span>
-<a name="l00184"></a>00184 <span class="preprocessor">#define _IO_INT_STAT(port,pin)          __IO_INT_STAT(port,pin)</span>
-<a name="l00185"></a>00185 <span class="preprocessor"></span><span class="preprocessor">#define __IO_INT_STAT(port,pin)         (P##port##IFG &amp; _BV(pin))</span>
-<a name="l00186"></a>00186 <span class="preprocessor"></span>
-<a name="l00187"></a>00187 <span class="preprocessor">#endif</span>
+<a name="l00171"></a><a class="code" href="global_8h.html#a9310ad1f83a1ab633ed64ab199fd8603a86445853271053ed37f404b9ca4fa434">00171</a> <span class="keyword">enum</span> <a class="code" href="global_8h.html#a9310ad1f83a1ab633ed64ab199fd8603">IoEdge</a> {<a class="code" href="global_8h.html#a9310ad1f83a1ab633ed64ab199fd8603a86445853271053ed37f404b9ca4fa434">RISING_EDGE</a> = 0, <a class="code" href="global_8h.html#a9310ad1f83a1ab633ed64ab199fd8603ab88c132109a78c131815f270b8bef045">FALLING_EDGE</a> = 1};
+<a name="l00173"></a><a class="code" href="global_8h.html#a577ea44f5a6da30d3424f865500ee969">00173</a> <span class="preprocessor">#define IO_INT_EDGE(name,ed)            _IO_INT_EDGE(name##_PORT,name##_PIN,ed)</span>
+<a name="l00174"></a>00174 <span class="preprocessor"></span>
+<a name="l00175"></a>00175 <span class="preprocessor">#define _IO_INT_EDGE(port,pin,ed)       st(__IO_INT_EDGE(port,pin,ed);)</span>
+<a name="l00176"></a>00176 <span class="preprocessor"></span><span class="preprocessor">#define __IO_INT_EDGE(port,pin,ed)      if (ed)\</span>
+<a name="l00177"></a>00177 <span class="preprocessor">                                        {\</span>
+<a name="l00178"></a>00178 <span class="preprocessor">                                            st((P##port##IES |= _BV(pin)););\</span>
+<a name="l00179"></a>00179 <span class="preprocessor">                                        }\</span>
+<a name="l00180"></a>00180 <span class="preprocessor">                                        else\</span>
+<a name="l00181"></a>00181 <span class="preprocessor">                                        {\</span>
+<a name="l00182"></a>00182 <span class="preprocessor">                                            st((P##port##IES &amp;= ~_BV(pin)););\</span>
+<a name="l00183"></a>00183 <span class="preprocessor">                                        }</span>
+<a name="l00184"></a>00184 <span class="preprocessor"></span>
+<a name="l00186"></a><a class="code" href="global_8h.html#adfc25cfa0517dac3232c7bcde5df3a1f">00186</a> <span class="preprocessor">#define CLEARED 1</span>
+<a name="l00187"></a>00187 <span class="preprocessor"></span>
+<a name="l00188"></a><a class="code" href="global_8h.html#ae4080a780c08c6a196b596d3f4ade163">00188</a> <span class="preprocessor">#define IO_INT_FLAG(name,fl)            _IO_INT_FLAG(name##_PORT,name##_PIN,fl)</span>
+<a name="l00189"></a>00189 <span class="preprocessor"></span>
+<a name="l00190"></a>00190 <span class="preprocessor">#define _IO_INT_FLAG(port,pin,fl)       st(__IO_INT_FLAG(port,pin,fl);)</span>
+<a name="l00191"></a>00191 <span class="preprocessor"></span><span class="preprocessor">#define __IO_INT_FLAG(port,pin,fl)      if (fl)\</span>
+<a name="l00192"></a>00192 <span class="preprocessor">                                        {\</span>
+<a name="l00193"></a>00193 <span class="preprocessor">                                            st((P##port##IFG &amp;= ~_BV(pin)););\</span>
+<a name="l00194"></a>00194 <span class="preprocessor">                                        }\</span>
+<a name="l00195"></a>00195 <span class="preprocessor">                                        else\</span>
+<a name="l00196"></a>00196 <span class="preprocessor">                                        {\</span>
+<a name="l00197"></a>00197 <span class="preprocessor">                                            st((P##port##IFG |= _BV(pin)););\</span>
+<a name="l00198"></a>00198 <span class="preprocessor">                                        }</span>
+<a name="l00199"></a>00199 <span class="preprocessor"></span>
+<a name="l00202"></a><a class="code" href="global_8h.html#a510f21084abb49c19bbd703b991a1f2d">00202</a> <span class="preprocessor">#define IO_INT_STAT(name)               _IO_INT_STAT(name##_PORT,name##_PIN)</span>
+<a name="l00203"></a>00203 <span class="preprocessor"></span>
+<a name="l00204"></a>00204 <span class="preprocessor">#define _IO_INT_STAT(port,pin)          __IO_INT_STAT(port,pin)</span>
+<a name="l00205"></a>00205 <span class="preprocessor"></span><span class="preprocessor">#define __IO_INT_STAT(port,pin)         (P##port##IFG &amp; _BV(pin))</span>
+<a name="l00206"></a>00206 <span class="preprocessor"></span>
+<a name="l00207"></a>00207 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="global_8h.html">global.h</a>      </li>
-      <li class="footer">Generated on Tue Mar 6 2012 22:38:39 for LaunchLib by&#160;
+      <li class="footer">Generated on Wed Mar 7 2012 23:14:24 for LaunchLib by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

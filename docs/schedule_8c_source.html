@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
@@ -98,137 +99,137 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00024"></a>00024 
 <a name="l00025"></a><a class="code" href="schedule_8h.html#a7cca52889a75eb770ca7a70cbf47a858">00025</a> <span class="keywordtype">void</span> <a class="code" href="schedule_8c.html#a7cca52889a75eb770ca7a70cbf47a858" title="Initialize the schedule timer used to check callouts and callbacks.">ScheduleTimerInit</a>(<span class="keywordtype">void</span>)
 <a name="l00026"></a>00026 {
-<a name="l00027"></a>00027     WDTCTL = WDT_MDLY_8;  <span class="comment">// interval = 500us @ 16Mhz</span>
-<a name="l00028"></a>00028     IE1 |= WDTIE;         <span class="comment">// Enable WDT interrupt</span>
-<a name="l00029"></a>00029 }
-<a name="l00030"></a>00030 
-<a name="l00031"></a><a class="code" href="schedule_8h.html#ab12586e59cf64577040be8ed06e4814a">00031</a> <span class="keywordtype">void</span> <a class="code" href="schedule_8c.html#ab12586e59cf64577040be8ed06e4814a" title="Add a callback to the store for periodic execution.">CallbackRegister</a>(<a class="code" href="schedule_8h.html#a52acb0158eef8a6a72957b6605c95353" title="function pointer to a callback">CallbackFn</a> func, <a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> run_time)
-<a name="l00032"></a>00032 {
-<a name="l00033"></a>00033     <span class="keywordflow">if</span> (event_count &lt; <span class="keyword">sizeof</span>(callback_store)/<span class="keyword">sizeof</span>(<a class="code" href="schedule_8h.html#a52acb0158eef8a6a72957b6605c95353" title="function pointer to a callback">CallbackFn</a>))
-<a name="l00034"></a>00034     {
-<a name="l00035"></a>00035         <span class="comment">// Callbacks are initialized disabled</span>
-<a name="l00036"></a>00036         callback_store[event_count].<a class="code" href="struct_callback_event.html#a81a7031abfd335275a5acf475d7ef766">enabled</a>       = <a class="code" href="global_8h.html#a06fc87d81c62e9abb8790b6e5713c55baa1e095cc966dbecf6a0d8aad75348d1a">FALSE</a>;
-<a name="l00037"></a>00037         callback_store[event_count].<a class="code" href="struct_callback_event.html#a5ee86bf0b23d84d0d119ee6dac811695">func</a>          = func;
-<a name="l00038"></a>00038         callback_store[event_count].<a class="code" href="struct_callback_event.html#a787c60dfca79b1561e9cbd020561e5e4">run_time</a>      = run_time - 1;
-<a name="l00039"></a>00039         callback_store[event_count].<a class="code" href="struct_callback_event.html#a1b21ad88610b96246ed05e4b7a645817">next_run_time</a> = <a class="code" href="schedule_8c.html#a7446a6cae82b017d6e65871b3c805eb1" title="global time accessible by everyone">now</a> + run_time;
-<a name="l00040"></a>00040         event_count++;
-<a name="l00041"></a>00041     }
-<a name="l00042"></a>00042 }
-<a name="l00043"></a>00043 
-<a name="l00044"></a><a class="code" href="schedule_8c.html#a036325aad3e8e1a9194ae25867db6f22">00044</a> <span class="keywordtype">void</span> <a class="code" href="schedule_8c.html#a036325aad3e8e1a9194ae25867db6f22" title="Check the callback list for functions that are ready to run.">CallbackService</a>(<a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> current_time)
-<a name="l00045"></a>00045 {
-<a name="l00046"></a>00046     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
-<a name="l00047"></a>00047     <span class="keywordflow">for</span> (i = 0;i &lt; event_count;i++)
-<a name="l00048"></a>00048     {
-<a name="l00049"></a>00049         <span class="keywordflow">if</span> (callback_store[i].enabled == <a class="code" href="global_8h.html#a06fc87d81c62e9abb8790b6e5713c55baa82764c3079aea4e60c80e45befbb839">TRUE</a> &amp;&amp;
-<a name="l00050"></a>00050             current_time == callback_store[i].next_run_time)
-<a name="l00051"></a>00051         {
-<a name="l00052"></a>00052             callback_store[i].<a class="code" href="struct_callback_event.html#a1b21ad88610b96246ed05e4b7a645817">next_run_time</a> = current_time +
-<a name="l00053"></a>00053                                               callback_store[i].<a class="code" href="struct_callback_event.html#a787c60dfca79b1561e9cbd020561e5e4">run_time</a>;
-<a name="l00054"></a>00054             callback_store[i].<a class="code" href="struct_callback_event.html#a5ee86bf0b23d84d0d119ee6dac811695">func</a>();
-<a name="l00055"></a>00055         }
-<a name="l00056"></a>00056     }
-<a name="l00057"></a>00057 }
-<a name="l00058"></a>00058 
-<a name="l00059"></a><a class="code" href="schedule_8h.html#a0767ccd3af067fb315ab6d4c08dedf04">00059</a> <span class="keywordtype">void</span> <a class="code" href="schedule_8c.html#a0767ccd3af067fb315ab6d4c08dedf04" title="Enable or disable a function callback.">CallbackMode</a>(<a class="code" href="schedule_8h.html#a52acb0158eef8a6a72957b6605c95353" title="function pointer to a callback">CallbackFn</a> func, <span class="keyword">enum</span> <a class="code" href="global_8h.html#aace9e950edab699a0fa0e281503ee4da">IoMode</a> mode)
-<a name="l00060"></a>00060 {
-<a name="l00061"></a>00061     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
-<a name="l00062"></a>00062     <span class="keywordflow">for</span> (i = 0;i &lt; event_count;i++)
-<a name="l00063"></a>00063     {
-<a name="l00064"></a>00064         <span class="keywordflow">if</span> (func == callback_store[i].func)
-<a name="l00065"></a>00065         {
-<a name="l00066"></a>00066             callback_store[i].<a class="code" href="struct_callback_event.html#a81a7031abfd335275a5acf475d7ef766">enabled</a> = mode;
-<a name="l00067"></a>00067             <span class="keywordflow">if</span> (mode)
-<a name="l00068"></a>00068             {
-<a name="l00069"></a>00069                 callback_store[i].<a class="code" href="struct_callback_event.html#a1b21ad88610b96246ed05e4b7a645817">next_run_time</a> = <a class="code" href="schedule_8c.html#a7446a6cae82b017d6e65871b3c805eb1" title="global time accessible by everyone">now</a> +
-<a name="l00070"></a>00070                                                   callback_store[i].<a class="code" href="struct_callback_event.html#a787c60dfca79b1561e9cbd020561e5e4">run_time</a>;
-<a name="l00071"></a>00071             }
-<a name="l00072"></a>00072             <span class="keywordflow">break</span>;
-<a name="l00073"></a>00073         }
-<a name="l00074"></a>00074     }
-<a name="l00075"></a>00075 }
-<a name="l00076"></a>00076 
-<a name="l00077"></a><a class="code" href="schedule_8h.html#ac7515403c92ea393f971b6688aa5b87b">00077</a> <a class="code" href="global_8h.html#aef44329758059c91c76d334e8fc09700">int8_t</a> <a class="code" href="schedule_8c.html#ac7515403c92ea393f971b6688aa5b87b" title="Add a callout to the store for one-time execution.">CalloutRegister</a>(<a class="code" href="schedule_8h.html#a1c02760ad032ffd6ebc2b0a01d474f0d" title="function pointer to a callout">CalloutFn</a> func, <a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> run_time)
-<a name="l00078"></a>00078 {
-<a name="l00079"></a>00079     <a class="code" href="global_8h.html#aef44329758059c91c76d334e8fc09700">int8_t</a> ret = -1;
-<a name="l00080"></a>00080     <span class="comment">// event queue full?</span>
-<a name="l00081"></a>00081     <span class="keywordflow">if</span> (<a class="code" href="schedule_8c.html#aff0bd22b0eece12f7fc20a6516712f66" title="Return the number of occupied slots in the callout map (pending callouts)">get_callout_map_size</a>() != <a class="code" href="hardware_8h.html#a633e51fd220983033afe28f559b9243f">MAX_CALLOUT_CNT</a>)
-<a name="l00082"></a>00082     {
-<a name="l00083"></a>00083         <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
-<a name="l00084"></a>00084         <span class="keywordflow">for</span> (i = 0;i &lt; <a class="code" href="hardware_8h.html#a633e51fd220983033afe28f559b9243f">MAX_CALLOUT_CNT</a>;i++)
-<a name="l00085"></a>00085         {
-<a name="l00086"></a>00086             <span class="comment">// find the first open slot</span>
-<a name="l00087"></a>00087             <span class="keywordflow">if</span> (!(callout_map &amp; <a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i)))
-<a name="l00088"></a>00088             {
-<a name="l00089"></a>00089                 <span class="comment">// claim the slot</span>
-<a name="l00090"></a>00090                 callout_map |= <a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i);
-<a name="l00091"></a>00091                 <span class="comment">// save our data</span>
-<a name="l00092"></a>00092                 callout_store[i].<a class="code" href="struct_callout_event.html#a0e689c61e79a9b51ed4dfcd11c390bb1">func</a> = func;
-<a name="l00093"></a>00093                 callout_store[i].<a class="code" href="struct_callout_event.html#a040c82f3961da0defdbb57979c68283d">run_time</a> = <a class="code" href="schedule_8c.html#a7446a6cae82b017d6e65871b3c805eb1" title="global time accessible by everyone">now</a> + run_time;
-<a name="l00094"></a>00094                 <span class="comment">// return success</span>
-<a name="l00095"></a>00095                 ret = 0;
-<a name="l00096"></a>00096                 <span class="keywordflow">break</span>;
-<a name="l00097"></a>00097             }
-<a name="l00098"></a>00098         }
-<a name="l00099"></a>00099     }
-<a name="l00100"></a>00100     <span class="keywordflow">return</span> ret;
-<a name="l00101"></a>00101 }
-<a name="l00102"></a>00102 
-<a name="l00103"></a><a class="code" href="schedule_8h.html#ab55f47631849be4bd604d9aec2ffb390">00103</a> <span class="keywordtype">void</span> <a class="code" href="schedule_8c.html#ab55f47631849be4bd604d9aec2ffb390" title="Disable a function callout before it has run.">CalloutCancel</a>(<a class="code" href="schedule_8h.html#a1c02760ad032ffd6ebc2b0a01d474f0d" title="function pointer to a callout">CalloutFn</a> func)
-<a name="l00104"></a>00104 {
-<a name="l00105"></a>00105     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
-<a name="l00106"></a>00106     <span class="keywordflow">for</span> (i = 0;i &lt; <a class="code" href="hardware_8h.html#a633e51fd220983033afe28f559b9243f">MAX_CALLOUT_CNT</a>;i++)
-<a name="l00107"></a>00107     {
-<a name="l00108"></a>00108         <span class="comment">// find the slot</span>
-<a name="l00109"></a>00109         <span class="keywordflow">if</span> (callout_store[i].func == func)
-<a name="l00110"></a>00110         {
-<a name="l00111"></a>00111             <span class="comment">// clear</span>
-<a name="l00112"></a>00112             callout_map &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i);
-<a name="l00113"></a>00113             <span class="keywordflow">break</span>;
-<a name="l00114"></a>00114         }
-<a name="l00115"></a>00115     }
-<a name="l00116"></a>00116 }
-<a name="l00117"></a>00117 
-<a name="l00118"></a><a class="code" href="schedule_8c.html#aff0bd22b0eece12f7fc20a6516712f66">00118</a> <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> <a class="code" href="schedule_8c.html#aff0bd22b0eece12f7fc20a6516712f66" title="Return the number of occupied slots in the callout map (pending callouts)">get_callout_map_size</a>(<span class="keywordtype">void</span>)
-<a name="l00119"></a>00119 {
-<a name="l00120"></a>00120     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> sum = 0;
-<a name="l00121"></a>00121     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> map = callout_map;
-<a name="l00122"></a>00122     <span class="keywordflow">for</span> (sum = 0; map; sum++)
-<a name="l00123"></a>00123     {
-<a name="l00124"></a>00124         map &amp;= map - 1;
-<a name="l00125"></a>00125     }
-<a name="l00126"></a>00126     <span class="keywordflow">return</span> sum;
-<a name="l00127"></a>00127 }
-<a name="l00128"></a>00128 
-<a name="l00129"></a><a class="code" href="schedule_8c.html#a69a9c59f9d987a53d8b418c851373bb9">00129</a> <span class="keywordtype">void</span> <a class="code" href="schedule_8c.html#a69a9c59f9d987a53d8b418c851373bb9" title="Check the callout list for functions that are ready to run.">CalloutService</a>(<a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> current_time)
-<a name="l00130"></a>00130 {
-<a name="l00131"></a>00131     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
-<a name="l00132"></a>00132     <span class="keywordflow">for</span> (i = 0;i &lt; <a class="code" href="hardware_8h.html#a633e51fd220983033afe28f559b9243f">MAX_CALLOUT_CNT</a>;i++)
-<a name="l00133"></a>00133     {
-<a name="l00134"></a>00134         <span class="comment">// find occupied slots and see if the function there is ready</span>
-<a name="l00135"></a>00135         <span class="keywordflow">if</span> ((callout_map &amp; <a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i)) &amp;&amp; current_time == callout_store[i].run_time)
-<a name="l00136"></a>00136         {
-<a name="l00137"></a>00137             <span class="comment">// run the function</span>
-<a name="l00138"></a>00138             callout_store[i].<a class="code" href="struct_callout_event.html#a0e689c61e79a9b51ed4dfcd11c390bb1">func</a>();
-<a name="l00139"></a>00139             <span class="comment">// vacate the slot</span>
-<a name="l00140"></a>00140             callout_map &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i);
-<a name="l00141"></a>00141         }
-<a name="l00142"></a>00142     }
-<a name="l00143"></a>00143 }
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145 <span class="preprocessor">#pragma vector = SCHEDULE_VECTOR</span>
-<a name="l00146"></a><a class="code" href="schedule_8h.html#a31e7ad787760dc23b9e359185f5eb69b">00146</a> <span class="preprocessor"></span>__interrupt <span class="keywordtype">void</span> <a class="code" href="schedule_8c.html#a31e7ad787760dc23b9e359185f5eb69b" title="Interrupt routine run by overflow of watchdog timer.">ScheduleTimerOverflow</a>(<span class="keywordtype">void</span>)
-<a name="l00147"></a>00147 {
-<a name="l00148"></a>00148     <a class="code" href="schedule_8c.html#a7446a6cae82b017d6e65871b3c805eb1" title="global time accessible by everyone">now</a>++;
-<a name="l00149"></a>00149     <a class="code" href="schedule_8c.html#a036325aad3e8e1a9194ae25867db6f22" title="Check the callback list for functions that are ready to run.">CallbackService</a>(<a class="code" href="schedule_8c.html#a7446a6cae82b017d6e65871b3c805eb1" title="global time accessible by everyone">now</a>);
-<a name="l00150"></a>00150     <a class="code" href="schedule_8c.html#a69a9c59f9d987a53d8b418c851373bb9" title="Check the callout list for functions that are ready to run.">CalloutService</a>(<a class="code" href="schedule_8c.html#a7446a6cae82b017d6e65871b3c805eb1" title="global time accessible by everyone">now</a>);
-<a name="l00151"></a>00151 }
+<a name="l00028"></a>00028     WDTCTL = WDT_MDLY_8;        <span class="comment">// interval = 500us @ 16Mhz</span>
+<a name="l00029"></a>00029     WDT_INT_ENABLE |= WDTIE;    <span class="comment">// Enable WDT interrupt</span>
+<a name="l00030"></a>00030 }
+<a name="l00031"></a>00031 
+<a name="l00032"></a><a class="code" href="schedule_8h.html#ab12586e59cf64577040be8ed06e4814a">00032</a> <span class="keywordtype">void</span> <a class="code" href="schedule_8c.html#ab12586e59cf64577040be8ed06e4814a" title="Add a callback to the store for periodic execution.">CallbackRegister</a>(<a class="code" href="schedule_8h.html#a52acb0158eef8a6a72957b6605c95353" title="function pointer to a callback">CallbackFn</a> func, <a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> run_time)
+<a name="l00033"></a>00033 {
+<a name="l00034"></a>00034     <span class="keywordflow">if</span> (event_count &lt; <span class="keyword">sizeof</span>(callback_store)/<span class="keyword">sizeof</span>(<a class="code" href="schedule_8h.html#a52acb0158eef8a6a72957b6605c95353" title="function pointer to a callback">CallbackFn</a>))
+<a name="l00035"></a>00035     {
+<a name="l00036"></a>00036         <span class="comment">// Callbacks are initialized disabled</span>
+<a name="l00037"></a>00037         callback_store[event_count].<a class="code" href="struct_callback_event.html#a81a7031abfd335275a5acf475d7ef766">enabled</a>       = <a class="code" href="global_8h.html#a06fc87d81c62e9abb8790b6e5713c55baa1e095cc966dbecf6a0d8aad75348d1a">FALSE</a>;
+<a name="l00038"></a>00038         callback_store[event_count].<a class="code" href="struct_callback_event.html#a5ee86bf0b23d84d0d119ee6dac811695">func</a>          = func;
+<a name="l00039"></a>00039         callback_store[event_count].<a class="code" href="struct_callback_event.html#a787c60dfca79b1561e9cbd020561e5e4">run_time</a>      = run_time - 1;
+<a name="l00040"></a>00040         callback_store[event_count].<a class="code" href="struct_callback_event.html#a1b21ad88610b96246ed05e4b7a645817">next_run_time</a> = <a class="code" href="schedule_8c.html#a7446a6cae82b017d6e65871b3c805eb1" title="global time accessible by everyone">now</a> + run_time;
+<a name="l00041"></a>00041         event_count++;
+<a name="l00042"></a>00042     }
+<a name="l00043"></a>00043 }
+<a name="l00044"></a>00044 
+<a name="l00045"></a><a class="code" href="schedule_8c.html#a036325aad3e8e1a9194ae25867db6f22">00045</a> <span class="keywordtype">void</span> <a class="code" href="schedule_8c.html#a036325aad3e8e1a9194ae25867db6f22" title="Check the callback list for functions that are ready to run.">CallbackService</a>(<a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> current_time)
+<a name="l00046"></a>00046 {
+<a name="l00047"></a>00047     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
+<a name="l00048"></a>00048     <span class="keywordflow">for</span> (i = 0;i &lt; event_count;i++)
+<a name="l00049"></a>00049     {
+<a name="l00050"></a>00050         <span class="keywordflow">if</span> (callback_store[i].enabled == <a class="code" href="global_8h.html#a06fc87d81c62e9abb8790b6e5713c55baa82764c3079aea4e60c80e45befbb839">TRUE</a> &amp;&amp;
+<a name="l00051"></a>00051             current_time == callback_store[i].next_run_time)
+<a name="l00052"></a>00052         {
+<a name="l00053"></a>00053             callback_store[i].<a class="code" href="struct_callback_event.html#a1b21ad88610b96246ed05e4b7a645817">next_run_time</a> = current_time +
+<a name="l00054"></a>00054                                               callback_store[i].<a class="code" href="struct_callback_event.html#a787c60dfca79b1561e9cbd020561e5e4">run_time</a>;
+<a name="l00055"></a>00055             callback_store[i].<a class="code" href="struct_callback_event.html#a5ee86bf0b23d84d0d119ee6dac811695">func</a>();
+<a name="l00056"></a>00056         }
+<a name="l00057"></a>00057     }
+<a name="l00058"></a>00058 }
+<a name="l00059"></a>00059 
+<a name="l00060"></a><a class="code" href="schedule_8h.html#a0767ccd3af067fb315ab6d4c08dedf04">00060</a> <span class="keywordtype">void</span> <a class="code" href="schedule_8c.html#a0767ccd3af067fb315ab6d4c08dedf04" title="Enable or disable a function callback.">CallbackMode</a>(<a class="code" href="schedule_8h.html#a52acb0158eef8a6a72957b6605c95353" title="function pointer to a callback">CallbackFn</a> func, <span class="keyword">enum</span> <a class="code" href="global_8h.html#aace9e950edab699a0fa0e281503ee4da">IoMode</a> mode)
+<a name="l00061"></a>00061 {
+<a name="l00062"></a>00062     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
+<a name="l00063"></a>00063     <span class="keywordflow">for</span> (i = 0;i &lt; event_count;i++)
+<a name="l00064"></a>00064     {
+<a name="l00065"></a>00065         <span class="keywordflow">if</span> (func == callback_store[i].func)
+<a name="l00066"></a>00066         {
+<a name="l00067"></a>00067             callback_store[i].<a class="code" href="struct_callback_event.html#a81a7031abfd335275a5acf475d7ef766">enabled</a> = mode;
+<a name="l00068"></a>00068             <span class="keywordflow">if</span> (mode)
+<a name="l00069"></a>00069             {
+<a name="l00070"></a>00070                 callback_store[i].<a class="code" href="struct_callback_event.html#a1b21ad88610b96246ed05e4b7a645817">next_run_time</a> = <a class="code" href="schedule_8c.html#a7446a6cae82b017d6e65871b3c805eb1" title="global time accessible by everyone">now</a> +
+<a name="l00071"></a>00071                                                   callback_store[i].<a class="code" href="struct_callback_event.html#a787c60dfca79b1561e9cbd020561e5e4">run_time</a>;
+<a name="l00072"></a>00072             }
+<a name="l00073"></a>00073             <span class="keywordflow">break</span>;
+<a name="l00074"></a>00074         }
+<a name="l00075"></a>00075     }
+<a name="l00076"></a>00076 }
+<a name="l00077"></a>00077 
+<a name="l00078"></a><a class="code" href="schedule_8h.html#ac7515403c92ea393f971b6688aa5b87b">00078</a> <a class="code" href="global_8h.html#aef44329758059c91c76d334e8fc09700">int8_t</a> <a class="code" href="schedule_8c.html#ac7515403c92ea393f971b6688aa5b87b" title="Add a callout to the store for one-time execution.">CalloutRegister</a>(<a class="code" href="schedule_8h.html#a1c02760ad032ffd6ebc2b0a01d474f0d" title="function pointer to a callout">CalloutFn</a> func, <a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> run_time)
+<a name="l00079"></a>00079 {
+<a name="l00080"></a>00080     <a class="code" href="global_8h.html#aef44329758059c91c76d334e8fc09700">int8_t</a> ret = -1;
+<a name="l00081"></a>00081     <span class="comment">// event queue full?</span>
+<a name="l00082"></a>00082     <span class="keywordflow">if</span> (<a class="code" href="schedule_8c.html#aff0bd22b0eece12f7fc20a6516712f66" title="Return the number of occupied slots in the callout map (pending callouts)">get_callout_map_size</a>() != <a class="code" href="hardware_8h.html#a633e51fd220983033afe28f559b9243f">MAX_CALLOUT_CNT</a>)
+<a name="l00083"></a>00083     {
+<a name="l00084"></a>00084         <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
+<a name="l00085"></a>00085         <span class="keywordflow">for</span> (i = 0;i &lt; <a class="code" href="hardware_8h.html#a633e51fd220983033afe28f559b9243f">MAX_CALLOUT_CNT</a>;i++)
+<a name="l00086"></a>00086         {
+<a name="l00087"></a>00087             <span class="comment">// find the first open slot</span>
+<a name="l00088"></a>00088             <span class="keywordflow">if</span> (!(callout_map &amp; <a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i)))
+<a name="l00089"></a>00089             {
+<a name="l00090"></a>00090                 <span class="comment">// claim the slot</span>
+<a name="l00091"></a>00091                 callout_map |= <a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i);
+<a name="l00092"></a>00092                 <span class="comment">// save our data</span>
+<a name="l00093"></a>00093                 callout_store[i].<a class="code" href="struct_callout_event.html#a0e689c61e79a9b51ed4dfcd11c390bb1">func</a> = func;
+<a name="l00094"></a>00094                 callout_store[i].<a class="code" href="struct_callout_event.html#a040c82f3961da0defdbb57979c68283d">run_time</a> = <a class="code" href="schedule_8c.html#a7446a6cae82b017d6e65871b3c805eb1" title="global time accessible by everyone">now</a> + run_time;
+<a name="l00095"></a>00095                 <span class="comment">// return success</span>
+<a name="l00096"></a>00096                 ret = 0;
+<a name="l00097"></a>00097                 <span class="keywordflow">break</span>;
+<a name="l00098"></a>00098             }
+<a name="l00099"></a>00099         }
+<a name="l00100"></a>00100     }
+<a name="l00101"></a>00101     <span class="keywordflow">return</span> ret;
+<a name="l00102"></a>00102 }
+<a name="l00103"></a>00103 
+<a name="l00104"></a><a class="code" href="schedule_8h.html#ab55f47631849be4bd604d9aec2ffb390">00104</a> <span class="keywordtype">void</span> <a class="code" href="schedule_8c.html#ab55f47631849be4bd604d9aec2ffb390" title="Disable a function callout before it has run.">CalloutCancel</a>(<a class="code" href="schedule_8h.html#a1c02760ad032ffd6ebc2b0a01d474f0d" title="function pointer to a callout">CalloutFn</a> func)
+<a name="l00105"></a>00105 {
+<a name="l00106"></a>00106     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
+<a name="l00107"></a>00107     <span class="keywordflow">for</span> (i = 0;i &lt; <a class="code" href="hardware_8h.html#a633e51fd220983033afe28f559b9243f">MAX_CALLOUT_CNT</a>;i++)
+<a name="l00108"></a>00108     {
+<a name="l00109"></a>00109         <span class="comment">// find the slot</span>
+<a name="l00110"></a>00110         <span class="keywordflow">if</span> (callout_store[i].func == func)
+<a name="l00111"></a>00111         {
+<a name="l00112"></a>00112             <span class="comment">// clear</span>
+<a name="l00113"></a>00113             callout_map &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i);
+<a name="l00114"></a>00114             <span class="keywordflow">break</span>;
+<a name="l00115"></a>00115         }
+<a name="l00116"></a>00116     }
+<a name="l00117"></a>00117 }
+<a name="l00118"></a>00118 
+<a name="l00119"></a><a class="code" href="schedule_8c.html#aff0bd22b0eece12f7fc20a6516712f66">00119</a> <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> <a class="code" href="schedule_8c.html#aff0bd22b0eece12f7fc20a6516712f66" title="Return the number of occupied slots in the callout map (pending callouts)">get_callout_map_size</a>(<span class="keywordtype">void</span>)
+<a name="l00120"></a>00120 {
+<a name="l00121"></a>00121     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> sum = 0;
+<a name="l00122"></a>00122     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> map = callout_map;
+<a name="l00123"></a>00123     <span class="keywordflow">for</span> (sum = 0; map; sum++)
+<a name="l00124"></a>00124     {
+<a name="l00125"></a>00125         map &amp;= map - 1;
+<a name="l00126"></a>00126     }
+<a name="l00127"></a>00127     <span class="keywordflow">return</span> sum;
+<a name="l00128"></a>00128 }
+<a name="l00129"></a>00129 
+<a name="l00130"></a><a class="code" href="schedule_8c.html#a69a9c59f9d987a53d8b418c851373bb9">00130</a> <span class="keywordtype">void</span> <a class="code" href="schedule_8c.html#a69a9c59f9d987a53d8b418c851373bb9" title="Check the callout list for functions that are ready to run.">CalloutService</a>(<a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> current_time)
+<a name="l00131"></a>00131 {
+<a name="l00132"></a>00132     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
+<a name="l00133"></a>00133     <span class="keywordflow">for</span> (i = 0;i &lt; <a class="code" href="hardware_8h.html#a633e51fd220983033afe28f559b9243f">MAX_CALLOUT_CNT</a>;i++)
+<a name="l00134"></a>00134     {
+<a name="l00135"></a>00135         <span class="comment">// find occupied slots and see if the function there is ready</span>
+<a name="l00136"></a>00136         <span class="keywordflow">if</span> ((callout_map &amp; <a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i)) &amp;&amp; current_time == callout_store[i].run_time)
+<a name="l00137"></a>00137         {
+<a name="l00138"></a>00138             <span class="comment">// run the function</span>
+<a name="l00139"></a>00139             callout_store[i].<a class="code" href="struct_callout_event.html#a0e689c61e79a9b51ed4dfcd11c390bb1">func</a>();
+<a name="l00140"></a>00140             <span class="comment">// vacate the slot</span>
+<a name="l00141"></a>00141             callout_map &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i);
+<a name="l00142"></a>00142         }
+<a name="l00143"></a>00143     }
+<a name="l00144"></a>00144 }
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146 <span class="preprocessor">#pragma vector = SCHEDULE_VECTOR</span>
+<a name="l00147"></a><a class="code" href="schedule_8h.html#a31e7ad787760dc23b9e359185f5eb69b">00147</a> <span class="preprocessor"></span>__interrupt <span class="keywordtype">void</span> <a class="code" href="schedule_8c.html#a31e7ad787760dc23b9e359185f5eb69b" title="Interrupt routine run by overflow of watchdog timer.">ScheduleTimerOverflow</a>(<span class="keywordtype">void</span>)
+<a name="l00148"></a>00148 {
+<a name="l00149"></a>00149     <a class="code" href="schedule_8c.html#a7446a6cae82b017d6e65871b3c805eb1" title="global time accessible by everyone">now</a>++;
+<a name="l00150"></a>00150     <a class="code" href="schedule_8c.html#a036325aad3e8e1a9194ae25867db6f22" title="Check the callback list for functions that are ready to run.">CallbackService</a>(<a class="code" href="schedule_8c.html#a7446a6cae82b017d6e65871b3c805eb1" title="global time accessible by everyone">now</a>);
+<a name="l00151"></a>00151     <a class="code" href="schedule_8c.html#a69a9c59f9d987a53d8b418c851373bb9" title="Check the callout list for functions that are ready to run.">CalloutService</a>(<a class="code" href="schedule_8c.html#a7446a6cae82b017d6e65871b3c805eb1" title="global time accessible by everyone">now</a>);
+<a name="l00152"></a>00152 }
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="schedule_8c.html">schedule.c</a>      </li>
-      <li class="footer">Generated on Tue Mar 6 2012 22:38:39 for LaunchLib by&#160;
+      <li class="footer">Generated on Wed Mar 7 2012 23:14:24 for LaunchLib by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

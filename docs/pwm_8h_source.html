@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
@@ -83,28 +84,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 <a href="pwm_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00006"></a>00006 <span class="preprocessor">#ifndef PWM_H</span>
-<a name="l00007"></a>00007 <span class="preprocessor"></span><span class="preprocessor">#define PWM_H</span>
-<a name="l00008"></a>00008 <span class="preprocessor"></span>
-<a name="l00011"></a><a class="code" href="struct_pwm_output.html">00011</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00012"></a>00012 {
-<a name="l00013"></a><a class="code" href="struct_pwm_output.html#ac7b02517bdfeeb1a965a08f293736658">00013</a>     <a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> <a class="code" href="struct_pwm_output.html#ac7b02517bdfeeb1a965a08f293736658">frequency</a>;
-<a name="l00014"></a><a class="code" href="struct_pwm_output.html#a362f440a2ad5ae4f2c8d95533bd1fd2f">00014</a>     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> <a class="code" href="struct_pwm_output.html#a362f440a2ad5ae4f2c8d95533bd1fd2f">duty</a>;
-<a name="l00015"></a>00015 } <a class="code" href="struct_pwm_output.html" title="A pwm output which stores the current frequency and duty cycle of each channel.">PwmOutput</a>;
-<a name="l00016"></a>00016 
-<a name="l00024"></a>00024 <span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="pwm_8c.html#ab60d04617af55996eab515c3a73f39ef" title="Initialize the PWM hardware channel.">PwmInit</a>(<a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> channel);
-<a name="l00025"></a>00025 
-<a name="l00034"></a>00034 <span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="pwm_8c.html#a661bb96200343184e2e9c8f449b20d0b" title="Configure the period of the specified pwm channel.">PwmSetPeriod</a>(<a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> channel, <a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> frequency);
-<a name="l00035"></a>00035 
-<a name="l00043"></a>00043 <span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="pwm_8c.html#a39081d09530a640772f04056a4b073aa" title="Configure the duty cycle of the specified pwm channel.">PwmSetDuty</a>(<a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> channel, <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> duty);
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045 <span class="preprocessor">#endif //PWM_H</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#ifndef PWM_H</span>
+<a name="l00008"></a>00008 <span class="preprocessor"></span><span class="preprocessor">#define PWM_H</span>
+<a name="l00009"></a>00009 <span class="preprocessor"></span>
+<a name="l00012"></a><a class="code" href="struct_pwm_output.html">00012</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00013"></a>00013 {
+<a name="l00014"></a><a class="code" href="struct_pwm_output.html#ac7b02517bdfeeb1a965a08f293736658">00014</a>     <a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> <a class="code" href="struct_pwm_output.html#ac7b02517bdfeeb1a965a08f293736658">frequency</a>;
+<a name="l00015"></a><a class="code" href="struct_pwm_output.html#a362f440a2ad5ae4f2c8d95533bd1fd2f">00015</a>     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> <a class="code" href="struct_pwm_output.html#a362f440a2ad5ae4f2c8d95533bd1fd2f">duty</a>;
+<a name="l00016"></a>00016 } <a class="code" href="struct_pwm_output.html" title="A pwm output which stores the current frequency and duty cycle of each channel.">PwmOutput</a>;
+<a name="l00017"></a>00017 
+<a name="l00025"></a>00025 <span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="pwm_8c.html#ab60d04617af55996eab515c3a73f39ef" title="Initialize the PWM hardware channel.">PwmInit</a>(<a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> channel);
+<a name="l00026"></a>00026 
+<a name="l00035"></a>00035 <span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="pwm_8c.html#a661bb96200343184e2e9c8f449b20d0b" title="Configure the period of the specified pwm channel.">PwmSetPeriod</a>(<a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> channel, <a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> frequency);
+<a name="l00036"></a>00036 
+<a name="l00044"></a>00044 <span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="pwm_8c.html#a39081d09530a640772f04056a4b073aa" title="Configure the duty cycle of the specified pwm channel.">PwmSetDuty</a>(<a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> channel, <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> duty);
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046 <span class="preprocessor">#endif // PWM_H</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="pwm_8h.html">pwm.h</a>      </li>
-      <li class="footer">Generated on Tue Mar 6 2012 22:38:39 for LaunchLib by&#160;
+      <li class="footer">Generated on Wed Mar 7 2012 23:14:24 for LaunchLib by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

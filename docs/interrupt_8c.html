@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
@@ -79,6 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#define-members">Defines</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">interrupt.c File Reference</div>  </div>
@@ -93,12 +95,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <p><a href="interrupt_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="define-members"></a>
+Defines</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8c.html#aec04df2d952793de2489346cc67159d8">ATTACH_CASE</a>(x)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8c.html#a9ca78782700f80b4ebb6476ebbaf0900">DETACH_CASE</a>(x)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8c.html#a0056c30dd76c2af1029b78075cc82ef2">PORT_CASE</a>(x)</td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8c.html#ac15b0a99fc1614c891b16cc874f32aa8">InterruptAttach</a> (<a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> port, <a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> pin, <a class="el" href="interrupt_8h.html#a765ab02db2ed47b4ab85d918609d9974">InterruptFn</a> func, enum <a class="el" href="global_8h.html#a9310ad1f83a1ab633ed64ab199fd8603">IoEdge</a> type)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Attach function to GPIO pin edge interrupt.  <a href="#ac15b0a99fc1614c891b16cc874f32aa8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8c.html#a42028d8e6598a35743081ec83dce7167">InterruptDetach</a> (<a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> port, <a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> pin)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Detach function from GPIO pin interrupt.  <a href="#a42028d8e6598a35743081ec83dce7167"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8c.html#a3da3cee7c974de9f423e39145590ebe5">InterruptRunOnPort</a> (<a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> port)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search interrupt function pointer lists and run functions corresponding to the interrupt that fired.  <a href="#a3da3cee7c974de9f423e39145590ebe5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">__interrupt void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8c.html#a5bdc84178e450f885a181e2848532f71">Port1</a> (void)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Port 1 interrupt service routine.  <a href="#a5bdc84178e450f885a181e2848532f71"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">__interrupt void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8c.html#a635c67d4a49a7da65aecafcfb826d9b6">Port2</a> (void)</td></tr>
@@ -109,7 +118,64 @@ Functions</h2></td></tr>
 <dl class="author"><dt><b>Author:</b></dt><dd>Joe Brown </dd></dl>
 
 <p>Definition in file <a class="el" href="interrupt_8c_source.html">interrupt.c</a>.</p>
-</div><hr/><h2>Function Documentation</h2>
+</div><hr/><h2>Define Documentation</h2>
+<a class="anchor" id="aec04df2d952793de2489346cc67159d8"></a><!-- doxytag: member="interrupt.c::ATTACH_CASE" ref="aec04df2d952793de2489346cc67159d8" args="(x)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATTACH_CASE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9ca78782700f80b4ebb6476ebbaf0900"></a><!-- doxytag: member="interrupt.c::DETACH_CASE" ref="a9ca78782700f80b4ebb6476ebbaf0900" args="(x)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DETACH_CASE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">case</span> x:                                                             \
+        p##x##_int_table[pin] = NULL;   <span class="comment">/* null the function pointer */</span> \
+        P##x##IE  &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);         <span class="comment">/* interrupt disabled */</span>        \
+        P##x##IFG &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);         <span class="comment">/* clear the flag */</span>            \
+        <span class="keywordflow">break</span>;
+</pre></div>
+</div>
+</div>
+<a class="anchor" id="a0056c30dd76c2af1029b78075cc82ef2"></a><!-- doxytag: member="interrupt.c::PORT_CASE" ref="a0056c30dd76c2af1029b78075cc82ef2" args="(x)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PORT_CASE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<hr/><h2>Function Documentation</h2>
 <a class="anchor" id="ac15b0a99fc1614c891b16cc874f32aa8"></a><!-- doxytag: member="interrupt.c::InterruptAttach" ref="ac15b0a99fc1614c891b16cc874f32aa8" args="(uint8_t port, uint8_t pin, InterruptFn func, enum IoEdge type)" -->
 <div class="memitem">
 <div class="memproto">
@@ -159,39 +225,33 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="interrupt_8c_source.html#l00018">18</a> of file <a class="el" href="interrupt_8c_source.html">interrupt.c</a>.</p>
+<p>Definition at line <a class="el" href="interrupt_8c_source.html#l00025">25</a> of file <a class="el" href="interrupt_8c_source.html">interrupt.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
+
+<span class="preprocessor">#define ATTACH_CASE(x)                                                  \</span>
+<span class="preprocessor">    case x:                                                             \</span>
+<span class="preprocessor">        p##x##_int_table[pin] = func;   </span><span class="comment">/* save the function pointer */</span> \
+        P##x##IFG &amp;= ~_BV(pin);                                         \
+        P##x##IE |= _BV(pin);           <span class="comment">/* interrupt enabled */</span>         \
+        if (type == FALLING_EDGE)                                       \
+        {                                                               \
+            P##x##IES |= _BV(pin);                                      \
+        }                                                               \
+        else                                                            \
+        {                                                               \
+            P##x##IES &amp;= ~_BV(pin);                                     \
+        }                                                               \
+        break;
+
     <span class="keywordflow">switch</span> (port)
     {
-        <span class="keywordflow">case</span> 1:
-            p1_int_table[pin] = func;   <span class="comment">// save the function pointer</span>
-            P1IFG &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);
-            P1IE |= <a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);           <span class="comment">// interrupt enabled</span>
-            <span class="keywordflow">if</span> (type == <a class="code" href="global_8h.html#a9310ad1f83a1ab633ed64ab199fd8603ab88c132109a78c131815f270b8bef045">FALLING_EDGE</a>)
-            {
-                P1IES |= <a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);
-            }
-            <span class="keywordflow">else</span>
-            {
-                P1IES &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);
-            }
-            <span class="keywordflow">break</span>;
-        <span class="keywordflow">case</span> 2:
-            p2_int_table[pin] = func;
-            P2IFG &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);
-            P2IE |= <a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);
-            <span class="keywordflow">if</span> (type == <a class="code" href="global_8h.html#a9310ad1f83a1ab633ed64ab199fd8603ab88c132109a78c131815f270b8bef045">FALLING_EDGE</a>)
-            {
-                P2IES |= <a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);
-            }
-            <span class="keywordflow">else</span>
-            {
-                P2IES &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);
-            }
-            <span class="keywordflow">break</span>;
-        <span class="keywordflow">default</span>:
-            <span class="keywordflow">break</span>;
-    }
+        <a class="code" href="interrupt_8c.html#aec04df2d952793de2489346cc67159d8">ATTACH_CASE</a>(1);
+        <a class="code" href="interrupt_8c.html#aec04df2d952793de2489346cc67159d8">ATTACH_CASE</a>(2);
+<span class="preprocessor">#ifdef __MSP430FR5739__</span>
+<span class="preprocessor"></span>        <a class="code" href="interrupt_8c.html#aec04df2d952793de2489346cc67159d8">ATTACH_CASE</a>(3);
+        <a class="code" href="interrupt_8c.html#aec04df2d952793de2489346cc67159d8">ATTACH_CASE</a>(4);
+<span class="preprocessor">#endif</span>
+<span class="preprocessor"></span>    }
 }
 </pre></div>
 </div>
@@ -231,23 +291,82 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="interrupt_8c_source.html#l00053">53</a> of file <a class="el" href="interrupt_8c_source.html">interrupt.c</a>.</p>
+<p>Definition at line <a class="el" href="interrupt_8c_source.html#l00054">54</a> of file <a class="el" href="interrupt_8c_source.html">interrupt.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
+
+<span class="preprocessor">#define DETACH_CASE(x)                                                  \</span>
+<span class="preprocessor">    case x:                                                             \</span>
+<span class="preprocessor">        p##x##_int_table[pin] = NULL;   </span><span class="comment">/* null the function pointer */</span> \
+        P##x##IE  &amp;= ~_BV(pin);         <span class="comment">/* interrupt disabled */</span>        \
+        P##x##IFG &amp;= ~_BV(pin);         <span class="comment">/* clear the flag */</span>            \
+        break;
+
     <span class="keywordflow">switch</span> (port)
     {
-        <span class="keywordflow">case</span> 1:
-            p1_int_table[pin] = NULL;   <span class="comment">// null the function pointer</span>
-            P1IE  &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);         <span class="comment">// interrupt disabled</span>
-            P1IFG &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);         <span class="comment">// clear the flag</span>
-            <span class="keywordflow">break</span>;
-        <span class="keywordflow">case</span> 2:
-            p2_int_table[pin] = NULL;
-            P2IE  &amp;=  ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);
-            P2IFG &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin);
-            <span class="keywordflow">break</span>;
-        <span class="keywordflow">default</span>:
-            <span class="keywordflow">break</span>;
-    }
+        <a class="code" href="interrupt_8c.html#a9ca78782700f80b4ebb6476ebbaf0900">DETACH_CASE</a>(1);
+        <a class="code" href="interrupt_8c.html#a9ca78782700f80b4ebb6476ebbaf0900">DETACH_CASE</a>(2);
+<span class="preprocessor">#ifdef __MSP430FR5739__</span>
+<span class="preprocessor"></span>        <a class="code" href="interrupt_8c.html#a9ca78782700f80b4ebb6476ebbaf0900">DETACH_CASE</a>(3);
+        <a class="code" href="interrupt_8c.html#a9ca78782700f80b4ebb6476ebbaf0900">DETACH_CASE</a>(4);
+<span class="preprocessor">#endif</span>
+<span class="preprocessor"></span>    }
+}
+</pre></div>
+</div>
+</div>
+<a class="anchor" id="a3da3cee7c974de9f423e39145590ebe5"></a><!-- doxytag: member="interrupt.c::InterruptRunOnPort" ref="a3da3cee7c974de9f423e39145590ebe5" args="(uint8_t port)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void InterruptRunOnPort </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a>&#160;</td>
+          <td class="paramname"><em>port</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Search interrupt function pointer lists and run functions corresponding to the interrupt that fired. </p>
+<p>Go through each bit in the interrupt flag to see if it is set. If it is run the corresponding function. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">port</td><td>port to search </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="interrupt_8c_source.html#l00079">79</a> of file <a class="el" href="interrupt_8c_source.html">interrupt.c</a>.</p>
+<div class="fragment"><pre class="fragment">{
+
+<span class="preprocessor">#define PORT_CASE(x)                                                    \</span>
+<span class="preprocessor">    case x:                                                             \</span>
+<span class="preprocessor">        {                                                               \</span>
+<span class="preprocessor">            uint8_t i = 0;                                              \</span>
+<span class="preprocessor">            for (i = 0;i &lt; NUM_P##x##_INTS;i++)                         \</span>
+<span class="preprocessor">            {                                                           \</span>
+<span class="preprocessor">                if ((P##x##IFG &amp; _BV(i)) &amp;&amp; p##x##_int_table[i] != NULL)\</span>
+<span class="preprocessor">                {                                                       \</span>
+<span class="preprocessor">                    p##x##_int_table[i]();                              \</span>
+<span class="preprocessor">                    P##x##IFG &amp;= ~_BV(i);                               \</span>
+<span class="preprocessor">                }                                                       \</span>
+<span class="preprocessor">            }                                                           \</span>
+<span class="preprocessor">        }                                                               \</span>
+<span class="preprocessor">        break;</span>
+<span class="preprocessor"></span>
+    _DINT();
+    <span class="keywordflow">switch</span>(port)
+    {
+        <a class="code" href="interrupt_8c.html#a0056c30dd76c2af1029b78075cc82ef2">PORT_CASE</a>(1);
+        <a class="code" href="interrupt_8c.html#a0056c30dd76c2af1029b78075cc82ef2">PORT_CASE</a>(2);
+<span class="preprocessor">#ifdef __MSP430FR5739__</span>
+<span class="preprocessor"></span>        <a class="code" href="interrupt_8c.html#a0056c30dd76c2af1029b78075cc82ef2">PORT_CASE</a>(3);
+        <a class="code" href="interrupt_8c.html#a0056c30dd76c2af1029b78075cc82ef2">PORT_CASE</a>(4);
+<span class="preprocessor">#endif</span>
+<span class="preprocessor"></span>    }
+    _EINT();
 }
 </pre></div>
 </div>
@@ -270,19 +389,9 @@ Functions</h2></td></tr>
 <p>Port 1 interrupt service routine. </p>
 <p>Go through each bit in the interrupt flag to see if it is set. If it is run the corresponding function. </p>
 
-<p>Definition at line <a class="el" href="interrupt_8c_source.html#l00076">76</a> of file <a class="el" href="interrupt_8c_source.html">interrupt.c</a>.</p>
+<p>Definition at line <a class="el" href="interrupt_8c_source.html#l00111">111</a> of file <a class="el" href="interrupt_8c_source.html">interrupt.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
-    _DINT();
-    <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
-    <span class="keywordflow">for</span> (i = 0;i &lt; <a class="code" href="hardware_8h.html#aeafcf9fddd4a98dc8bc340730de2fd30">NUM_P1_INTS</a>;i++)
-    {
-        <span class="keywordflow">if</span> ((P1IFG &amp; <a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i)) &amp;&amp; p1_int_table[i] != NULL)
-        {
-            p1_int_table[i]();
-            P1IFG &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i);
-        }
-    }
-    _EINT();
+    <a class="code" href="interrupt_8c.html#a3da3cee7c974de9f423e39145590ebe5" title="Search interrupt function pointer lists and run functions corresponding to the interrupt that fired...">InterruptRunOnPort</a>(1);
 }
 </pre></div>
 </div>
@@ -305,19 +414,9 @@ Functions</h2></td></tr>
 <p>Port 2 interrupt service routine. </p>
 <p>Go through each bit in the interrupt flag to see if it is set. If it is run the corresponding function. </p>
 
-<p>Definition at line <a class="el" href="interrupt_8c_source.html#l00092">92</a> of file <a class="el" href="interrupt_8c_source.html">interrupt.c</a>.</p>
+<p>Definition at line <a class="el" href="interrupt_8c_source.html#l00117">117</a> of file <a class="el" href="interrupt_8c_source.html">interrupt.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
-    _DINT();
-    <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
-    <span class="keywordflow">for</span> (i = 0;i &lt; <a class="code" href="hardware_8h.html#a9eb0f2cf56184647ba5718140208a09c">NUM_P2_INTS</a>;i++)
-    {
-        <span class="keywordflow">if</span> ((P2IFG &amp; <a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i)) &amp;&amp; p2_int_table[i] != NULL)
-        {
-            p2_int_table[i]();
-            P2IFG &amp;= ~<a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(i);
-        }
-    }
-    _EINT();
+    <a class="code" href="interrupt_8c.html#a3da3cee7c974de9f423e39145590ebe5" title="Search interrupt function pointer lists and run functions corresponding to the interrupt that fired...">InterruptRunOnPort</a>(2);
 }
 </pre></div>
 </div>
@@ -327,7 +426,7 @@ Functions</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="interrupt_8c.html">interrupt.c</a>      </li>
-      <li class="footer">Generated on Tue Mar 6 2012 22:38:39 for LaunchLib by&#160;
+      <li class="footer">Generated on Wed Mar 7 2012 23:14:24 for LaunchLib by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

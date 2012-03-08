@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>LaunchLib: delay.h Source File</title>
+<title>LaunchLib: clock.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
@@ -75,26 +75,112 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-  initNavTree('delay_8h.html','');
+  initNavTree('clock_8h.html','');
 </script>
 <div id="doc-content">
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">delay.h</div>  </div>
+<div class="title">clock.h File Reference</div>  </div>
 </div>
 <div class="contents">
-<a href="delay_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00006"></a>00006 <span class="preprocessor">#ifndef DELAY_H</span>
-<a name="l00007"></a>00007 <span class="preprocessor"></span><span class="preprocessor">#define DELAY_H</span>
-<a name="l00008"></a>00008 <span class="preprocessor"></span>
-<a name="l00015"></a>00015 <span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="delay_8c.html#ae0b059b6b8d75c7d0f6c995bb06a1a92" title="Delay for selected time.">Delay</a>(<a class="code" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> delay_time);
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017 <span class="preprocessor">#endif // DELAY_H</span>
-</pre></div></div>
+
+<p><a href="clock_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#afa002073487babf6a0336e5aa9a9f624">ClockConfig</a> (<a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> mhz)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the clocks for use.  <a href="#afa002073487babf6a0336e5aa9a9f624"></a><br/></td></tr>
+</table>
+<hr/><h2>Function Documentation</h2>
+<a class="anchor" id="afa002073487babf6a0336e5aa9a9f624"></a><!-- doxytag: member="clock.h::ClockConfig" ref="afa002073487babf6a0336e5aa9a9f624" args="(uint8_t mhz)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ClockConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a>&#160;</td>
+          <td class="paramname"><em>mhz</em></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Configure the clocks for use. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">mhz</td><td>the clock speed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>should we save the DCO value somewhere? </dd></dl>
+</p>
+
+<p>Definition at line <a class="el" href="clock_8h_source.html#l00013">13</a> of file <a class="el" href="clock_8h_source.html">clock.h</a>.</p>
+<div class="fragment"><pre class="fragment">{
+<span class="preprocessor">#ifdef __MSP430G2553__</span>
+<span class="preprocessor"></span>    <span class="comment">// Calibrated DCO values are 1,8,12,16</span>
+<span class="preprocessor">#define CLOCK_CASE(x)               \</span>
+<span class="preprocessor">    case x:                         \</span>
+<span class="preprocessor">        BCSCTL1 = CALBC1_##x##MHZ;  \</span>
+<span class="preprocessor">        DCOCTL  = CALDCO_##x##MHZ;  \</span>
+<span class="preprocessor">        break;</span>
+<span class="preprocessor"></span>
+    <span class="keywordflow">switch</span>(mhz)
+    {
+        CLOCK_CASE(1);
+        CLOCK_CASE(8);
+        CLOCK_CASE(12);
+        CLOCK_CASE(16);
+    }
+
+<span class="preprocessor">#elif __MSP430FR5739__</span>
+<span class="preprocessor"></span><span class="preprocessor">#define FR5739_CLOCK_PASSWORD 0xA5</span>
+<span class="preprocessor"></span>    <span class="comment">// Calibrated DCO values are 5.33,6.67,8,16,20,24</span>
+    <span class="comment">// 8,16,20,24 are avaiable here</span>
+    CSCTL0_H = FR5739_CLOCK_PASSWORD;
+    <span class="keywordflow">switch</span>(mhz)
+    {
+       <span class="keywordflow">case</span> 8:
+           CSCTL1 = DCOFSEL0 + DCOFSEL1;
+           <span class="keywordflow">break</span>;
+       <span class="keywordflow">case</span> 16:
+           CSCTL1 = DCORSEL;
+           <span class="keywordflow">break</span>;
+       <span class="keywordflow">case</span> 20:
+           CSCTL1 = DCORSEL + DCOFSEL0;
+           <span class="keywordflow">break</span>;
+       <span class="keywordflow">case</span> 24:
+           CSCTL1 = DCORSEL + DCOFSEL0 + DCOFSEL1;
+           <span class="keywordflow">break</span>;
+    }
+    <span class="comment">// ACLK source = VLO</span>
+    CSCTL2  = SELA_0;
+    <span class="comment">// SMCLK source = DCO</span>
+    CSCTL2 |= SELS_3;
+    <span class="comment">// MCLK source = DCO</span>
+    CSCTL2 |= SELM_3;
+    <span class="comment">// ACLK divider = 1</span>
+    CSCTL3  = DIVA_0;
+    <span class="comment">// SMCLK divider = 1</span>
+    CSCTL3 |= DIVS_0;
+    <span class="comment">// MCLK divider = 1</span>
+    CSCTL3 |= DIVM_0;
+<span class="preprocessor">#endif</span>
+<span class="preprocessor"></span>
+}
+</pre></div>
+</div>
+</div>
+</div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="navelem"><a class="el" href="delay_8h.html">delay.h</a>      </li>
+      <li class="navelem"><a class="el" href="clock_8h.html">clock.h</a>      </li>
       <li class="footer">Generated on Wed Mar 7 2012 23:14:24 for LaunchLib by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
