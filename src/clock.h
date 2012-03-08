@@ -1,5 +1,5 @@
 /**
-@file adc.h
+@file clock.h
 @brief Definitions for clock config helper macros
 @author Joe Brown
 */

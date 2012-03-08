@@ -1,3 +1,8 @@
+/**
+@file hardware.h
+@brief Definitions hardware config (ports, pins, and module settings)
+@author Joe Brown
+*/
 #ifndef HARDWARE_H
 #define HARDWARE_H
 //http://patorjk.com/software/taag/
