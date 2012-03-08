@@ -420,7 +420,7 @@ void UartPrintf(uint8_t *format, ...)
                     }
                     UartPutIToA(current_short_int, DECIMAL);
                     break;
-                case 'x':   // 16 or 32 bit hex
+                case 'x':   // 32 bit hex
                     current_long_int = va_arg(arg_list, uint32_t);
                     UartPutIToA(current_long_int, HEX);
                     break;
