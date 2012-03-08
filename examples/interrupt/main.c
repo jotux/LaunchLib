@@ -1,31 +1,30 @@
 #include "src/global.h"
 #include "src/hardware.h"
 #include "src/interrupt.h"
+#include "src/clock.h"
 
-void ToggleRedLed(void);
+void ToggleLed1(void);
 
 void HardwareInit(void)
 {
-    IO_DIRECTION(RED_LED,OUTPUT);
-    RED_LED_OFF();
-
+    IO_DIRECTION(LED1,OUTPUT);
     IO_DIRECTION(SW1,INPUT);
 }
 
 void main(void)
 {
     WD_STOP();
-    SET_CLOCK(16);
+    ClockConfig(16);
     HardwareInit();
 
     // attach function to SW1 falling edge interrupt
-    InterruptAttach(SW1_PORT,SW1_PIN,ToggleRedLed,FALLING_EDGE);
+    InterruptAttach(SW1_PORT,SW1_PIN,ToggleLed1,FALLING_EDGE);
 
     _EINT();
     LPM0;
 }
 
-void ToggleRedLed(void)
+void ToggleLed1(void)
 {
-    RED_LED_TOGGLE();
+    LED_TOGGLE(1);
 }

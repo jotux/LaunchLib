@@ -2,27 +2,31 @@
 #include "src/hardware.h"
 #include "src/delay.h"
 #include "src/uart.h"
+#include "src/clock.h"
 
 void HardwareInit(void)
 {
+#ifdef __MSP430G2553__
     IO_FUNCTION(UART_TX,SPECIAL);
     IO_FUNCTION(UART_RX,SPECIAL);
+#endif
     IO_AUX_FUNCTION(UART_TX,SPECIAL);
     IO_AUX_FUNCTION(UART_RX,SPECIAL);
 }
 
 void main(void)
 {
+#ifndef NON_BLOCKING_UART_TX
+    #error "Define NON_BLOCKING_UART_TX in hardware.h for this example"
+#endif
     WD_STOP();
-    SET_CLOCK(16);
+    ClockConfig(16);
     HardwareInit();
     // init uart at 115k
     UartInit(115200);
 
     _EINT();
-    // Make sure NON_BLOCKING_UART_RX is defined in hardware.h and
-    // MAX_UART_TX_BUF_CNT is large enough to support the inrush of characters
-    // MAX_UART_TX_BUF_CNT = 200 will work well for this demo
+
     UartPrintf("\n\nThis is %s\n",        "a string");
     UartPrintf("Hex number(16): 0x%x\n",  60000);
     UartPrintf("Hex number(32): 0x%x\n",  100000);

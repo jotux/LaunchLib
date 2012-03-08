@@ -1,4 +1,4 @@
-/** 
+/**
 @file uart.h
 @brief Definitions, data structues and prototypes for UART
 @author Joe Brown
@@ -6,8 +6,26 @@
 #ifndef UART_H
 #define UART_H
 
-#define UCBRS_OFFSET 1
-#define USBRF_OFFSET 4
+#ifdef __MSP430G2553__
+    #define UART_INT_ENABLE     IE2
+    #define UART_INT_FLAG       IFG2
+    #define UART_RX_INT_VECTOR  USCIAB0RX_VECTOR
+    #define UART_TX_INT_VECTOR  USCIAB0TX_VECTOR
+    #define UCBRS_OFFSET        1
+    #define USBRF_OFFSET        4
+#elif __MSP430FR5739__
+    /** @todo 5739 has USCIA0 and A1, it would be nice to target both */
+    #define UART_INT_VECTOR     USCI_A0_VECTOR
+    #define UART_INT_ENABLE     UCA0IE
+    #define UART_INT_FLAG       UCA0IFG
+    #define UCA0RXIFG           UCRXIFG
+    #define UCA0TXIFG           UCTXIFG
+    #define UCA0MCTL            UCA0MCTLW
+    #define UCA0TXIE            UCTXIE
+    #define UCA0RXIE            UCRXIE
+    #define UCBRS_OFFSET        4
+    #define USBRF_OFFSET        8
+#endif
 
 enum NUMBER_BASE {DECIMAL, HEX};
 
@@ -24,7 +42,7 @@ typedef struct
 /**
 @brief Enqueue data into the rx buffer
 @details
-Take data from the hardware rx buffer and enqueue it in a circular buffer for 
+Take data from the hardware rx buffer and enqueue it in a circular buffer for
 retrieval.
 @param[in] data data to enqueue
 @return 0 for success -1 for failure
@@ -163,4 +181,4 @@ Check rx_size to see if any data is pending
 */
 extern uint8_t UartBufEmpty(void);
 
-#endif //UART_H
+#endif // UART_H

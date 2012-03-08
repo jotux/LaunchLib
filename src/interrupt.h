@@ -1,4 +1,4 @@
-/** 
+/**
 @file interrupt.h
 @brief Definitions, data structues and prototypes for GPIO interrupt handler
 @author Joe Brown
@@ -31,6 +31,16 @@ Index into the p1 or p2 array and null the corresponding function pointer.
 extern void InterruptDetach(uint8_t port, uint8_t pin);
 
 /**
+@brief Search interrupt function pointer lists and run functions corresponding
+to the interrupt that fired
+@details
+Go through each bit in the interrupt flag to see if it is set. If it is run the
+corresponding function.
+@param[in] port port to search
+*/
+static void InterruptRunOnPort(uint8_t port);
+
+/**
 @brief Port 1 interrupt service routine
 @details
 Go through each bit in the interrupt flag to see if it is set. If it is run the
@@ -46,4 +56,4 @@ corresponding function.
 */
 __interrupt void Port2(void);
 
-#endif
+#endif // INTERRUPT_H

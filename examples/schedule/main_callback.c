@@ -1,44 +1,42 @@
 #include "src/global.h"
 #include "src/hardware.h"
 #include "src/schedule.h"
+#include "src/clock.h"
 
-void BlinkRedLed(void);
-void BlinkGreenLed(void);
+void BlinkLed1(void);
+void BlinkLed1(void);
 
 void HardwareInit(void)
 {
-    IO_DIRECTION(RED_LED,OUTPUT);
-    RED_LED_OFF();
-
-    IO_DIRECTION(GREEN_LED,OUTPUT);
-    GREEN_LED_OFF();
+    IO_DIRECTION(LED1,OUTPUT);
+    IO_DIRECTION(LED2,OUTPUT);
 }
 
 void main(void)
 {
     WD_STOP();
-    SET_CLOCK(16);
+    ClockConfig(16);
     HardwareInit();
 
     // Init the timer
     ScheduleTimerInit();
     // register functions and define their period
-    CallbackRegister(BlinkRedLed,   100ul * _millisecond);
-    CallbackRegister(BlinkGreenLed, 101ul * _millisecond);
+    CallbackRegister(BlinkLed1, 100ul * _millisecond);
+    CallbackRegister(BlinkLed1, 101ul * _millisecond);
     // callbacks are disabled by default, so enable them
-    CallbackMode(BlinkRedLed,   ENABLED);
-    CallbackMode(BlinkGreenLed, ENABLED);
+    CallbackMode(BlinkLed1,   ENABLED);
+    CallbackMode(BlinkLed2, ENABLED);
 
     _EINT();
     LPM0;
 }
 
-void BlinkRedLed(void)
+void BlinkLed1(void)
 {
-    RED_LED_TOGGLE();
+    LED_TOGGLE(1);
 }
 
-void BlinkGreenLed(void)
+void BlinkLed2(void)
 {
-    GREEN_LED_TOGGLE();
+    LED_TOGGLE(2);
 }

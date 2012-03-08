@@ -2,39 +2,33 @@
 #include "src/hardware.h"
 #include "src/schedule.h"
 #include "src/interrupt.h"
+#include "src/clock.h"
 
-void ToggleGreenLed(void);
+void ToggleLed2(void);
 
 void HardwareInit(void)
 {
-    IO_DIRECTION(RED_LED,OUTPUT);
-    RED_LED_OFF();
-
-    IO_DIRECTION(GREEN_LED,OUTPUT);
-    GREEN_LED_OFF();
+    IO_DIRECTION(LED1,OUTPUT);
+    IO_DIRECTION(LED2,OUTPUT);
 }
 
 void main(void)
 {
     WD_STOP();
-    SET_CLOCK(16);
+    ClockConfig(16);
     ScheduleTimerInit();
     HardwareInit();
 
-    // call ToggleGreenLed and it will continue to reschedule itself
-    ToggleGreenLed();
+    // call ToggleLed2 and it will continue to reschedule itself forever
+    ToggleLed2();
     _EINT();
     LPM0;
 }
 
 
 
-void ToggleGreenLed(void)
+void ToggleLed2(void)
 {
-    static uint8_t cnt = 0;
-    GREEN_LED_TOGGLE();
-    if (cnt++ < 20)
-    {
-        CalloutRegister(ToggleGreenLed, (100ul * _millisecond));
-    }
+    LED_TOGGLE(2);
+    CalloutRegister(ToggleLed2, (100ul * _millisecond));
 }

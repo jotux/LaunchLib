@@ -1,11 +1,18 @@
 #include "src/global.h"
 #include "src/hardware.h"
 #include "src/adc.h"
+#include "src/clock.h"
+
+void HardwareInit(void)
+{
+    IO_DIRECTION(LED1,OUTPUT);
+    IO_DIRECTION(SW1,INPUT);
+}
 
 void main(void)
 {
     WD_STOP();
-    SET_CLOCK(16);
+    ClockConfig(16);
     HardwareInit();
 
     // Init P1.5 as ADC channel
@@ -16,11 +23,11 @@ void main(void)
     {
         if (AdcRead(5) > 512) // P1.5 > 1.25Vdc?
         {
-            RED_LED_ON();
+            LED_ON(1);
         }
         else
         {
-            RED_LED_OFF();
+            LED_OFF(1);
         }
     }
 }

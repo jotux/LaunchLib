@@ -1,7 +1,7 @@
 ##An easy-to-use library to help kickstart your launchpad development.
 ![Pew Pew Pew](http://jotux.github.com/LaunchLib/logo.png)
 
-### MSP430G2553 currently required to use all functionality.
+### Support for MSP430G2553 and MSP430FR5739
 
 ##Docs can be found [here](http://jotux.github.com/LaunchLib/docs/index.html)
 
@@ -43,5 +43,6 @@
 ##TODO
  - I<sup>2</sup>C
  - SPI
+ - More hardware support
 
 Code compatible with CCS and IAR.

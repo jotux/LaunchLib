@@ -1,129 +1,195 @@
 #include "src/global.h"
 #include "src/hardware.h"
 #include "src/schedule.h"
-#include "src/interrupt.h"
+#include "src/uart.h"
 #include "src/state.h"
+#include "src/adc.h"
+#include "src/clock.h"
 
 // Event generating functions
-void QueueButton(void);
 void TimerTick(void);
+void UartRxPoll(void);
 
-// Event definitions
-// do NOT explicitly set values and DEFAULT_EVENTS must be first
-enum Event {DEFAULT_EVENTS, BUTTON_DOWN, TIMER_TICK, TICK_EXPIRE};
-
-// State functions (functions that consume events)
-void state_idle(uint8_t event);
-void state_blink_red(uint8_t event);
-void state_blink_green(uint8_t event);
-void state_blink_both(uint8_t event);
-
-// Transition rules
-Transition rules[] =
+// Event definitions (DEFAULT_EVENTS must be included)
+enum
 {
-    {state_idle,        BUTTON_DOWN, state_blink_red  },
-    {state_blink_red,   BUTTON_DOWN, state_blink_green},
-    {state_blink_green, TICK_EXPIRE, state_blink_both },
-    {state_blink_both,  BUTTON_DOWN, state_idle       }
+    DEFAULT_EVENTS,
+    TIMER_TICK,
+    RECIEVED_COMMAND,
+    GO_BLINK_LED1,
+    GO_BLINK_LED2,
+    GO_READ_ADC,
+    RETURN_TO_IDLE
 };
 
+// State functions
+void state_idle(uint8_t event);
+void state_blink_1(uint8_t event);
+void state_blink_2(uint8_t event);
+void state_read_adc(uint8_t event);
 
+//Rules
+Transition rules[] =
+{
+    {state_idle,        GO_BLINK_LED1,  state_blink_1    },
+    {state_idle,        GO_BLINK_LED2,  state_blink_2    },
+    {state_idle,        GO_READ_ADC,    state_read_adc   },
+    {state_blink_1,     RETURN_TO_IDLE, state_idle       },
+    {state_blink_2,     RETURN_TO_IDLE, state_idle       },
+    {state_read_adc,    RETURN_TO_IDLE, state_idle       },
+};
 
 // Current state pointer
 State state = state_idle;
 
+// Current char in rx buffer
+static uint8_t current_command;
+
 void HardwareInit(void)
 {
-    IO_DIRECTION(RED_LED,OUTPUT);
-    RED_LED_OFF();
+    IO_DIRECTION(LED1,OUTPUT);
+    IO_DIRECTION(LED2,OUTPUT);
 
-    IO_DIRECTION(GREEN_LED,OUTPUT);
-    GREEN_LED_OFF();
-
-    IO_DIRECTION(SW1,INPUT);
+#ifdef __MSP430G2553__
+    IO_FUNCTION(UART_TX,SPECIAL);
+    IO_FUNCTION(UART_RX,SPECIAL);
+#endif
+    IO_AUX_FUNCTION(UART_TX,SPECIAL);
+    IO_AUX_FUNCTION(UART_RX,SPECIAL);
 }
 
 void main(void)
 {
+#ifndef NON_BLOCKING_UART_RX
+    #error "Define NON_BLOCKING_UART_RX in hardware.h for this example"
+#endif
     WD_STOP();
-    SET_CLOCK(16);
-    ScheduleTimerInit();
+    ClockConfig(16);
     HardwareInit();
-
-    InterruptAttach(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
-    CallbackRegister(TimerTick, 500ul * _millisecond);
+    ScheduleTimerInit();
+    AdcInit();
+    UartInit(115200);
     StateMachineInit(rules, sizeof(rules));
-    _EINT();
 
+    // register receive polling callback
+    CallbackRegister(UartRxPoll, 50ul * _millisecond);
+    CallbackMode(UartRxPoll, ENABLED);
+    // register timer tick callback (for led blinking)
+    CallbackRegister(TimerTick, 100ul * _millisecond);
+
+    _EINT();
     while (1)
     {
-        StateRun(&state);
+        StateMachineRun(&state);
     }
-}
-
-void QueueButton(void)
-{
-    EnqueueEvent(BUTTON_DOWN);
 }
 
 void TimerTick(void)
 {
-    EnqueueEvent(TIMER_TICK);
+    StateMachinePublishEvent(TIMER_TICK);
 }
 
-void state_idle(uint8_t event){}
-
-void state_blink_red(uint8_t event)
+void UartRxPoll(void)
 {
-    switch(event)
+    // if there is a character pending
+    if (!UartBufEmpty())
     {
-        case ENTER:
-            CallbackMode(TimerTick, ENABLED);
-            break;
-        case TIMER_TICK:
-            RED_LED_TOGGLE();
-            break;
-        case EXIT:
-            RED_LED_OFF();
-            break;
+        // stick it in the current command buffer
+        UartRead(&current_command,1);
+        StateMachinePublishEvent(RECIEVED_COMMAND);
     }
 }
 
-void state_blink_green(uint8_t event)
+void state_idle(uint8_t event)
 {
-    static uint8_t tick_cnt = 0;
     switch(event)
     {
         case ENTER:
-            InterruptDetach(SW1_PORT, SW1_PIN);
-            break;
-        case TIMER_TICK:
-            GREEN_LED_TOGGLE();
-            if (tick_cnt++ > 4)
+        CallbackMode(TimerTick, DISABLED);
+
+        UartPrintf("\n:::::::::::::MENU::::::::::::::\n");
+        UartPrintf("1 - LED1\n");
+        UartPrintf("2 - LED2\n");
+        UartPrintf("3 - Read ADC from P1.5\n");
+        UartPrintf("Press ENTER to return to this menu\n");
+
+        break;
+        case RECIEVED_COMMAND:
+            switch(current_command)
             {
-                tick_cnt = 0;
-                EnqueueEvent(TICK_EXPIRE);
+                case '1':
+                    StateMachinePublishEvent(GO_BLINK_LED1);
+                    break;
+                case '2':
+                    StateMachinePublishEvent(GO_BLINK_LED2);
+                    break;
+                case '3':
+                    StateMachinePublishEvent(GO_READ_ADC);
+                    break;
             }
             break;
         case EXIT:
-            InterruptAttach(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
-            GREEN_LED_OFF();
+            CallbackMode(TimerTick, ENABLED);
             break;
     }
 }
 
-void state_blink_both(uint8_t event)
+void state_blink_1(uint8_t event)
 {
     switch(event)
     {
+        case ENTER:
+            UartPrintf("\nNow Blinking LED1. Press ENTER to return to IDLE\n");
+            break;
+        case RECIEVED_COMMAND:
+            if(current_command == '\r')
+            {
+                StateMachinePublishEvent(RETURN_TO_IDLE);
+            }
+            break;
         case TIMER_TICK:
-            GREEN_LED_TOGGLE();
-            RED_LED_TOGGLE();
+            LED_TOGGLE(1);
             break;
         case EXIT:
-            GREEN_LED_OFF();
-            RED_LED_OFF();
-            CallbackMode(TimerTick, DISABLED);
+            LED_OFF(1);
+            break;
+    }
+}
+
+void state_blink_2(uint8_t event)
+{
+    switch(event)
+    {
+        case ENTER:
+            UartPrintf("\nNow Blinking LED2. Press ENTER to return to IDLE\n");
+            break;
+        case RECIEVED_COMMAND:
+            if(current_command == '\r')
+            {
+                StateMachinePublishEvent(RETURN_TO_IDLE);
+            }
+            break;
+        case TIMER_TICK:
+            LED_TOGGLE(2);
+            break;
+        case EXIT:
+            LED_OFF(2);
+            break;
+    }
+}
+
+void state_read_adc(uint8_t event)
+{
+    switch(event)
+    {
+        case RECIEVED_COMMAND:
+            if(current_command == '\r')
+            {
+                StateMachinePublishEvent(RETURN_TO_IDLE);
+            }
+            break;
+        case TIMER_TICK:
+            UartPrintf("Adc value = %u\n",AdcRead(0));
             break;
     }
 }

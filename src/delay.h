@@ -1,4 +1,4 @@
-/** 
+/**
 @file delay.h
 @brief Definition of delay
 @author Joe Brown
@@ -6,7 +6,7 @@
 #ifndef DELAY_H
 #define DELAY_H
 
-/** 
+/**
 @brief Delay for selected time
 @details
 Continuously check global now variable to see if it has passed the delay_time
@@ -14,4 +14,4 @@ Continuously check global now variable to see if it has passed the delay_time
 */
 extern void Delay(uint32_t delay_time);
 
-#endif
+#endif // DELAY_H

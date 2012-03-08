@@ -4,6 +4,7 @@
 #include "src/uart.h"
 #include "src/state.h"
 #include "src/adc.h"
+#include "src/clock.h"
 
 // Event generating functions
 void TimerTick(void);
@@ -15,26 +16,26 @@ enum
     DEFAULT_EVENTS,
     TIMER_TICK,
     RECIEVED_COMMAND,
-    GO_BLINK_RED,
-    GO_BLINK_GREEN,
+    GO_BLINK_LED1,
+    GO_BLINK_LED2,
     GO_READ_ADC,
     RETURN_TO_IDLE
 };
 
 // State functions
 void state_idle(uint8_t event);
-void state_blink_red(uint8_t event);
-void state_blink_green(uint8_t event);
+void state_blink_1(uint8_t event);
+void state_blink_2(uint8_t event);
 void state_read_adc(uint8_t event);
 
 //Rules
 Transition rules[] =
 {
-    {state_idle,        GO_BLINK_RED,   state_blink_red  },
-    {state_idle,        GO_BLINK_GREEN, state_blink_green},
+    {state_idle,        GO_BLINK_LED1,  state_blink_1    },
+    {state_idle,        GO_BLINK_LED2,  state_blink_2    },
     {state_idle,        GO_READ_ADC,    state_read_adc   },
-    {state_blink_red,   RETURN_TO_IDLE, state_idle       },
-    {state_blink_green, RETURN_TO_IDLE, state_idle       },
+    {state_blink_1,     RETURN_TO_IDLE, state_idle       },
+    {state_blink_2,     RETURN_TO_IDLE, state_idle       },
     {state_read_adc,    RETURN_TO_IDLE, state_idle       },
 };
 
@@ -46,28 +47,27 @@ static uint8_t current_command;
 
 void HardwareInit(void)
 {
-    IO_DIRECTION(RED_LED,OUTPUT);
-    RED_LED_OFF();
+    IO_DIRECTION(LED1,OUTPUT);
+    IO_DIRECTION(LED2,OUTPUT);
 
-    IO_DIRECTION(GREEN_LED,OUTPUT);
-    GREEN_LED_OFF();
-
-    IO_DIRECTION(SW1,INPUT);
-
+#ifdef __MSP430G2553__
     IO_FUNCTION(UART_TX,SPECIAL);
     IO_FUNCTION(UART_RX,SPECIAL);
+#endif
     IO_AUX_FUNCTION(UART_TX,SPECIAL);
     IO_AUX_FUNCTION(UART_RX,SPECIAL);
 }
 
 void main(void)
 {
+#ifndef NON_BLOCKING_UART_RX
+    #error "Define NON_BLOCKING_UART_RX in hardware.h for this example"
+#endif
     WD_STOP();
-    SET_CLOCK(16);
+    ClockConfig(16);
     HardwareInit();
     ScheduleTimerInit();
-    AdcInit(5);
-    // Make sure NON_BLOCKING_UART_RX is defined in hardware.h
+    AdcInit();
     UartInit(115200);
     StateMachineInit(rules, sizeof(rules));
 
@@ -108,8 +108,8 @@ void state_idle(uint8_t event)
         CallbackMode(TimerTick, DISABLED);
 
         UartPrintf("\n:::::::::::::MENU::::::::::::::\n");
-        UartPrintf("1 - Blink Red LED\n");
-        UartPrintf("2 - Blink Green LED\n");
+        UartPrintf("1 - LED1\n");
+        UartPrintf("2 - LED2\n");
         UartPrintf("3 - Read ADC from P1.5\n");
         UartPrintf("Press ENTER to return to this menu\n");
 
@@ -118,10 +118,10 @@ void state_idle(uint8_t event)
             switch(current_command)
             {
                 case '1':
-                    StateMachinePublishEvent(GO_BLINK_RED);
+                    StateMachinePublishEvent(GO_BLINK_LED1);
                     break;
                 case '2':
-                    StateMachinePublishEvent(GO_BLINK_GREEN);
+                    StateMachinePublishEvent(GO_BLINK_LED2);
                     break;
                 case '3':
                     StateMachinePublishEvent(GO_READ_ADC);
@@ -134,12 +134,12 @@ void state_idle(uint8_t event)
     }
 }
 
-void state_blink_red(uint8_t event)
+void state_blink_1(uint8_t event)
 {
     switch(event)
     {
         case ENTER:
-            UartPrintf("\nNow Blinking RED LED. Press ENTER to return to IDLE\n");
+            UartPrintf("\nNow Blinking LED1. Press ENTER to return to IDLE\n");
             break;
         case RECIEVED_COMMAND:
             if(current_command == '\r')
@@ -148,20 +148,20 @@ void state_blink_red(uint8_t event)
             }
             break;
         case TIMER_TICK:
-            RED_LED_TOGGLE();
+            LED_TOGGLE(1);
             break;
         case EXIT:
-            RED_LED_OFF();
+            LED_OFF(1);
             break;
     }
 }
 
-void state_blink_green(uint8_t event)
+void state_blink_2(uint8_t event)
 {
     switch(event)
     {
         case ENTER:
-            UartPrintf("\nNow Blinking GREEN LED. Press ENTER to return to IDLE\n");
+            UartPrintf("\nNow Blinking LED2. Press ENTER to return to IDLE\n");
             break;
         case RECIEVED_COMMAND:
             if(current_command == '\r')
@@ -170,10 +170,10 @@ void state_blink_green(uint8_t event)
             }
             break;
         case TIMER_TICK:
-            GREEN_LED_TOGGLE();
+            LED_TOGGLE(2);
             break;
         case EXIT:
-            GREEN_LED_OFF();
+            LED_OFF(2);
             break;
     }
 }
@@ -189,7 +189,7 @@ void state_read_adc(uint8_t event)
             }
             break;
         case TIMER_TICK:
-            UartPrintf("Adc value = %u\n",AdcRead(5));
+            UartPrintf("Adc value = %u\n",AdcRead(0));
             break;
     }
 }

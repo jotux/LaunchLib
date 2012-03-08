@@ -1,4 +1,4 @@
-/** 
+/**
 @file uart.c
 @brief Blocking and non-blocking UART interface
 @author Joe Brown
@@ -10,13 +10,54 @@
 ////////////////////////////////////////////////////////////////////////////////
 //                              INIT
 ////////////////////////////////////////////////////////////////////////////////
-// see userguide table 15-5
 /** @brief baud rate lookup table */
-static const BaudRateConfig rate_table[5] = {{  9600, 16000000, 104, 0,  3},
-                                             { 19200, 16000000,  52, 0,  1},
-                                             { 38400, 16000000,  26, 0,  1},
-                                             { 57600, 16000000,  17, 0,  6},
-                                             {115200, 16000000,   8, 0, 11}};
+static const BaudRateConfig rate_table[] =
+{
+#ifdef __MSP430G2553__
+    // see userguide table 15-5
+    {  9600,  1000000,   6,    0,  8},
+    { 19200,  1000000,   3,    0,  4},
+    { 57600,  1000000,   1,    7,  0},
+    {  9600,  8000000,  52,    0,  1},
+    { 19200,  8000000,  26,    0,  1},
+    { 38400,  8000000,  13,    0,  0},
+    { 57600,  8000000,   8,    0, 11},
+    {115200,  8000000,   4,    5,  3},
+    {  9600, 12000000,  78,    0,  2},
+    { 19200, 12000000,  39,    0,  1},
+    { 38400, 12000000,  19,    0,  8},
+    { 57600, 12000000,  13,    0,  0},
+    {115200, 12000000,   6,    0,  8},
+    {  9600, 16000000, 104,    0,  3},
+    { 19200, 16000000,  52,    0,  1},
+    { 38400, 16000000,  26,    0,  1},
+    { 57600, 16000000,  17,    0,  6},
+    {115200, 16000000,   8,    0, 11}
+#elif __MSP430FR5739__
+    // see userguide table 18-5
+    {  9600,  8000000,  52, 0x49,  1},
+    { 19200,  8000000,  26, 0xB6,  0},
+    { 38400,  8000000,  13, 0x84,  0},
+    { 57600,  8000000,   8, 0xF7, 10},
+    {115200,  8000000,   4, 0x55,  5},
+    {  9600, 16000000, 104, 0xD6,  2},
+    { 19200, 16000000,  52, 0x49,  1},
+    { 38400, 16000000,  26, 0xB6,  0},
+    { 57600, 16000000,  17, 0xDD,  5},
+    {115200, 16000000,   8, 0xF7, 10},
+    {  9600, 20000000, 104, 0x25,  3},
+    { 19200, 20000000,  52, 0xD6,  1},
+    { 38400, 20000000,  26, 0xEE,  8},
+    { 57600, 20000000,  17, 0x22, 11},
+    {115200, 20000000,   8, 0xAD, 13},
+    {  9600, 24000000, 156, 0x00,  4},
+    { 19200, 24000000,  78, 0x00,  2},
+    { 38400, 24000000,  39, 0x00,  1},
+    { 57600, 24000000,  26, 0xD6,  0},
+    {115200, 24000000,  13, 0x49,  0}
+#endif
+};
+
 void UartInit(uint32_t baud_rate)
 {
     uint8_t i = 0;
@@ -33,7 +74,6 @@ void UartInit(uint32_t baud_rate)
 
     // SMCLK sources uart
     UCA0CTL1 |= UCSSEL_2;
-
     // set the divisor
     UCA0BR0 = rate_table[index].ucbr;
     // we always use modulation and never go below 9600 baud which means BR will
@@ -41,7 +81,7 @@ void UartInit(uint32_t baud_rate)
     UCA0BR1 = 0;
     // UCBRS is at bits 1-3
     UCA0MCTL = rate_table[index].ucbrs << UCBRS_OFFSET;
-    // UCBRS is at bits 4-7
+    // UCBRF is at bits 4-7
     UCA0MCTL |= rate_table[index].ucbrf << USBRF_OFFSET;
     // set UCOS16 to enable oversampling
     UCA0MCTL |= UCOS16;
@@ -50,10 +90,10 @@ void UartInit(uint32_t baud_rate)
     UCA0CTL1 &= ~UCSWRST;
     // Enable USCI_A0 RX and TX interrupts
 #ifdef NON_BLOCKING_UART_TX
-    IE2 |= UCA0TXIE;
+    UART_INT_ENABLE |= UCA0TXIE;
 #endif
 #ifdef NON_BLOCKING_UART_RX
-    IE2 |= UCA0RXIE;
+    UART_INT_ENABLE |= UCA0RXIE;
 #endif
 }
 
@@ -145,12 +185,6 @@ error:
     _EINT();
     return (0);
 }
-
-#pragma vector=USCIAB0RX_VECTOR
-__interrupt void UartRxInt(void)
-{
-    RxBufferEnqueue(UCA0RXBUF);
-}
 #endif // NON_BLOCKING_UART_TX
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -212,13 +246,55 @@ uint8_t TxBufferDequeue(void)
     }
     return ret;
 }
+#endif //NON_BLOCKING_UART_TX
 
-#pragma vector = USCIAB0TX_VECTOR
+////////////////////////////////////////////////////////////////////////////////
+//                              Interrupt handlers
+////////////////////////////////////////////////////////////////////////////////
+#ifdef __MSP430G2553__
+
+#ifdef NON_BLOCKING_UART_RX
+#pragma vector=UART_RX_INT_VECTOR
+__interrupt void UartRxInt(void)
+{
+    RxBufferEnqueue(UCA0RXBUF);
+}
+#endif //NON_BLOCKING_UART_RX
+
+#ifdef NON_BLOCKING_UART_TX
+#pragma vector = UART_TX_INT_VECTOR
 __interrupt void UartTxInt(void)
 {
-    UCA0TXBUF = TxBufferDequeue();
 }
 #endif //NON_BLOCKING_UART_TX
+
+#elif __MSP430FR5739__
+
+#if defined NON_BLOCKING_UART_RX || defined NON_BLOCKING_UART_TX
+#pragma vector=USCI_A0_VECTOR
+__interrupt void USCI_A0_ISR(void)
+{
+    switch(__even_in_range(UCA0IV,0x08))
+    {
+        case 0: // no interrupt
+            break;
+        case 2: // RXIFG
+#ifdef NON_BLOCKING_UART_RX
+            RxBufferEnqueue(UCA0RXBUF);
+#endif
+            break;
+        case 4: //TXIFG
+#ifdef NON_BLOCKING_UART_TX
+            UCA0TXBUF = TxBufferDequeue();
+#endif
+            break;
+        default:
+            break;
+    }
+}
+#endif
+
+#endif
 ////////////////////////////////////////////////////////////////////////////////
 //                              Printf implementation
 ////////////////////////////////////////////////////////////////////////////////
@@ -393,7 +469,7 @@ uint8_t UartGetC(void)
     RxBufferDequeue(&buf,1);
     return buf;
 #else
-    while (!(IFG2 & UCA0RXIFG));    // RX a byte?
+    while (!(UART_INT_FLAG & UCA0RXIFG));    // RX a byte?
     return UCA0RXBUF;
 #endif
 
@@ -404,7 +480,7 @@ void UartPutC(uint8_t data)
 #ifdef NON_BLOCKING_UART_TX
     TxBufferEnqueue(data);
 #else
-    while (!(IFG2 & UCA0TXIFG));    // TX buffer ready?
+    while (!(UART_INT_FLAG & UCA0TXIFG));    // TX buffer ready?
     UCA0TXBUF = data;
 #endif
 }

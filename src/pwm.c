@@ -1,4 +1,4 @@
-/** 
+/**
 @file pwm.c
 @brief Hardware pulse width modulation handler
 @author Joe Brown
@@ -12,22 +12,18 @@ static PwmOutput pwm_out[NUM_PWM_CHANNELS];
 
 void PwmInit(uint8_t channel)
 {
+#define TA_INIT_CASE(x)                 \
+    case x:                             \
+        TA##x##CCR0 = 0;                \
+        TA##x##CCTL1 = OUTMOD_7;        \
+        TA##x##CCR1 = 0;                \
+        TA##x##CTL = TASSEL_2 + MC_1;   \
+        break;
+
     switch(channel)
     {
-        case 0:
-            TA0CCR0 = 0; // period
-            TA0CCTL1 = OUTMOD_7;
-            TA0CCR1 = 0; // duty
-            TA0CTL = TASSEL_2 + MC_1;
-            break;
-        case 1:
-            TA1CCR0 = 0;
-            TA1CCTL1 = OUTMOD_7;
-            TA1CCR1 = 0;
-            TA1CTL = TASSEL_2 + MC_1;
-            break;
-        default:
-            break;
+        TA_INIT_CASE(0);
+        TA_INIT_CASE(1);
     }
 }
 
@@ -41,14 +37,18 @@ void PwmSetPeriod(uint8_t channel, uint32_t frequency)
     uint16_t freq_to_set = CLOCK_DCO / frequency;
 
     pwm_out[channel].frequency = freq_to_set;
-    if (channel)
+
+#define TACCR0_CASE(x)              \
+    case x:                         \
+        TA##x##CCR0 = freq_to_set;  \
+        break;
+
+    switch (channel)
     {
-        TA1CCR0 = freq_to_set;
+        TACCR0_CASE(0);
+        TACCR0_CASE(1);
     }
-    else
-    {
-        TA0CCR0 = freq_to_set;
-    }
+
     // fix the duty cycle
     PwmSetDuty(channel,pwm_out[channel].duty);
 }
@@ -62,12 +62,15 @@ void PwmSetDuty(uint8_t channel, uint8_t duty)
     uint32_t duty_to_set = (duty * pwm_out[channel].frequency) / 100;
 
     pwm_out[channel].duty = duty;
-    if (channel)
+
+#define TACCR1_CASE(x)              \
+    case x:                         \
+        TA##x##CCR1 = duty_to_set;  \
+        break;
+
+    switch (channel)
     {
-        TA1CCR1 = duty_to_set;
-    }
-    else
-    {
-        TA0CCR1 = duty_to_set;
+        TACCR1_CASE(0);
+        TACCR1_CASE(1);
     }
 }

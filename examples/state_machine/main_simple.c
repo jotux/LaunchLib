@@ -3,6 +3,7 @@
 #include "src/schedule.h"
 #include "src/interrupt.h"
 #include "src/state.h"
+#include "src/clock.h"
 
 // Event generating functions
 void QueueButton(void);
@@ -14,17 +15,17 @@ enum Event {DEFAULT_EVENTS, BUTTON_DOWN, TIMER_TICK, TICK_EXPIRE};
 
 // State functions (functions that consume events)
 void state_idle(uint8_t event);
-void state_blink_red(uint8_t event);
-void state_blink_green(uint8_t event);
+void state_blink_1(uint8_t event);
+void state_blink_2(uint8_t event);
 void state_blink_both(uint8_t event);
 
 // Transition rules
 Transition rules[] =
 {
-    {state_idle,        BUTTON_DOWN, state_blink_red  },
-    {state_blink_red,   BUTTON_DOWN, state_blink_green},
-    {state_blink_green, TICK_EXPIRE, state_blink_both },
-    {state_blink_both,  BUTTON_DOWN, state_idle       }
+    {state_idle,       BUTTON_DOWN, state_blink_1    },
+    {state_blink_1,    BUTTON_DOWN, state_blink_2    },
+    {state_blink_2,    TICK_EXPIRE, state_blink_both },
+    {state_blink_both, BUTTON_DOWN, state_idle       }
 };
 
 
@@ -34,11 +35,8 @@ State state = state_idle;
 
 void HardwareInit(void)
 {
-    IO_DIRECTION(RED_LED,OUTPUT);
-    RED_LED_OFF();
-
-    IO_DIRECTION(GREEN_LED,OUTPUT);
-    GREEN_LED_OFF();
+    IO_DIRECTION(LED1,OUTPUT);
+    IO_DIRECTION(LED2,OUTPUT);
 
     IO_DIRECTION(SW1,INPUT);
 }
@@ -46,7 +44,7 @@ void HardwareInit(void)
 void main(void)
 {
     WD_STOP();
-    SET_CLOCK(16);
+    ClockConfig(16);
     ScheduleTimerInit();
     HardwareInit();
 
@@ -73,7 +71,7 @@ void TimerTick(void)
 
 void state_idle(uint8_t event){}
 
-void state_blink_red(uint8_t event)
+void state_blink_1(uint8_t event)
 {
     switch(event)
     {
@@ -81,15 +79,15 @@ void state_blink_red(uint8_t event)
             CallbackMode(TimerTick, ENABLED);
             break;
         case TIMER_TICK:
-            RED_LED_TOGGLE();
+            LED_TOGGLE(1);
             break;
         case EXIT:
-            RED_LED_OFF();
+            LED_OFF(1);
             break;
     }
 }
 
-void state_blink_green(uint8_t event)
+void state_blink_2(uint8_t event)
 {
     static uint8_t tick_cnt = 0;
     switch(event)
@@ -98,7 +96,7 @@ void state_blink_green(uint8_t event)
             InterruptDetach(SW1_PORT, SW1_PIN);
             break;
         case TIMER_TICK:
-            GREEN_LED_TOGGLE();
+            LED_TOGGLE(2);
             if (tick_cnt++ > 4)
             {
                 tick_cnt = 0;
@@ -107,7 +105,7 @@ void state_blink_green(uint8_t event)
             break;
         case EXIT:
             InterruptAttach(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
-            GREEN_LED_OFF();
+            LED_OFF(2);
             break;
     }
 }
@@ -117,12 +115,12 @@ void state_blink_both(uint8_t event)
     switch(event)
     {
         case TIMER_TICK:
-            GREEN_LED_TOGGLE();
-            RED_LED_TOGGLE();
+            LED_TOGGLE(1);
+            LED_TOGGLE(2);
             break;
         case EXIT:
-            GREEN_LED_OFF();
-            RED_LED_OFF();
+            LED_OFF(1);
+            LED_OFF(2);
             CallbackMode(TimerTick, DISABLED);
             break;
     }

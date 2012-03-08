@@ -101,4 +101,4 @@ the state based on state transitions.
 */
 extern void StateMachineRun(State* state);
 
-#endif
+#endif // STATE_H

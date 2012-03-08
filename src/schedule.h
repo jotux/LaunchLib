@@ -1,10 +1,16 @@
-/** 
+/**
 @file schedule.h
 @brief Definitions, data structues and prototypes for generic scheduling mechanisms
 @author Joe Brown
 */
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
+
+#ifdef __MSP430G2553__
+    #define WDT_INT_ENABLE IE1
+#elif __MSP430FR5739__
+    #define WDT_INT_ENABLE SFRIE1
+#endif
 
 #define SCHEDULE_VECTOR WDT_VECTOR
 /** @brief function pointer to a callback*/
@@ -121,4 +127,4 @@ map to indicate the slot is vacant.
 */
 extern void CalloutCancel(CalloutFn func);
 
-#endif
+#endif // SCHEDULE_H

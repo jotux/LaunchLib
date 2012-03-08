@@ -1,51 +1,52 @@
 #include "src/global.h"
 #include "src/hardware.h"
 #include "src/schedule.h"
+#include "src/interrupt.h"
+#include "src/clock.h"
 
-void BlinkRedLed(void);
-void ToggleBlinkRedLed(void);
+void BlinkLed1(void);
+void ToggleEnable(void);
 
 void HardwareInit(void)
 {
-    IO_DIRECTION(RED_LED,OUTPUT);
-    RED_LED_OFF();
-
+    IO_DIRECTION(LED1,OUTPUT);
     IO_DIRECTION(SW1,INPUT);
 }
 
 void main(void)
 {
     WD_STOP();
-    SET_CLOCK(16);
+    ClockConfig(16);
     HardwareInit();
 
     // Init the timer
     ScheduleTimerInit();
     // register a function and define its period
-    CallbackRegister(BlinkRedLed,   100ul * _millisecond);
+    CallbackRegister(BlinkLed1, 100ul * _millisecond);
     // attach function to SW1 falling edge interrupt
-    InterruptAttach(SW1_PORT,SW1_PIN,ToggleRedLed,FALLING_EDGE);
+    InterruptAttach(SW1_PORT,SW1_PIN,ToggleEnable,FALLING_EDGE);
 
     _EINT();
     LPM0;
 }
 
-void BlinkRedLed(void)
+void BlinkLed1(void)
 {
-    RED_LED_TOGGLE();
+    LED_TOGGLE(1);
 }
 
-void ToggleBlinkRedLed(void)
+void ToggleEnable(void)
 {
     static uint8_t tog = 0;
     if (tog == FALSE)
     {
         tog = TRUE;
-        CallbackMode(BlinkRedLed, ENABLED);
+        CallbackMode(BlinkLed1, ENABLED);
     }
     else
     {
         tog = FALSE;
-        CallbackMode(BlinkRedLed, DISABLED);
+        LED_OFF(1);
+        CallbackMode(BlinkLed1, DISABLED);
     }
 }

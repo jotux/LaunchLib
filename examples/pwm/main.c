@@ -1,22 +1,23 @@
 #include "src/global.h"
 #include "src/hardware.h"
 #include "src/pwm.h"
+#include "src/clock.h"
 
 void HardwareInit(void)
 {
     IO_DIRECTION(SW1,INPUT);
 
-    IO_DIRECTION(PWM_0,OUTPUT);
-    IO_FUNCTION(PWM_0,SPECIAL);
+    IO_DIRECTION(PWM0,OUTPUT);
+    IO_FUNCTION(PWM0,SPECIAL);
 
-    IO_DIRECTION(PWM_1,OUTPUT);
-    IO_FUNCTION(PWM_1,SPECIAL);
+    IO_DIRECTION(PWM1,OUTPUT);
+    IO_FUNCTION(PWM1,SPECIAL);
 }
 
 void main(void)
 {
     WD_STOP();
-    SET_CLOCK(16);
+    ClockConfig(16);
     HardwareInit();
 
     // Init PWM channel 0 (P1.2). Pwm output pins are specific to the device

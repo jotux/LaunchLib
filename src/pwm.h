@@ -1,6 +1,7 @@
-/** 
+/**
 @file pwm.h
 @brief Definitions, data structues and prototypes for pulse width modulation
+@todo It would be nice to also generate PWM on timer B
 @author Joe Brown
 */
 #ifndef PWM_H
@@ -42,4 +43,4 @@ Set the duty cycle of the  pwm channel
 */
 extern void PwmSetDuty(uint8_t channel, uint8_t duty);
 
-#endif //PWM_H
+#endif // PWM_H

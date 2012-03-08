@@ -1,4 +1,4 @@
-/** 
+/**
 @file schedule.c
 @brief Generic scheduling mechanisms
 @author Joe Brown
@@ -24,8 +24,9 @@ static CalloutEvent callout_store[MAX_CALLOUT_CNT];
 
 void ScheduleTimerInit(void)
 {
-    WDTCTL = WDT_MDLY_8;  // interval = 500us @ 16Mhz
-    IE1 |= WDTIE;         // Enable WDT interrupt
+    /** @todo make this more robust and change depending on DCO freq */
+    WDTCTL = WDT_MDLY_8;        // interval = 500us @ 16Mhz
+    WDT_INT_ENABLE |= WDTIE;    // Enable WDT interrupt
 }
 
 void CallbackRegister(CallbackFn func, uint32_t run_time)

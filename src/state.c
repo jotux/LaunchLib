@@ -18,7 +18,7 @@ static uint8_t start;
 /** @brief number of events in the circular event buffer */
 static uint8_t size;
 /** @brief published events are stored here */
-static uint8_t queue[MAX_EVENT_NUM];
+static uint8_t queue[MAX_EVENT_CNT];
 
 
 /** @brief event queue (published events are stored here) */
@@ -82,10 +82,10 @@ int8_t StateMachinePublishEvent(uint8_t event)
 {
     int8_t ret = -1;
     // event queue full?
-    if (size < MAX_EVENT_NUM)
+    if (size < MAX_EVENT_CNT)
     {
         // add event to queue
-        queue[((start + size) == MAX_EVENT_NUM) ? 0 : (start + size)] = event;
+        queue[((start + size) == MAX_EVENT_CNT) ? 0 : (start + size)] = event;
         // adjust the size
         size++;
         // return success
@@ -103,7 +103,7 @@ uint8_t DequeueEvent(void)
         // save the value we will return
         ret = queue[start];
         // adjust the start
-        start = (start == (MAX_EVENT_NUM - 1)) ? 0 : (start + 1);
+        start = (start == (MAX_EVENT_CNT - 1)) ? 0 : (start + 1);
         // adjust the size
         size--;
     }

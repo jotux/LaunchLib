@@ -1,4 +1,4 @@
-/** 
+/**
 @file global.h
 @brief Definitions and data structures for general use in all files
 @author Joe Brown
@@ -21,8 +21,6 @@ enum {FALSE = 0, TRUE = 1};
 #define CLR_BIT(reg,bit)    ((reg)&=~_BV(bit))
 #define TOG_BIT(reg,bit)    ((reg)^= _BV(bit))
 #define WD_STOP()           (WDTCTL = WDTPW + WDTHOLD)
-#define SET_CLOCK(N)        BCSCTL1 = CALBC1_##N##MHZ; \
-                            DCOCTL  = CALDCO_##N##MHZ;
 
 //types
 typedef unsigned char       uint8_t;
@@ -55,6 +53,7 @@ enum IoFunction {IO = 0, SPECIAL = 1};
 #define IO_FUNCTION(name,fun)           _IO_FUNCTION(name##_PORT,name##_PIN,fun)
 /** @cond IGNORE_DOC */
 #define _IO_FUNCTION(port, pin,fun)     st(__IO_FUNCTION(port,pin,fun);)
+#ifdef __MSP430G2553__
 #define __IO_FUNCTION(port, pin,fun)    if (fun)\
                                         {\
                                             st((P##port##SEL |= _BV(pin)););\
@@ -63,6 +62,16 @@ enum IoFunction {IO = 0, SPECIAL = 1};
                                         {\
                                             st((P##port##SEL &= ~_BV(pin)););\
                                         }
+#elif __MSP430FR5739__
+#define __IO_FUNCTION(port, pin,fun)    if (fun)\
+                                        {\
+                                            st((P##port##SEL0 |= _BV(pin)););\
+                                        }\
+                                        else\
+                                        {\
+                                            st((P##port##SEL0 &= ~_BV(pin)););\
+                                        }
+#endif
 /** @endcond */
 
 
@@ -70,6 +79,7 @@ enum IoFunction {IO = 0, SPECIAL = 1};
 #define IO_AUX_FUNCTION(name,fun)        _IO_AUX_FUNCTION(name##_PORT,name##_PIN,fun)
 /** @cond IGNORE_DOC */
 #define _IO_AUX_FUNCTION(port, pin,fun)  st(__IO_AUX_FUNCTION(port,pin,fun);)
+#ifdef __MSP430G2553__
 #define __IO_AUX_FUNCTION(port, pin,fun) if (fun)\
                                          {\
                                              st((P##port##SEL2 |= _BV(pin)););\
@@ -78,6 +88,16 @@ enum IoFunction {IO = 0, SPECIAL = 1};
                                          {\
                                              st((P##port##SEL2 &= ~_BV(pin)););\
                                          }
+#elif __MSP430FR5739__
+#define __IO_AUX_FUNCTION(port, pin,fun) if (fun)\
+                                         {\
+                                             st((P##port##SEL1 |= _BV(pin)););\
+                                         }\
+                                         else\
+                                         {\
+                                             st((P##port##SEL1 &= ~_BV(pin)););\
+                                         }
+#endif
 /** @endcond */
 
 enum IoState {LOW = 0, HIGH = 1, TOGGLE = 2};

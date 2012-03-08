@@ -2,25 +2,32 @@
 #include "src/hardware.h"
 #include "src/delay.h"
 #include "src/uart.h"
+#include "src/clock.h"
 
 void HardwareInit(void)
 {
+#ifdef __MSP430G2553__
     IO_FUNCTION(UART_TX,SPECIAL);
     IO_FUNCTION(UART_RX,SPECIAL);
+#endif
     IO_AUX_FUNCTION(UART_TX,SPECIAL);
     IO_AUX_FUNCTION(UART_RX,SPECIAL);
 }
 
 void main(void)
 {
+#ifndef NON_BLOCKING_UART_RX
+    #error "Define NON_BLOCKING_UART_RX in hardware.h for this example"
+#endif
+
     WD_STOP();
-    SET_CLOCK(16);
+    ClockConfig(16);
     HardwareInit();
     // init uart at 115k
     UartInit(115200);
 
     _EINT();
-    // Make sure NON_BLOCKING_UART_RX is defined in hardware.h
+
     UartPrintf("\n\nEnter your name: ");
     static uint8_t buf[30];
     uint8_t* cur_char = &buf[0];
