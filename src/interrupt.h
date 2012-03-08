@@ -56,4 +56,20 @@ corresponding function.
 */
 __interrupt void Port2(void);
 
+/**
+@brief Port 3 interrupt service routine
+@details
+Go through each bit in the interrupt flag to see if it is set. If it is run the
+corresponding function.
+*/
+__interrupt void Port3(void);
+
+/**
+@brief Port 4 interrupt service routine
+@details
+Go through each bit in the interrupt flag to see if it is set. If it is run the
+corresponding function.
+*/
+__interrupt void Port4(void);
+
 #endif // INTERRUPT_H
