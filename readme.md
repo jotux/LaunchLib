@@ -40,6 +40,10 @@
    - Selectable blocking/non-blocking RX/TX
    - Built-in compact printf functionality
  
+## LICENSE
+
+All code is released under the supplied (MIT) license unless otherwise stated.
+
 ##TODO
  - I<sup>2</sup>C
  - SPI
