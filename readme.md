@@ -39,7 +39,12 @@
 ### - Uart
    - Selectable blocking/non-blocking RX/TX
    - Built-in compact printf functionality
- 
+
+##Contributing
+
+Please ensure your code fits the [coding standards](https://github.com/jotux/C_standards) before sending a pull request.
+
+
 ## LICENSE
 
 All code is released under the supplied (MIT) license unless otherwise stated.
