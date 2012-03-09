@@ -105,6 +105,10 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Port 1 interrupt service routine.  <a href="#a5bdc84178e450f885a181e2848532f71"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">__interrupt void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a635c67d4a49a7da65aecafcfb826d9b6">Port2</a> (void)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Port 2 interrupt service routine.  <a href="#a635c67d4a49a7da65aecafcfb826d9b6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">__interrupt void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#ae06e1af27a77b84763a999de6d189fb6">Port3</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Port 3 interrupt service routine.  <a href="#ae06e1af27a77b84763a999de6d189fb6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">__interrupt void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#aa7c3e2d8a860c73eb586cb113d91160b">Port4</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Port 4 interrupt service routine.  <a href="#aa7c3e2d8a860c73eb586cb113d91160b"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Definitions, data structues and prototypes for GPIO interrupt handler. </p>
@@ -316,12 +320,52 @@ Functions</h2></td></tr>
 </pre></div>
 </div>
 </div>
+<a class="anchor" id="ae06e1af27a77b84763a999de6d189fb6"></a><!-- doxytag: member="interrupt.h::Port3" ref="ae06e1af27a77b84763a999de6d189fb6" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__interrupt void Port3 </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Port 3 interrupt service routine. </p>
+<p>Go through each bit in the interrupt flag to see if it is set. If it is run the corresponding function. </p>
+
+</div>
+</div>
+<a class="anchor" id="aa7c3e2d8a860c73eb586cb113d91160b"></a><!-- doxytag: member="interrupt.h::Port4" ref="aa7c3e2d8a860c73eb586cb113d91160b" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__interrupt void Port4 </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Port 4 interrupt service routine. </p>
+<p>Go through each bit in the interrupt flag to see if it is set. If it is run the corresponding function. </p>
+
+</div>
+</div>
 </div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="interrupt_8h.html">interrupt.h</a>      </li>
-      <li class="footer">Generated on Wed Mar 7 2012 23:19:46 for LaunchLib by&#160;
+      <li class="footer">Generated on Thu Mar 8 2012 18:28:47 for LaunchLib by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

@@ -29,6 +29,7 @@ var NAVTREE =
       [ "schedule.h", "schedule_8h.html", null ],
       [ "state.c", "state_8c.html", null ],
       [ "state.h", "state_8h.html", null ],
+      [ "tone.h", "tone_8h.html", null ],
       [ "uart.c", "uart_8c.html", null ],
       [ "uart.h", "uart_8h.html", null ]
     ] ],
