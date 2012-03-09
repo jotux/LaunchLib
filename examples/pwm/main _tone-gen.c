@@ -36,6 +36,9 @@ void Rest(enum NOTE_TYPE type)
 
 void HardwareInit(void)
 {
+    IO_DIRECTION(LED1,OUTPUT);
+    IO_DIRECTION(LED2,OUTPUT);
+    
     IO_DIRECTION(PWM0,OUTPUT);
     IO_FUNCTION(PWM0,SPECIAL);
 }
