@@ -19,20 +19,19 @@ typedef struct
 @brief Initialize the PWM hardware channel
 @details
 Init TIMER 0 or 1 with SMCLK as the source in UP mode. Intially set the duty
-cycle and period to 0.
+cycle and frequency to 0.
 @param[in] channel channel to enable pwm generation
 */
 extern void PwmInit(uint8_t channel);
 
 /**
-@brief Configure the period of the specified pwm channel
+@brief Configure the frequency of the specified pwm channel
 @details
-Set the period pwm channel while maintaining the duty cycle percentage.
-cycle and period to 0.
+Set the frequency pwm channel while maintaining the duty cycle percentage.
 @param[in] channel channel configure
 @param[in] frequency frequency in hz to oscillate
 */
-extern void PwmSetPeriod(uint8_t channel, uint32_t frequency);
+extern void PwmSetFrequency(uint8_t channel, uint32_t frequency);
 
 /**
 @brief Configure the duty cycle of the specified pwm channel

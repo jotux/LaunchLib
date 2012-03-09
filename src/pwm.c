@@ -27,19 +27,48 @@ void PwmInit(uint8_t channel)
     }
 }
 
-
-// Max frequency is DCO/1 but the duty cycle is between 1-100, which means if
-// you run faster than 100/DCO your duty cycle resolution will suffer. Max
-// frequecy for 1% resolution is DCO/100 = 160KHz
-void PwmSetPeriod(uint8_t channel, uint32_t frequency)
+// Max frequency is DCO/2 but the duty cycle is between 1-100, which means if
+// you run faster than 100/DCO your duty cycle resolution will suffer.
+// Min frequency is ((DCO/(8))/(2^16)) = DCO/2^18
+void PwmSetFrequency(uint8_t channel, uint32_t frequency)
 {
+    uint16_t freq_to_set = 0;
+    uint32_t input_clock = 0;
+    uint8_t  is_divided = FALSE;
+
+    if (frequency == 0)
+    {
+        PwmInit(channel);
+        return;
+    }
+
+    // check if we need to divide the timer A clock(DCO/freq > 2^16)
+    else if ((CLOCK_DCO / frequency) > 0xFFFF)
+    {
+        // calculate the new input clock
+        input_clock = CLOCK_DCO / 8;
+        is_divided = TRUE;
+    }
+    else
+    {
+        input_clock = CLOCK_DCO;
+    }
+
     // calculate the frequency based on the DCO speed
-    uint16_t freq_to_set = CLOCK_DCO / frequency;
+    freq_to_set = input_clock / frequency;
 
     pwm_out[channel].frequency = freq_to_set;
 
 #define TACCR0_CASE(x)              \
     case x:                         \
+        if (is_divided)             \
+        {                           \
+            TA##x##CTL |= ID_3;     \
+        }                           \
+        else                        \
+        {                           \
+            TA##x##CTL &= ~ID_3;    \
+        }                           \
         TA##x##CCR0 = freq_to_set;  \
         break;
 

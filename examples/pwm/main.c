@@ -25,7 +25,7 @@ void main(void)
     PwmInit(0);
 
     // Configure period (Hz) and duty cycle (%) for the channel
-    PwmSetPeriod(0,10);
+    PwmSetFrequency(0,10);
     PwmSetDuty(0,50);
 
     _EINT();
@@ -44,6 +44,6 @@ void main(void)
         {
             cnt--;
         }
-        PwmSetPeriod(0,cnt);
+        PwmSetFrequency(0,cnt);
     }
 }
