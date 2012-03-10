@@ -12,7 +12,6 @@
 */
 extern inline void ClockConfig(uint8_t mhz)
 {
-    /** @todo should we save the DCO value somewhere? */
 #ifdef __MSP430G2553__
     // Calibrated DCO values are 1,8,12,16
 #define CLOCK_CASE(x)               \
@@ -27,6 +26,12 @@ extern inline void ClockConfig(uint8_t mhz)
         CLOCK_CASE(8);
         CLOCK_CASE(12);
         CLOCK_CASE(16);
+        default:
+            while(1)
+            {
+                // If you're here the clock was configured incorrectly
+                _NOP();
+            }
     }
 
 #elif __MSP430FR5739__
@@ -48,6 +53,12 @@ extern inline void ClockConfig(uint8_t mhz)
        case 24:
            CSCTL1 = DCORSEL + DCOFSEL0 + DCOFSEL1;
            break;
+        default:
+            while(1)
+            {
+                // If you're here the clock was configured incorrectly
+                _NOP();
+            }
     }
     /** @todo Add more control over ACLK, currently only set to VLO */
     // ACLK source = VLO
@@ -63,7 +74,7 @@ extern inline void ClockConfig(uint8_t mhz)
     // MCLK divider = 1
     CSCTL3 |= DIVM_0;
 #endif
-
+    g_clock_speed = x * 1000000;
 }
 
 #endif

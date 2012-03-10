@@ -65,7 +65,8 @@ void UartInit(uint32_t baud_rate)
     // find where the baud rate is in the table
     for(i = 0;i < sizeof(rate_table) / sizeof(BaudRateConfig);i++)
     {
-        if (baud_rate == rate_table[i].baud && CLOCK_DCO == rate_table[i].clock)
+        if (baud_rate == rate_table[i].baud && 
+            g_clock_speed == rate_table[i].clock)
         {
             index = i;
             break;

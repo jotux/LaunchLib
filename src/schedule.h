@@ -13,6 +13,17 @@
 #endif
 
 #define SCHEDULE_VECTOR WDT_VECTOR
+
+/** @brief timing multiplier to allow regular interval scheduling with varying
+clock speeds */
+extern volatile uint8_t g_timing_multiplier;
+
+// timing divisors for scheduling
+#define _MILLISECOND        g_timing_multiplier
+#define _SECOND             _MILLISECOND * 1000
+#define _MINUTE             _SECOND * 60
+#define _HOUR               _MINUTE * 60
+
 /** @brief function pointer to a callback*/
 typedef void (*CallbackFn)(void);
 /** @brief function pointer to a callout*/
@@ -37,7 +48,7 @@ typedef struct
 } CalloutEvent;
 
 /** @brief global time accessible by everyone */
-extern volatile uint32_t now;
+extern volatile uint32_t g_now;
 
 /**
 @brief Check the callback list for functions that are ready to run

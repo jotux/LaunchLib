@@ -9,6 +9,6 @@
 
 void Delay(uint32_t delay_time)
 {
-    uint32_t start_time = now;
-    while(now < (start_time + delay_time));
+    uint32_t start_time = g_now;
+    while(g_now < (start_time + delay_time));
 }

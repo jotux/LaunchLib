@@ -43,15 +43,15 @@ void PwmSetFrequency(uint8_t channel, uint32_t frequency)
     }
 
     // check if we need to divide the timer A clock(DCO/freq > 2^16)
-    else if ((CLOCK_DCO / frequency) > 0xFFFF)
+    else if ((g_clock_speed / frequency) > 0xFFFF)
     {
         // calculate the new input clock
-        input_clock = CLOCK_DCO / 8;
+        input_clock = g_clock_speed / 8;
         is_divided = TRUE;
     }
     else
     {
-        input_clock = CLOCK_DCO;
+        input_clock = g_clock_speed;
     }
 
     // calculate the frequency based on the DCO speed

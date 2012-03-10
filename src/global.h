@@ -30,6 +30,9 @@ typedef signed short int    int16_t;
 typedef unsigned long int   uint32_t;
 typedef signed long int     int32_t;
 
+// global clock speed
+extern uint32_t g_clock_speed;
+
 //macros for IO config (with preprocessor abuse)
 #define st(x) do{x} while(__LINE__ == -1)
 
