@@ -10,12 +10,13 @@
  - Get most recent Code Composer Studio (CCS) [here](http://processors.wiki.ti.com/index.php/Download_CCS)
  - Clone the Code
  - Create a new CCS project
+ - Copy launchlib into your project
  - Copy examples files to the top level directory and rename to main.c
  - Enjoy
 
 ##Current Features:
 ### - Scheduling mechanism
-  - driven from 2ms watchdog timer
+  - Automatic handling of clock changes
   - Callbacks
      - Periodic function scheduling
   - Callouts
