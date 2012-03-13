@@ -25,6 +25,14 @@ function pointer stored and if it is disabled the pointer will be replaced
 with a null*/
 static CalloutEvent callout_store[MAX_CALLOUT_CNT];
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//                            ____        _  __
+//                           /  _/____   (_)/ /_
+//                           / / / __ \ / // __/
+//                         _/ / / / / // // /_
+//                        /___//_/ /_//_/ \__/
+//
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void ScheduleTimerInit(void)
 {
     uint16_t divisor = 0;
@@ -33,7 +41,7 @@ void ScheduleTimerInit(void)
 
     // We use the watchdog timer for scheduling but there are issues with using
     // it that need to be carefully considered. The watchdog can only be divided
-    // by 64, 512, 8192, or 32768. To get a regular 500us interveral we will
+    // by 64, 512, 8192, or 32768. To get a regular 1ms interveral we will
     // need to change the divisor based on the source clock.
     // Source Clock    Divisor    Resulting interval   multiplier to 1ms
     //     1mhz         512            512us                  2
@@ -41,12 +49,12 @@ void ScheduleTimerInit(void)
     //    12mhz         512           42.6us                 24
     //    16mhz        8192            512us                  2
     //    20mhz         512           25.6us                 40
-    //    24mhz        8192           341.3us                 4
+    //    24mhz        8192          341.3us                  4
     switch(clock_mhz)
     {
         case  1:
         case 12:
-        case 200:
+        case 20:
             divisor = 512;
             WDTCTL = WDT_MDLY_0_5;
             break;
@@ -58,11 +66,35 @@ void ScheduleTimerInit(void)
             break;
     }
     // calculate the multiplier
-    g_timing_multiplier = clock_mhz * (1024 / divisor);
+    g_timing_multiplier = (clock_mhz * 1024) / divisor;
 
     WDT_INT_ENABLE |= WDTIE;    // Enable WDT interrupt
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//            ____        __                                   __
+//           /  _/____   / /_ ___   _____ _____ __  __ ____   / /_
+//           / / / __ \ / __// _ \ / ___// ___// / / // __ \ / __/
+//         _/ / / / / // /_ /  __// /   / /   / /_/ // /_/ // /_
+//        /___//_/ /_/ \__/ \___//_/   /_/    \__,_// .___/ \__/
+//                                                 /_/
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+#pragma vector = SCHEDULE_VECTOR
+__interrupt void ScheduleTimerOverflow(void)
+{
+    g_now++;
+    CallbackService(g_now);
+    CalloutService(g_now);
+}
+
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//               ______        __ __ __                  __
+//              / ____/____ _ / // // /_   ____ _ _____ / /__
+//             / /    / __ `// // // __ \ / __ `// ___// //_/
+//            / /___ / /_/ // // // /_/ // /_/ // /__ / ,<
+//            \____/ \__,_//_//_//_.___/ \__,_/ \___//_/|_|
+//
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void CallbackRegister(CallbackFn func, uint32_t run_time)
 {
     if (event_count < sizeof(callback_store)/sizeof(CallbackFn))
@@ -71,11 +103,12 @@ void CallbackRegister(CallbackFn func, uint32_t run_time)
         callback_store[event_count].enabled       = FALSE;
         callback_store[event_count].func          = func;
         callback_store[event_count].run_time      = run_time - 1;
-        callback_store[event_count].next_run_time = now + run_time;
+        callback_store[event_count].next_run_time = g_now + run_time;
         event_count++;
     }
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void CallbackService(uint32_t current_time)
 {
     uint8_t i = 0;
@@ -91,6 +124,7 @@ void CallbackService(uint32_t current_time)
     }
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void CallbackMode(CallbackFn func, enum IoMode mode)
 {
     uint8_t i = 0;
@@ -101,7 +135,7 @@ void CallbackMode(CallbackFn func, enum IoMode mode)
             callback_store[i].enabled = mode;
             if (mode)
             {
-                callback_store[i].next_run_time = now +
+                callback_store[i].next_run_time = g_now +
                                                   callback_store[i].run_time;
             }
             break;
@@ -109,6 +143,14 @@ void CallbackMode(CallbackFn func, enum IoMode mode)
     }
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//                   ______        __ __               __
+//                  / ____/____ _ / // /____   __  __ / /_
+//                 / /    / __ `// // // __ \ / / / // __/
+//                / /___ / /_/ // // // /_/ // /_/ // /_
+//                \____/ \__,_//_//_/ \____/ \__,_/ \__/
+//
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 int8_t CalloutRegister(CalloutFn func, uint32_t run_time)
 {
     int8_t ret = -1;
@@ -125,7 +167,7 @@ int8_t CalloutRegister(CalloutFn func, uint32_t run_time)
                 callout_map |= _BV(i);
                 // save our data
                 callout_store[i].func = func;
-                callout_store[i].run_time = now + run_time;
+                callout_store[i].run_time = g_now + run_time;
                 // return success
                 ret = 0;
                 break;
@@ -135,6 +177,7 @@ int8_t CalloutRegister(CalloutFn func, uint32_t run_time)
     return ret;
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void CalloutCancel(CalloutFn func)
 {
     uint8_t i = 0;
@@ -150,6 +193,7 @@ void CalloutCancel(CalloutFn func)
     }
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 uint8_t get_callout_map_size(void)
 {
     uint8_t sum = 0;
@@ -161,6 +205,7 @@ uint8_t get_callout_map_size(void)
     return sum;
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void CalloutService(uint32_t current_time)
 {
     uint8_t i = 0;
@@ -175,12 +220,4 @@ void CalloutService(uint32_t current_time)
             callout_map &= ~_BV(i);
         }
     }
-}
-
-#pragma vector = SCHEDULE_VECTOR
-__interrupt void ScheduleTimerOverflow(void)
-{
-    now++;
-    CallbackService(now);
-    CalloutService(now);
 }

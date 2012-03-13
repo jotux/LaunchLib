@@ -18,11 +18,14 @@
 clock speeds */
 extern volatile uint8_t g_timing_multiplier;
 
-// timing divisors for scheduling
+// Timing divisors for scheduling
+// The base time millisecond will always be 1.024ms due to the watchdog timer
+// divisors. For that reason we will multiply _SECOND by slightly less than 1000
+// to account for it and make subsequent multipliers slightly more accurate
 #define _MILLISECOND        g_timing_multiplier
-#define _SECOND             _MILLISECOND * 1000
-#define _MINUTE             _SECOND * 60
-#define _HOUR               _MINUTE * 60
+#define _SECOND             (_MILLISECOND * 977)
+#define _MINUTE             (_SECOND * 60)
+#define _HOUR               (_MINUTE * 60)
 
 /** @brief function pointer to a callback*/
 typedef void (*CallbackFn)(void);

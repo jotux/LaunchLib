@@ -10,6 +10,14 @@
 /** @brief table of channel configurations */
 static PwmOutput pwm_out[NUM_PWM_CHANNELS];
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//                            ____        _  __
+//                           /  _/____   (_)/ /_
+//                           / / / __ \ / // __/
+//                         _/ / / / / // // /_
+//                        /___//_/ /_//_/ \__/
+//
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void PwmInit(uint8_t channel)
 {
 #define TA_INIT_CASE(x)                 \
@@ -27,6 +35,7 @@ void PwmInit(uint8_t channel)
     }
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Max frequency is DCO/2 but the duty cycle is between 1-100, which means if
 // you run faster than 100/DCO your duty cycle resolution will suffer.
 // Min frequency is ((DCO/(8))/(2^16)) = DCO/2^18
@@ -82,6 +91,7 @@ void PwmSetFrequency(uint8_t channel, uint32_t frequency)
     PwmSetDuty(channel,pwm_out[channel].duty);
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Duty cycle resolution = ((frequency * 100) / DCO) %
 // Example 1, f = 10kHz,  DCO = 16MHz, (10kHz * 100)  / 16MHz = 0.0625% ~ 10bit
 //         2, f = 160kHz, DCO = 16MHz, (160kHz * 100) / 16MHz = 1%      ~  6bit

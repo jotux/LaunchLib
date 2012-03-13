@@ -19,8 +19,9 @@ static InterruptFn p3_int_table[NUM_P3_INTS];
 static InterruptFn p4_int_table[NUM_P4_INTS];
 #endif
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Note: functions called from GPIO interrupts have no access to timer-based
-// facilities (like the global "now" variable used for timing). The current
+// facilities (like the global "g_now" variable used for timing). The current
 // Delay() implementation will also not work as it relies on timers.
 void InterruptAttach(uint8_t port, uint8_t pin, InterruptFn func, enum IoEdge type)
 {
@@ -51,6 +52,7 @@ void InterruptAttach(uint8_t port, uint8_t pin, InterruptFn func, enum IoEdge ty
     }
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void InterruptDetach(uint8_t port, uint8_t pin)
 {
 
@@ -72,10 +74,10 @@ void InterruptDetach(uint8_t port, uint8_t pin)
     }
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Any GPIO interrupt on any port triggers a single interrupt. We will look at
 // PxIFG to determine which pin actually caused the interrupt and if an attached
 // function is associated with it we will call the function.
-
 void InterruptRunOnPort(uint8_t port)
 {
 
@@ -107,6 +109,14 @@ void InterruptRunOnPort(uint8_t port)
     _EINT();
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//        ____        __                                   __
+//       /  _/____   / /_ ___   _____ _____ __  __ ____   / /_ _____
+//       / / / __ \ / __// _ \ / ___// ___// / / // __ \ / __// ___/
+//     _/ / / / / // /_ /  __// /   / /   / /_/ // /_/ // /_ (__  )
+//    /___//_/ /_/ \__/ \___//_/   /_/    \__,_// .___/ \__//____/
+//                                             /_/
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 #pragma vector = PORT1_VECTOR
 __interrupt void Port1(void)
 {

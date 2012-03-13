@@ -27,6 +27,14 @@ enum LocalDefaults {DEFAULT_EVENTS};
 /** @brief indicator kept to store EXIT/ENTER events */
 static uint8_t transition_event = IDLE;
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//                            ____        _  __
+//                           /  _/____   (_)/ /_
+//                           / / / __ \ / // __/
+//                         _/ / / / / // // /_
+//                        /___//_/ /_//_/ \__/
+//
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void StateMachineInit(Transition *state_transitions, uint8_t t_size)
 {
     // save a pointer to the state transition table
@@ -37,6 +45,7 @@ void StateMachineInit(Transition *state_transitions, uint8_t t_size)
     StateMachinePublishEvent(ENTER);
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 uint8_t CheckEventQueue(State state)
 {
     uint8_t ret_event = IDLE;
@@ -73,11 +82,13 @@ uint8_t CheckEventQueue(State state)
     return ret_event;
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 uint8_t QueuePeek(void)
 {
     return size ? queue[start] : IDLE;
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 int8_t StateMachinePublishEvent(uint8_t event)
 {
     int8_t ret = -1;
@@ -94,6 +105,7 @@ int8_t StateMachinePublishEvent(uint8_t event)
     return ret;
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 uint8_t DequeueEvent(void)
 {
     int8_t ret = IDLE;
@@ -110,6 +122,7 @@ uint8_t DequeueEvent(void)
     return ret;
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 State LookupTransition(State state, uint8_t event)
 {
     uint8_t i = 0;
@@ -131,6 +144,7 @@ State LookupTransition(State state, uint8_t event)
     return ret_state;
 }
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void StateMachineRun(State* state)
 {
     // get the next event
