@@ -1,10 +1,10 @@
-#include "src/global.h"
-#include "src/hardware.h"
-#include "src/schedule.h"
-#include "src/clock.h"
+#include "launchlib/global.h"
+#include "launchlib/hardware.h"
+#include "launchlib/schedule.h"
+#include "launchlib/clock.h"
 
 void BlinkLed1(void);
-void BlinkLed1(void);
+void BlinkLed2(void);
 
 void HardwareInit(void)
 {
@@ -22,7 +22,7 @@ void main(void)
     ScheduleTimerInit();
     // register functions and define their period
     CallbackRegister(BlinkLed1, 100ul * _millisecond);
-    CallbackRegister(BlinkLed1, 101ul * _millisecond);
+    CallbackRegister(BlinkLed2, 101ul * _millisecond);
     // callbacks are disabled by default, so enable them
     CallbackMode(BlinkLed1,   ENABLED);
     CallbackMode(BlinkLed2, ENABLED);

@@ -1,10 +1,10 @@
-#include "src/global.h"
-#include "src/hardware.h"
-#include "src/schedule.h"
-#include "src/uart.h"
-#include "src/state.h"
-#include "src/adc.h"
-#include "src/clock.h"
+#include "launchlib/global.h"
+#include "launchlib/hardware.h"
+#include "launchlib/schedule.h"
+#include "launchlib/uart.h"
+#include "launchlib/state.h"
+#include "launchlib/adc.h"
+#include "launchlib/clock.h"
 
 // Event generating functions
 void TimerTick(void);

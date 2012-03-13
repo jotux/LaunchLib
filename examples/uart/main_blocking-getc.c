@@ -1,8 +1,8 @@
-#include "src/global.h"
-#include "src/hardware.h"
-#include "src/delay.h"
-#include "src/uart.h"
-#include "src/clock.h"
+#include "launchlib/global.h"
+#include "launchlib/hardware.h"
+#include "launchlib/delay.h"
+#include "launchlib/uart.h"
+#include "launchlib/clock.h"
 
 void HardwareInit(void)
 {

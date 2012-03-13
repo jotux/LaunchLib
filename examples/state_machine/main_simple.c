@@ -1,9 +1,9 @@
-#include "src/global.h"
-#include "src/hardware.h"
-#include "src/schedule.h"
-#include "src/interrupt.h"
-#include "src/state.h"
-#include "src/clock.h"
+#include "launchlib/global.h"
+#include "launchlib/hardware.h"
+#include "launchlib/schedule.h"
+#include "launchlib/interrupt.h"
+#include "launchlib/state.h"
+#include "launchlib/clock.h"
 
 // Event generating functions
 void QueueButton(void);

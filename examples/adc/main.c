@@ -1,7 +1,7 @@
-#include "src/global.h"
-#include "src/hardware.h"
-#include "src/adc.h"
-#include "src/clock.h"
+#include "launchlib/global.h"
+#include "launchlib/hardware.h"
+#include "launchlib/adc.h"
+#include "launchlib/clock.h"
 
 void HardwareInit(void)
 {
