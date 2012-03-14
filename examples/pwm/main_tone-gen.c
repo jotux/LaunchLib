@@ -10,7 +10,7 @@ uint16_t tempo = 100;
 
 enum NOTE_TYPE
 {
-	THIRTYSECOND = 32,
+    THIRTYSECOND = 32,
     SIXTEENTH = 16,
     EIGHTH    = 8,
     QUARTER   = 4,
