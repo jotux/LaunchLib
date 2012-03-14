@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>LaunchLib: Main Page</title>
+<title>LaunchLib: File List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
@@ -36,10 +36,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -58,6 +58,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li class="current"><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
+    </ul>
+  </div>
 </div>
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -69,14 +75,35 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-  initNavTree('index.html','');
+  initNavTree('files.html','');
 </script>
 <div id="doc-content">
 <div class="header">
   <div class="headertitle">
-<div class="title">LaunchLib Documentation</div>  </div>
+<div class="title">File List</div>  </div>
 </div>
 <div class="contents">
+<div class="textblock">Here is a list of all files with brief descriptions:</div><table>
+  <tr><td class="indexkey"><a class="el" href="adc_8c.html">adc.c</a> <a href="adc_8c_source.html">[code]</a></td><td class="indexvalue">Analog-to-digital conversion </td></tr>
+  <tr><td class="indexkey"><a class="el" href="adc_8h.html">adc.h</a> <a href="adc_8h_source.html">[code]</a></td><td class="indexvalue">Definitions, data structues and prototypes for analog-to-digital conversion </td></tr>
+  <tr><td class="indexkey"><a class="el" href="clock_8c.html">clock.c</a> <a href="clock_8c_source.html">[code]</a></td><td class="indexvalue">Clock config data and functions </td></tr>
+  <tr><td class="indexkey"><a class="el" href="clock_8h.html">clock.h</a> <a href="clock_8h_source.html">[code]</a></td><td class="indexvalue">Definitions for clock config helper macros </td></tr>
+  <tr><td class="indexkey"><a class="el" href="delay_8c.html">delay.c</a> <a href="delay_8c_source.html">[code]</a></td><td class="indexvalue">Simple delay using global timer </td></tr>
+  <tr><td class="indexkey"><a class="el" href="delay_8h.html">delay.h</a> <a href="delay_8h_source.html">[code]</a></td><td class="indexvalue">Definition of delay </td></tr>
+  <tr><td class="indexkey"><a class="el" href="global_8h.html">global.h</a> <a href="global_8h_source.html">[code]</a></td><td class="indexvalue">Definitions and data structures for general use in all files </td></tr>
+  <tr><td class="indexkey"><a class="el" href="hardware_8h.html">hardware.h</a> <a href="hardware_8h_source.html">[code]</a></td><td class="indexvalue">Definitions hardware config (ports, pins, and module settings) </td></tr>
+  <tr><td class="indexkey"><a class="el" href="interrupt_8c.html">interrupt.c</a> <a href="interrupt_8c_source.html">[code]</a></td><td class="indexvalue">GPIO interrupt handler </td></tr>
+  <tr><td class="indexkey"><a class="el" href="interrupt_8h.html">interrupt.h</a> <a href="interrupt_8h_source.html">[code]</a></td><td class="indexvalue">Definitions, data structues and prototypes for GPIO interrupt handler </td></tr>
+  <tr><td class="indexkey"><a class="el" href="pwm_8c.html">pwm.c</a> <a href="pwm_8c_source.html">[code]</a></td><td class="indexvalue">Hardware pulse width modulation handler </td></tr>
+  <tr><td class="indexkey"><a class="el" href="pwm_8h.html">pwm.h</a> <a href="pwm_8h_source.html">[code]</a></td><td class="indexvalue">Definitions, data structues and prototypes for pulse width modulation </td></tr>
+  <tr><td class="indexkey"><a class="el" href="schedule_8c.html">schedule.c</a> <a href="schedule_8c_source.html">[code]</a></td><td class="indexvalue">Generic scheduling mechanisms </td></tr>
+  <tr><td class="indexkey"><a class="el" href="schedule_8h.html">schedule.h</a> <a href="schedule_8h_source.html">[code]</a></td><td class="indexvalue">Definitions, data structues and prototypes for generic scheduling mechanisms </td></tr>
+  <tr><td class="indexkey"><a class="el" href="state_8c.html">state.c</a> <a href="state_8c_source.html">[code]</a></td><td class="indexvalue">Simple state machine handler </td></tr>
+  <tr><td class="indexkey"><a class="el" href="state_8h.html">state.h</a> <a href="state_8h_source.html">[code]</a></td><td class="indexvalue">Definitions, data structues and prototypes for state machine handling </td></tr>
+  <tr><td class="indexkey"><a class="el" href="tone_8h.html">tone.h</a> <a href="tone_8h_source.html">[code]</a></td><td class="indexvalue">Note frequency definitions </td></tr>
+  <tr><td class="indexkey"><a class="el" href="uart_8c.html">uart.c</a> <a href="uart_8c_source.html">[code]</a></td><td class="indexvalue">Blocking and non-blocking UART interface </td></tr>
+  <tr><td class="indexkey"><a class="el" href="uart_8h.html">uart.h</a> <a href="uart_8h_source.html">[code]</a></td><td class="indexvalue">Definitions, data structues and prototypes for UART </td></tr>
+</table>
 </div>
 </div>
   <div id="nav-path" class="navpath">
