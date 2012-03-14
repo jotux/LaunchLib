@@ -1,39 +1,6 @@
 var NAVTREE =
 [
-  [ "LaunchLib", "index.html", [
-    [ "Related Pages", "pages.html", [
-      [ "Todo List", "todo.html", null ]
-    ] ],
-    [ "Data Structures", "annotated.html", [
-      [ "BaudRateConfig", "struct_baud_rate_config.html", null ],
-      [ "CallbackEvent", "struct_callback_event.html", null ],
-      [ "CalloutEvent", "struct_callout_event.html", null ],
-      [ "PwmOutput", "struct_pwm_output.html", null ],
-      [ "Transition", "struct_transition.html", null ]
-    ] ],
-    [ "Data Structure Index", "classes.html", null ],
-    [ "Data Fields", "functions.html", null ],
-    [ "File List", "files.html", [
-      [ "adc.c", "adc_8c.html", null ],
-      [ "adc.h", "adc_8h.html", null ],
-      [ "clock.h", "clock_8h.html", null ],
-      [ "delay.c", "delay_8c.html", null ],
-      [ "delay.h", "delay_8h.html", null ],
-      [ "global.h", "global_8h.html", null ],
-      [ "hardware.h", "hardware_8h.html", null ],
-      [ "interrupt.c", "interrupt_8c.html", null ],
-      [ "interrupt.h", "interrupt_8h.html", null ],
-      [ "pwm.c", "pwm_8c.html", null ],
-      [ "pwm.h", "pwm_8h.html", null ],
-      [ "schedule.c", "schedule_8c.html", null ],
-      [ "schedule.h", "schedule_8h.html", null ],
-      [ "state.c", "state_8c.html", null ],
-      [ "state.h", "state_8h.html", null ],
-      [ "tone.h", "tone_8h.html", null ],
-      [ "uart.c", "uart_8c.html", null ],
-      [ "uart.h", "uart_8h.html", null ]
-    ] ],
-    [ "Globals", "globals.html", null ]
+  [ "LaunchLib", "index.html", ]
   ] ]
 ];
 
