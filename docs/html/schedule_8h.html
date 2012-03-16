@@ -287,7 +287,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="schedule_8c_source.html#l00128">128</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
+<p>Definition at line <a class="el" href="schedule_8c_source.html#l00099">99</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
     <span class="keywordflow">for</span> (i = 0;i &lt; event_count;i++)
@@ -342,7 +342,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="schedule_8c_source.html#l00098">98</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
+<p>Definition at line <a class="el" href="schedule_8c_source.html#l00069">69</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
     <span class="keywordflow">if</span> (event_count &lt; <span class="keyword">sizeof</span>(callback_store)/<span class="keyword">sizeof</span>(<a class="code" href="schedule_8h.html#a52acb0158eef8a6a72957b6605c95353" title="function pointer to a callback">CallbackFn</a>))
     {
@@ -381,7 +381,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="schedule_8c_source.html#l00181">181</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
+<p>Definition at line <a class="el" href="schedule_8c_source.html#l00152">152</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
     <span class="keywordflow">for</span> (i = 0;i &lt; <a class="code" href="hardware_8h.html#a633e51fd220983033afe28f559b9243f">MAX_CALLOUT_CNT</a>;i++)
@@ -433,7 +433,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="schedule_8c_source.html#l00154">154</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
+<p>Definition at line <a class="el" href="schedule_8c_source.html#l00125">125</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
     <a class="code" href="global_8h.html#aef44329758059c91c76d334e8fc09700">int8_t</a> ret = -1;
     <span class="comment">// event queue full?</span>
@@ -481,39 +481,10 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="schedule_8c_source.html#l00036">36</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
-    <a class="code" href="global_8h.html#adf4d876453337156dde61095e1f20223">uint16_t</a> divisor = 0;
-
-    <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> clock_mhz = <a class="code" href="clock_8c.html#a359bc99c5de9e253ca290fdde403d7b0">g_clock_speed</a> / 1000000;
-
-    <span class="comment">// We use the watchdog timer for scheduling but there are issues with using</span>
-    <span class="comment">// it that need to be carefully considered. The watchdog can only be divided</span>
-    <span class="comment">// by 64, 512, 8192, or 32768. To get a regular 1ms interveral we will</span>
-    <span class="comment">// need to change the divisor based on the source clock.</span>
-    <span class="comment">// Source Clock    Divisor    Resulting interval   multiplier to 1ms</span>
-    <span class="comment">//     1mhz         512            512us                  2</span>
-    <span class="comment">//     8mhz        8192           1024us                  1</span>
-    <span class="comment">//    12mhz         512           42.6us                 24</span>
-    <span class="comment">//    16mhz        8192            512us                  2</span>
-    <span class="comment">//    20mhz         512           25.6us                 40</span>
-    <span class="comment">//    24mhz        8192          341.3us                  4</span>
-    <span class="keywordflow">switch</span>(clock_mhz)
-    {
-        <span class="keywordflow">case</span>  1:
-        <span class="keywordflow">case</span> 12:
-        <span class="keywordflow">case</span> 20:
-            divisor = 512;
-            WDTCTL = WDT_MDLY_0_5;
-            <span class="keywordflow">break</span>;
-        <span class="keywordflow">case</span>  8:
-        <span class="keywordflow">case</span> 16:
-        <span class="keywordflow">case</span> 24:
-            divisor = 8192;
-            WDTCTL = WDT_MDLY_8;
-            <span class="keywordflow">break</span>;
-    }
-    <span class="comment">// calculate the multiplier</span>
-    <a class="code" href="schedule_8c.html#ac6105e756d37068c9b1ff56ccb388797" title="timing multiplier to allow regular interval scheduling with varying clock speeds">g_timing_multiplier</a> = (clock_mhz * 1024) / divisor;
-
+    <span class="comment">// divide the mclk by 512</span>
+    WDTCTL = WDT_MDLY_0_5;
+    <span class="comment">// calculate the multiplier (number of clks to get to 1ms)</span>
+    <a class="code" href="schedule_8c.html#ac6105e756d37068c9b1ff56ccb388797" title="timing multiplier to allow regular interval scheduling with varying clock speeds">g_timing_multiplier</a> = (<a class="code" href="clock_8c.html#a359bc99c5de9e253ca290fdde403d7b0">g_clock_speed</a> / 1000000) * 2;
     WDT_INT_ENABLE |= WDTIE;    <span class="comment">// Enable WDT interrupt</span>
 }
 </pre></div>
@@ -537,7 +508,7 @@ Variables</h2></td></tr>
 <p>Interrupt routine run by overflow of watchdog timer. </p>
 <p>When the interrupt fires increment the global time and service the call*s. </p>
 
-<p>Definition at line <a class="el" href="schedule_8c_source.html#l00083">83</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
+<p>Definition at line <a class="el" href="schedule_8c_source.html#l00054">54</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
     <a class="code" href="schedule_8c.html#a51b353488bb101e21bd86a67b750b5d4" title="global time accessible by everyone">g_now</a>++;
     <a class="code" href="schedule_8c.html#a036325aad3e8e1a9194ae25867db6f22" title="Check the callback list for functions that are ready to run.">CallbackService</a>(<a class="code" href="schedule_8c.html#a51b353488bb101e21bd86a67b750b5d4" title="global time accessible by everyone">g_now</a>);
@@ -586,7 +557,7 @@ Variables</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="schedule_8h.html">schedule.h</a>      </li>
-      <li class="footer">Generated on Tue Mar 13 2012 21:20:43 for LaunchLib by&#160;
+      <li class="footer">Generated on Thu Mar 15 2012 22:38:23 for LaunchLib by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>
