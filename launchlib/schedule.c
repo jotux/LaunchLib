@@ -35,39 +35,10 @@ static CalloutEvent callout_store[MAX_CALLOUT_CNT];
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void ScheduleTimerInit(void)
 {
-    uint16_t divisor = 0;
-
-    uint8_t clock_mhz = g_clock_speed / 1000000;
-
-    // We use the watchdog timer for scheduling but there are issues with using
-    // it that need to be carefully considered. The watchdog can only be divided
-    // by 64, 512, 8192, or 32768. To get a regular 1ms interveral we will
-    // need to change the divisor based on the source clock.
-    // Source Clock    Divisor    Resulting interval   multiplier to 1ms
-    //     1mhz         512            512us                  2
-    //     8mhz        8192           1024us                  1
-    //    12mhz         512           42.6us                 24
-    //    16mhz        8192            512us                  2
-    //    20mhz         512           25.6us                 40
-    //    24mhz        8192          341.3us                  4
-    switch(clock_mhz)
-    {
-        case  1:
-        case 12:
-        case 20:
-            divisor = 512;
-            WDTCTL = WDT_MDLY_0_5;
-            break;
-        case  8:
-        case 16:
-        case 24:
-            divisor = 8192;
-            WDTCTL = WDT_MDLY_8;
-            break;
-    }
-    // calculate the multiplier
-    g_timing_multiplier = (clock_mhz * 1024) / divisor;
-
+    // divide the mclk by 512
+    WDTCTL = WDT_MDLY_0_5;
+    // calculate the multiplier (number of clks to get to 1ms)
+    g_timing_multiplier = (g_clock_speed / 1000000) * 2;
     WDT_INT_ENABLE |= WDTIE;    // Enable WDT interrupt
 }
 
@@ -209,6 +180,13 @@ uint8_t get_callout_map_size(void)
 void CalloutService(uint32_t current_time)
 {
     uint8_t i = 0;
+    // get the number of callouts
+    uint8_t callouts_remaining = get_callout_map_size();
+    // if there are none to service exit
+    if (!callouts_remaining)
+    {
+        goto service_complete;
+    }
     for (i = 0;i < MAX_CALLOUT_CNT;i++)
     {
         // find occupied slots and see if the function there is ready
@@ -218,6 +196,13 @@ void CalloutService(uint32_t current_time)
             callout_store[i].func();
             // vacate the slot
             callout_map &= ~_BV(i);
+            // decrement the number left and see if we can stop
+            if (--callouts_remaining == 0)
+            {
+                goto service_complete;
+            }
         }
     }
+service_complete:
+    return;
 }
