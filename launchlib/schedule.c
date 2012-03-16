@@ -83,6 +83,11 @@ void CallbackRegister(CallbackFn func, uint32_t run_time)
 void CallbackService(uint32_t current_time)
 {
     uint8_t i = 0;
+    uint8_t callbacks_remaining = event_cnt;
+    if (callbacks_remaining == 0)
+    {
+        goto service_complete;
+    }
     for (i = 0;i < event_count;i++)
     {
         if (callback_store[i].enabled == TRUE &&
@@ -91,8 +96,14 @@ void CallbackService(uint32_t current_time)
             callback_store[i].next_run_time = current_time +
                                               callback_store[i].run_time;
             callback_store[i].func();
+            if (--callbacks_remaining == 0)
+            {
+                goto service_complete;
+            }
         }
     }
+service_complete:
+    return;
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
