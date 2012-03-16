@@ -30,5 +30,5 @@ void main(void)
 void ToggleLed2(void)
 {
     LED_TOGGLE(2);
-    CalloutRegister(ToggleLed2, (100ul * _millisecond));
+    CalloutRegister(ToggleLed2, (100ul * _MILLISECOND));
 }

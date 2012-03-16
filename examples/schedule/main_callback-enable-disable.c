@@ -22,7 +22,7 @@ void main(void)
     // Init the timer
     ScheduleTimerInit();
     // register a function and define its period
-    CallbackRegister(BlinkLed1, 100ul * _millisecond);
+    CallbackRegister(BlinkLed1, 100ul * _MILLISECOND);
     // attach function to SW1 falling edge interrupt
     InterruptAttach(SW1_PORT,SW1_PIN,ToggleEnable,FALLING_EDGE);
 

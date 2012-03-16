@@ -30,12 +30,12 @@ void main(void)
 void QueueButton(void)
 {
     // when the interrupt fires queue a few callouts to make the LED toggle
-    CalloutRegister(ToggleLed2, (5 * _second));
-    CalloutRegister(ToggleLed2, (5 * _second) + (100 * _millisecond));
-    CalloutRegister(ToggleLed2, (5 * _second) + (200 * _millisecond));
-    CalloutRegister(ToggleLed2, (5 * _second) + (300 * _millisecond));
-    CalloutRegister(ToggleLed2, (5 * _second) + (400 * _millisecond));
-    CalloutRegister(ToggleLed2, (5 * _second) + (500 * _millisecond));
+    CalloutRegister(ToggleLed2, (5 * _SECOND));
+    CalloutRegister(ToggleLed2, (5 * _SECOND) + (100 * _MILLISECOND));
+    CalloutRegister(ToggleLed2, (5 * _SECOND) + (200 * _MILLISECOND));
+    CalloutRegister(ToggleLed2, (5 * _SECOND) + (300 * _MILLISECOND));
+    CalloutRegister(ToggleLed2, (5 * _SECOND) + (400 * _MILLISECOND));
+    CalloutRegister(ToggleLed2, (5 * _SECOND) + (500 * _MILLISECOND));
 }
 
 void ToggleLed2(void)

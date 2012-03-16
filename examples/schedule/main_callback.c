@@ -21,10 +21,10 @@ void main(void)
     // Init the timer
     ScheduleTimerInit();
     // register functions and define their period
-    CallbackRegister(BlinkLed1, 100ul * _millisecond);
-    CallbackRegister(BlinkLed2, 101ul * _millisecond);
+    CallbackRegister(BlinkLed1, 100ul * _MILLISECOND);
+    CallbackRegister(BlinkLed2, 101ul * _MILLISECOND);
     // callbacks are disabled by default, so enable them
-    CallbackMode(BlinkLed1,   ENABLED);
+    CallbackMode(BlinkLed1, ENABLED);
     CallbackMode(BlinkLed2, ENABLED);
 
     _EINT();
