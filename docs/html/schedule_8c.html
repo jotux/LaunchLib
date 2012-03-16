@@ -163,7 +163,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="schedule_8c_source.html#l00099">99</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
+<p>Definition at line <a class="el" href="schedule_8c_source.html#l00110">110</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
     <span class="keywordflow">for</span> (i = 0;i &lt; event_count;i++)
@@ -260,6 +260,11 @@ Variables</h2></td></tr>
 <p>Definition at line <a class="el" href="schedule_8c_source.html#l00083">83</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
+    <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> callbacks_remaining = event_cnt;
+    <span class="keywordflow">if</span> (callbacks_remaining == 0)
+    {
+        <span class="keywordflow">goto</span> service_complete;
+    }
     <span class="keywordflow">for</span> (i = 0;i &lt; event_count;i++)
     {
         <span class="keywordflow">if</span> (callback_store[i].enabled == <a class="code" href="global_8h.html#a06fc87d81c62e9abb8790b6e5713c55baa82764c3079aea4e60c80e45befbb839">TRUE</a> &amp;&amp;
@@ -268,8 +273,14 @@ Variables</h2></td></tr>
             callback_store[i].<a class="code" href="struct_callback_event.html#a1b21ad88610b96246ed05e4b7a645817">next_run_time</a> = current_time +
                                               callback_store[i].<a class="code" href="struct_callback_event.html#a787c60dfca79b1561e9cbd020561e5e4">run_time</a>;
             callback_store[i].<a class="code" href="struct_callback_event.html#a5ee86bf0b23d84d0d119ee6dac811695">func</a>();
+            <span class="keywordflow">if</span> (--callbacks_remaining == 0)
+            {
+                <span class="keywordflow">goto</span> service_complete;
+            }
         }
     }
+service_complete:
+    <span class="keywordflow">return</span>;
 }
 </pre></div>
 </div>
@@ -298,7 +309,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="schedule_8c_source.html#l00152">152</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
+<p>Definition at line <a class="el" href="schedule_8c_source.html#l00163">163</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
     <span class="keywordflow">for</span> (i = 0;i &lt; <a class="code" href="hardware_8h.html#a633e51fd220983033afe28f559b9243f">MAX_CALLOUT_CNT</a>;i++)
@@ -350,7 +361,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="schedule_8c_source.html#l00125">125</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
+<p>Definition at line <a class="el" href="schedule_8c_source.html#l00136">136</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
     <a class="code" href="global_8h.html#aef44329758059c91c76d334e8fc09700">int8_t</a> ret = -1;
     <span class="comment">// event queue full?</span>
@@ -402,7 +413,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="schedule_8c_source.html#l00180">180</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
+<p>Definition at line <a class="el" href="schedule_8c_source.html#l00191">191</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
     <span class="comment">// get the number of callouts</span>
@@ -453,7 +464,7 @@ service_complete:
 <p>Use K&amp;R method to run through the callout map and count the number of bits. This represents the number of slot occupied in the callout store. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the number of functions pending in the callout map </dd></dl>
 
-<p>Definition at line <a class="el" href="schedule_8c_source.html#l00168">168</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
+<p>Definition at line <a class="el" href="schedule_8c_source.html#l00179">179</a> of file <a class="el" href="schedule_8c_source.html">schedule.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> sum = 0;
     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> map = callout_map;
@@ -562,7 +573,7 @@ service_complete:
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="schedule_8c.html">schedule.c</a>      </li>
-      <li class="footer">Generated on Thu Mar 15 2012 22:38:23 for LaunchLib by&#160;
+      <li class="footer">Generated on Thu Mar 15 2012 22:57:30 for LaunchLib by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>
