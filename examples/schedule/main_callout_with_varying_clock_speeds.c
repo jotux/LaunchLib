@@ -8,10 +8,6 @@ void BlinkLed1(void);
 void HardwareInit(void)
 {
     IO_DIRECTION(LED1,OUTPUT);
-
-    // configure 1.4 to output the DCO for observation
-    P1DIR |= 0x10;
-    P1SEL |= 0x10;
 }
 
 void main(void)
