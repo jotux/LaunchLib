@@ -130,9 +130,9 @@ int8_t RxBufferEnqueue(uint8_t data)
     }
 
     // stuff the data
-    if((rx_start + rx_size) == MAX_UART_RX_BUF_CNT)
+    if((rx_start + rx_size) >= MAX_UART_RX_BUF_CNT)
     {
-        rx_buf[0] = data;
+        rx_buf[(rx_start + rx_size) - MAX_UART_RX_BUF_CNT] = data;
     }
     else
     {
@@ -163,7 +163,7 @@ uint8_t RxBufferDequeue(uint8_t *in, uint16_t len)
 
     // copy the data from the rx buffer into the input buffer
     // does the data cross the end of the buffer?
-    if ((rx_start + rx_size) <= rx_start)
+    if ((rx_start + rx_size) <= MAX_UART_RX_BUF_CNT)
     {
         // break up the copy into two parts
         // from start index to the end of the buffer
