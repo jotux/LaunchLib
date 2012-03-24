@@ -5,6 +5,7 @@
 */
 #ifndef UART_H
 #define UART_H
+#include "hardware.h"
 
 #ifdef __MSP430G2553__
     #define UART_INT_ENABLE     IE2
@@ -27,7 +28,63 @@
     #define USBRF_OFFSET        8
 #endif
 
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+enum RX_TX {RX = 0, TX = 1};
+#if defined(NON_BLOCKING_UART_RX) && defined(NON_BLOCKING_UART_RX)
+    #define BUF_START(loc) ((loc) == RX ? &rx_start : &tx_start)
+    #define BUF_SIZE(loc)  ((loc) == RX ? &rx_size : &tx_size)
+    #define BUF_LOC(loc)   ((loc) == RX ? &rx_buf[0] : &tx_buf[0])
+    #define MAX_SIZE(loc)  ((loc) == RX ? MAX_UART_RX_BUF_CNT : MAX_UART_TX_BUF_CNT)
+#elif defined(NON_BLOCKING_UART_RX)
+    #define BUF_START(loc) (&rx_start)
+    #define BUF_SIZE(loc)  (&rx_size)
+    #define BUF_LOC(loc)   (&rx_buf[0])
+    #define MAX_SIZE(loc)  (MAX_UART_RX_BUF_CNT)
+#elif defined(NON_BLOCKING_UART_TX)
+    #define BUF_START(loc) (&tx_start)
+    #define BUF_SIZE(loc)  (&tx_size)
+    #define BUF_LOC(loc)   (&tx_buf[0])
+    #define MAX_SIZE(loc)  (MAX_UART_TX_BUF_CNT)
+#endif
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
 enum NUMBER_BASE {DECIMAL, HEX};
+
+/** @brief decimal value lookup table */
+static const uint32_t decimal_table[] =
+{
+    1000000000, // +0
+     100000000, // +1
+      10000000, // +2
+       1000000, // +3
+        100000, // +4
+         10000, // +5
+          1000, // +6
+           100, // +7
+            10, // +8
+             1, // +9
+             0
+};
+
+#define hex(m) char_table[m & 0x0F]
+
+/** @brief character lookup table */
+static const uint8_t char_table[] = "0123456789ABCDEF";
+
+/** @brief hex value lookup table */
+static const uint32_t hex_table[] =
+{
+    0x10000000,
+    0x01000000,
+    0x00100000,
+    0x00010000,
+    0x00001000,
+    0x00000100,
+    0x00000010,
+    0x00000001,
+    0x00000000
+};
 
 /** @brief Lookup table for uart config parameters */
 typedef struct
@@ -40,14 +97,14 @@ typedef struct
 } BaudRateConfig;
 
 /**
-@brief Enqueue data into the rx buffer
+@brief Enqueue data into the rx or tx circular buffer
 @details
-Take data from the hardware rx buffer and enqueue it in a circular buffer for
-retrieval.
+Take data and enqueue it in a circular buffer for retrieval.
+@param rx[in] RECIEVE to enqueue in recieve buffer, otherwise will be in tx buf
 @param[in] data data to enqueue
 @return 0 for success -1 for failure
 */
-static int8_t RxBufferEnqueue(uint8_t data);
+static int8_t DataEnqueue(enum RX_TX rx, uint8_t data);
 
 /**
 @brief Remove data from the rx buffer and place it into the provided address
@@ -55,33 +112,17 @@ static int8_t RxBufferEnqueue(uint8_t data);
 Dequeue data from the rx buffer and then adjust the start/size values. If the
 length makes the copy wrap around the end of the queue we break the copy into
 two parts.
+@param rx[in] RECIEVE to dequeue from recieve buffer, otherwise will be from tx
 @param[out] in pointer to copy data to
 @param[in] len length of data to copy
 @return length of data copied to the in pointer
 */
-static uint8_t RxBufferDequeue(uint8_t *in, uint16_t len);
+static uint8_t DataDequeue(enum RX_TX rx, uint8_t *in, uint16_t len);
 
 /**
 @brief Interrupt routine to enqueue received data
 */
 __interrupt void UartRxInt(void);
-
-/**
-@brief Enqueue data into the tx buffer
-@details
-Enqueue data in a circular buffer for eventual transmit
-@param[in] data data to enqueue
-@return 0 for success -1 for failure
-*/
-static int8_t TxBufferEnqueue(uint8_t data);
-
-/**
-@brief Remove data from the tx buffer for transmit
-@details
-Remove single bytes from the tx buffer and return them for transmit.
-@return data to be transmitted
-*/
-static uint8_t TxBufferDequeue(void);
 
 /**
 @brief Interrupt routine indicating transmit is complete and we can dequeue

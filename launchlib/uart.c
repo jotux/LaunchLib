@@ -105,42 +105,58 @@ void UartInit(uint32_t baud_rate)
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//                ____                     _
-//               / __ \ ___   _____ ___   (_)_   __ ___
-//              / /_/ // _ \ / ___// _ \ / /| | / // _ \
-//             / _, _//  __// /__ /  __// / | |/ //  __/
-//            /_/ |_| \___/ \___/ \___//_/  |___/ \___/
+//                    ____          ____ ____
+//                   / __ ) __  __ / __// __/___   _____ _____
+//                  / __  |/ / / // /_ / /_ / _ \ / ___// ___/
+//                 / /_/ // /_/ // __// __//  __// /   (__  )
+//                /_____/ \__,_//_/  /_/   \___//_/   /____/
 //
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 #ifdef NON_BLOCKING_UART_RX
 /** @brief start index for rx circular buffer */
-static uint8_t rx_start = 0;
+static uint16_t rx_start;
 /** @brief size of rx circular buffer */
-static uint8_t rx_size  = 0;
+static uint16_t rx_size;
 /** @brief rx buffer */
 static uint8_t rx_buf[MAX_UART_RX_BUF_CNT];
+#endif
+
+#ifdef NON_BLOCKING_UART_TX
+/** @brief start index for tx circular buffer */
+static uint16_t tx_start;
+/** @brief size of tx circular buffer */
+static uint16_t tx_size;
+/** @brief tx buffer */
+static uint8_t tx_buf[MAX_UART_TX_BUF_CNT];
+#endif
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-int8_t RxBufferEnqueue(uint8_t data)
+#if defined NON_BLOCKING_UART_TX || defined NON_BLOCKING_UART_RX
+int8_t DataEnqueue(enum RX_TX rx, uint8_t data)
 {
+    uint16_t* start    = BUF_START(rx);
+    uint16_t* size     = BUF_SIZE(rx);
+    uint8_t*  buf      = BUF_LOC(rx);
+    uint16_t  max_size = MAX_SIZE(rx);
+
     // is the buffer full?
-    if (rx_size == MAX_UART_RX_BUF_CNT)
+    if (*size == max_size)
     {
         goto error;
     }
 
     // stuff the data
-    if((rx_start + rx_size) == MAX_UART_RX_BUF_CNT)
+    if((*start + *size) >= max_size)
     {
-        rx_buf[0] = data;
+        buf[(*start + *size) - max_size] = data;
     }
     else
     {
-        rx_buf[(rx_start + rx_size)] = data;
+        buf[(*start + *size)] = data;
     }
 
     // adjust the buf size
-    rx_size++;
+    (*size)++;
 
     return (0);
 error:
@@ -148,50 +164,51 @@ error:
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-uint8_t RxBufferDequeue(uint8_t *in, uint16_t len)
+uint8_t DataDequeue(enum RX_TX rx, uint8_t *in, uint16_t len)
 {
+    uint16_t* start    = BUF_START(rx);
+    uint16_t* size     = BUF_SIZE(rx);
+    uint8_t*  buf      = BUF_LOC(rx);
+    uint16_t  max_size = MAX_SIZE(rx);
+
     uint8_t len_to_read;
     _DINT();
     // is the buffer empty?
-    if (rx_size == 0)
+    if (*start == 0)
     {
         goto error;
     }
 
     // are we trying to read more than is in the buffer?
-    len_to_read = (len > rx_size) ? rx_size : len;
+    len_to_read = (len > *size) ? *size : len;
 
     // copy the data from the rx buffer into the input buffer
     // does the data cross the end of the buffer?
-    if ((rx_start + rx_size) <= rx_start)
+    if ((*start + *size) >= max_size)
     {
         // break up the copy into two parts
         // from start index to the end of the buffer
-        memmove(in,
-               (rx_buf + rx_start),
-               (MAX_UART_RX_BUF_CNT - rx_start));
+        memmove(in,(buf + *start),(max_size - *start));
         // from the beginning of the buffer to the end index
-        memmove(in + (MAX_UART_RX_BUF_CNT - rx_start),
-               rx_buf,
-               (len_to_read - (MAX_UART_RX_BUF_CNT - rx_start)));
+        memmove(in + (max_size - *start),buf,(len_to_read - (max_size - *start)));
     }
     else
     {
-        memmove(in, rx_buf + rx_start, len_to_read);
+        memmove(in, (buf + *start), len_to_read);
     }
 
     // adjust the start index
-    if((rx_start + rx_size) >= MAX_UART_RX_BUF_CNT)
+    if((*start + *size) >= max_size)
     {
-        rx_start = ((rx_start + len_to_read) - MAX_UART_RX_BUF_CNT);
+        *start = ((*start + len_to_read) - max_size);
     }
     else
     {
-        rx_start = (rx_start + len_to_read);
+        *start = (*start + len_to_read);
     }
 
     // adjust the size
-    rx_size -= len_to_read;
+    (*size) -= len_to_read;
 
     _EINT();
     return len_to_read;
@@ -199,75 +216,7 @@ error:
     _EINT();
     return (0);
 }
-#endif // NON_BLOCKING_UART_TX
-
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//             ______                                      _  __
-//            /_  __/_____ ____ _ ____   _____ ____ ___   (_)/ /_
-//             / /  / ___// __ `// __ \ / ___// __ `__ \ / // __/
-//            / /  / /   / /_/ // / / /(__  )/ / / / / // // /_
-//           /_/  /_/    \__,_//_/ /_//____//_/ /_/ /_//_/ \__/
-//
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-#ifdef NON_BLOCKING_UART_TX
-/** @brief start index for tx circular buffer */
-static uint8_t tx_start = 0;
-/** @brief size of tx circular buffer */
-static uint8_t tx_size  = 0;
-/** @brief tx buffer */
-static uint8_t tx_buf[MAX_UART_TX_BUF_CNT];
-
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-int8_t TxBufferEnqueue(uint8_t data)
-{
-    _DINT();
-    // is the buffer full?
-    if (tx_size == MAX_UART_TX_BUF_CNT)
-    {
-        goto error;
-    }
-
-    // stuff the data
-    // although we only dequeue and queue single bytes at a time (because that's
-    // all the hardware supports) we still need to deal with multi-byte boundary
-    // crossing as we may be filling the queue faster than the tx interrupt can
-    // pull it out.
-    if ((tx_start + tx_size) >= MAX_UART_TX_BUF_CNT)
-    {
-        tx_buf[(tx_start + tx_size) - MAX_UART_TX_BUF_CNT] = data;
-    }
-    else
-    {
-        tx_buf[(tx_start + tx_size)] = data;
-    }
-
-    // adjust the buf size
-    tx_size++;
-
-    _EINT();
-    return (0);
-error:
-    _EINT();
-    return (-1);
-}
-
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-uint8_t TxBufferDequeue(void)
-{
-    uint8_t ret = 0;
-    // is the buffer empty?
-    if (tx_size != 0)
-    {
-        // return data
-        ret = tx_buf[tx_start];
-        // adjust the start
-        tx_start = (tx_start == (MAX_UART_TX_BUF_CNT - 1)) ? 0 : tx_start + 1;
-        // adjust the size
-        tx_size--;
-    }
-    return ret;
-}
-#endif //NON_BLOCKING_UART_TX
+#endif // defined NON_BLOCKING_UART_TX || defined NON_BLOCKING_UART_RX
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //        ____        __                                   __
@@ -283,7 +232,7 @@ uint8_t TxBufferDequeue(void)
 #pragma vector=UART_RX_INT_VECTOR
 __interrupt void UartRxInt(void)
 {
-    RxBufferEnqueue(UCA0RXBUF);
+    DataEnqueue(RX,UCA0RXBUF);
 }
 #endif //NON_BLOCKING_UART_RX
 
@@ -292,13 +241,15 @@ __interrupt void UartRxInt(void)
 #pragma vector = UART_TX_INT_VECTOR
 __interrupt void UartTxInt(void)
 {
-    UCA0TXBUF = TxBufferDequeue();
+    uint8_t buf[1];
+    DataDequeue(TX,&buf[0],1);
+    UCA0TXBUF = buf[0];
 }
 #endif //NON_BLOCKING_UART_TX
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 #elif __MSP430FR5739__
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-#if defined NON_BLOCKING_UART_RX || defined NON_BLOCKING_UART_TX
+#if defined(NON_BLOCKING_UART_RX) || defined(NON_BLOCKING_UART_TX)
 #pragma vector=USCI_A0_VECTOR
 __interrupt void USCI_A0_ISR(void)
 {
@@ -307,15 +258,21 @@ __interrupt void USCI_A0_ISR(void)
         case 0: // no interrupt
             break;
         case 2: // RXIFG
+        {
 #ifdef NON_BLOCKING_UART_RX
-            RxBufferEnqueue(UCA0RXBUF);
+            DataEnqueue(RX, UCA0RXBUF);
 #endif
             break;
+        }
         case 4: //TXIFG
+        {
 #ifdef NON_BLOCKING_UART_TX
-            UCA0TXBUF = TxBufferDequeue();
+            uint8_t buf[1];
+            DataDequeue(TX,&buf[0],1);
+            UCA0TXBUF = buf[0];
 #endif
             break;
+        }
         default:
             break;
     }
@@ -332,42 +289,6 @@ __interrupt void USCI_A0_ISR(void)
 //
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Code adapted from 43oh.com forums
-/** @brief decimal value lookup table */
-static const uint32_t decimal_table[] =
-{
-    1000000000, // +0
-     100000000, // +1
-      10000000, // +2
-       1000000, // +3
-        100000, // +4
-         10000, // +5
-          1000, // +6
-           100, // +7
-            10, // +8
-             1, // +9
-             0
-};
-
-#define hex(m) char_table[m & 0x0F]
-
-/** @brief character lookup table */
-static const uint8_t char_table[] = "0123456789ABCDEF";
-
-/** @brief hex value lookup table */
-static const uint32_t hex_table[] =
-{
-    0x10000000,
-    0x01000000,
-    0x00100000,
-    0x00010000,
-    0x00001000,
-    0x00000100,
-    0x00000010,
-    0x00000001,
-    0x00000000
-};
-
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void UartPutIToA(uint32_t value, enum NUMBER_BASE base)
 {
     uint32_t position = 0;
@@ -481,7 +402,7 @@ bad_fmt:
 uint8_t UartRead(uint8_t *in, uint16_t len)
 {
 #ifdef NON_BLOCKING_UART_RX
-    return RxBufferDequeue(in, len);
+    return DataDequeue(RX, in, len);
 #else
     in[0] = UartGetC();
     return (1);
@@ -495,7 +416,7 @@ void UartWrite(uint8_t *in, uint16_t len)
     for(i = 0;i < len;i++)
     {
 #ifdef NON_BLOCKING_UART_TX
-        TxBufferEnqueue(in[i]);
+        DataEnqueue(TX, in[i]);
 #else
         UartPutC(in[i]);
 #endif
@@ -506,8 +427,8 @@ void UartWrite(uint8_t *in, uint16_t len)
 uint8_t UartGetC(void)
 {
 #ifdef NON_BLOCKING_UART_RX
-    uint8_t buf = 0;
-    RxBufferDequeue(&buf,1);
+    uint8_t buf[1] = 0;
+    DataDequeue(RX,&buf[0],1);
     return buf;
 #else
     while (!(UART_INT_FLAG & UCA0RXIFG));    // RX a byte?
@@ -520,7 +441,7 @@ uint8_t UartGetC(void)
 void UartPutC(uint8_t data)
 {
 #ifdef NON_BLOCKING_UART_TX
-    TxBufferEnqueue(data);
+    DataEnqueue(TX,data);
 #else
     while (!(UART_INT_FLAG & UCA0TXIFG));    // TX buffer ready?
     UCA0TXBUF = data;
