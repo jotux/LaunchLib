@@ -163,7 +163,7 @@ uint8_t RxBufferDequeue(uint8_t *in, uint16_t len)
 
     // copy the data from the rx buffer into the input buffer
     // does the data cross the end of the buffer?
-    if ((rx_start + rx_size) <= MAX_UART_RX_BUF_CNT)
+    if ((rx_start + rx_size) >= MAX_UART_RX_BUF_CNT)
     {
         // break up the copy into two parts
         // from start index to the end of the buffer
