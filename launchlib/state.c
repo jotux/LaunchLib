@@ -128,7 +128,7 @@ State LookupTransition(State state, uint8_t event)
     uint8_t i = 0;
     State ret_state = state;
     // if the event is idle or enter/exit just return state)
-    if (event > EXIT)
+    if (event != IDLE && event != ENTER && state != EXIT)
     {
         // if event is a new event find the transition
         for(i = 0;i < transition_table_size;i++)
