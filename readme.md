@@ -3,7 +3,7 @@
 
 ### Support for MSP430G2553 and MSP430FR5739
 
-##Docs can be found [here](http://jotux.github.com/LaunchLib/docs/index.html)
+##Docs can be found [here](http://jotux.github.com/LaunchLib/docs/html/index.html)
 
 ##Getting started
 
