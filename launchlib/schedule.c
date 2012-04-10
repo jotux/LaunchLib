@@ -83,7 +83,7 @@ void CallbackRegister(CallbackFn func, uint32_t run_time)
 void CallbackService(uint32_t current_time)
 {
     uint8_t i = 0;
-    uint8_t callbacks_remaining = event_cnt;
+    uint8_t callbacks_remaining = event_count;
     if (callbacks_remaining == 0)
     {
         goto service_complete;
