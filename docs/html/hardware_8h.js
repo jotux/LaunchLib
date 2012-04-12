@@ -7,6 +7,5 @@ var hardware_8h =
     [ "MAX_CALLOUT_CNT", "hardware_8h.html#a633e51fd220983033afe28f559b9243f", null ],
     [ "MAX_EVENT_CNT", "hardware_8h.html#a4ca719fc38491bd0082e84b9e5dbe778", null ],
     [ "MAX_UART_RX_BUF_CNT", "hardware_8h.html#a63e46c67d118f74da8f5cf4ea5092599", null ],
-    [ "MAX_UART_TX_BUF_CNT", "hardware_8h.html#afeedc359adc613742b1b1107c0bb5424", null ],
-    [ "NON_BLOCKING_UART_RX", "hardware_8h.html#acd1e0bb38a89747a30909b2dbdcead39", null ]
+    [ "MAX_UART_TX_BUF_CNT", "hardware_8h.html#afeedc359adc613742b1b1107c0bb5424", null ]
 ];

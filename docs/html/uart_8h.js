@@ -13,7 +13,7 @@ var uart_8h =
     [ "UartPutIToA", "uart_8h.html#a31ffa36260438e815dc84877819e276c", null ],
     [ "UartPutS", "uart_8h.html#ad49030c86f6964b5589c7248c7536917", null ],
     [ "UartRead", "uart_8h.html#a2f66e34777bf9859318aaeb076d3dcf9", null ],
-    [ "UartRxInt", "uart_8h.html#a8814d60848cbd78b3615cfcc681cf896", null ],
-    [ "UartTxInt", "uart_8h.html#a61be1b8210ebc35b92065c0021407d45", null ],
+    [ "UartRxInt", "uart_8h.html#ae3cf4f98abd9ac22273d5ccba1c9db8d", null ],
+    [ "UartTxInt", "uart_8h.html#aaf7d3ca61292db89b5d0944186a9eeb3", null ],
     [ "UartWrite", "uart_8h.html#ac73e0a24fb3a76b33f178608b1961cbc", null ]
 ];

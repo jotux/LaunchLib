@@ -133,10 +133,6 @@ Defines</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a845320ee4b3a5233eef0ecc496803361"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uart_8c.html#a845320ee4b3a5233eef0ecc496803361">UartInit</a> (<a class="el" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> baud_rate)</td></tr>
 <tr class="memdesc:a845320ee4b3a5233eef0ecc496803361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize Uart hardware.  <a href="#a845320ee4b3a5233eef0ecc496803361"></a><br/></td></tr>
-<tr class="memitem:abf0bcd299654dc45edff357876635f14"><td class="memItemLeft" align="right" valign="top"><a class="el" href="global_8h.html#aef44329758059c91c76d334e8fc09700">int8_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uart_8c.html#abf0bcd299654dc45edff357876635f14">RxBufferEnqueue</a> (<a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> data)</td></tr>
-<tr class="memdesc:abf0bcd299654dc45edff357876635f14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueue data into the rx buffer.  <a href="#abf0bcd299654dc45edff357876635f14"></a><br/></td></tr>
-<tr class="memitem:a9e8df6c118f41ae2a77b8bdafa1d4dfa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uart_8c.html#a9e8df6c118f41ae2a77b8bdafa1d4dfa">RxBufferDequeue</a> (<a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> *in, <a class="el" href="global_8h.html#adf4d876453337156dde61095e1f20223">uint16_t</a> len)</td></tr>
-<tr class="memdesc:a9e8df6c118f41ae2a77b8bdafa1d4dfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove data from the rx buffer and place it into the provided address.  <a href="#a9e8df6c118f41ae2a77b8bdafa1d4dfa"></a><br/></td></tr>
 <tr class="memitem:a86ba3f4bf17f71004694a266847bf661"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uart_8c.html#a86ba3f4bf17f71004694a266847bf661">UartPutIToA</a> (<a class="el" href="global_8h.html#a33594304e786b158f3fb30289278f5af">uint32_t</a> value, enum <a class="el" href="uart_8h.html#a361986379210db4bedbdf16eb780a8c0">NUMBER_BASE</a> base)</td></tr>
 <tr class="memdesc:a86ba3f4bf17f71004694a266847bf661"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert int to string and transmit.  <a href="#a86ba3f4bf17f71004694a266847bf661"></a><br/></td></tr>
 <tr class="memitem:a5d1403cfde04c92b8accf2a99daa850e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uart_8c.html#a5d1403cfde04c92b8accf2a99daa850e">UartPrintf</a> (<a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> *format,...)</td></tr>
@@ -151,8 +147,6 @@ Functions</h2></td></tr>
 <tr class="memdesc:af7b647a92a39dbbc1e4db990a51d1b5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a single byte to the uart.  <a href="#af7b647a92a39dbbc1e4db990a51d1b5f"></a><br/></td></tr>
 <tr class="memitem:ad49030c86f6964b5589c7248c7536917"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uart_8c.html#ad49030c86f6964b5589c7248c7536917">UartPutS</a> (<a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> *s)</td></tr>
 <tr class="memdesc:ad49030c86f6964b5589c7248c7536917"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a string of bytes to the uart.  <a href="#ad49030c86f6964b5589c7248c7536917"></a><br/></td></tr>
-<tr class="memitem:af6888b94959a921ae8ff29952df28462"><td class="memItemLeft" align="right" valign="top"><a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uart_8c.html#af6888b94959a921ae8ff29952df28462">UartBufEmpty</a> (void)</td></tr>
-<tr class="memdesc:af6888b94959a921ae8ff29952df28462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check to see if rx buffer is empty.  <a href="#af6888b94959a921ae8ff29952df28462"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Blocking and non-blocking UART interface. </p>
@@ -180,175 +174,6 @@ Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Function Documentation</h2>
-<a class="anchor" id="a9e8df6c118f41ae2a77b8bdafa1d4dfa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> <a class="el" href="uart_8c.html#a9e8df6c118f41ae2a77b8bdafa1d4dfa">RxBufferDequeue</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> *&#160;</td>
-          <td class="paramname"><em>in</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="global_8h.html#adf4d876453337156dde61095e1f20223">uint16_t</a>&#160;</td>
-          <td class="paramname"><em>len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Remove data from the rx buffer and place it into the provided address. </p>
-<p>Dequeue data from the rx buffer and then adjust the start/size values. If the length makes the copy wrap around the end of the queue we break the copy into two parts. </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">in</td><td>pointer to copy data to </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>length of data to copy </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns:</dt><dd>length of data copied to the in pointer </dd></dl>
-
-<p>Definition at line <a class="el" href="uart_8c_source.html#l00151">151</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
-<div class="fragment"><pre class="fragment">{
-    <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> len_to_read;
-    _DINT();
-    <span class="comment">// is the buffer empty?</span>
-    <span class="keywordflow">if</span> (rx_size == 0)
-    {
-        <span class="keywordflow">goto</span> error;
-    }
-
-    <span class="comment">// are we trying to read more than is in the buffer?</span>
-    len_to_read = (len &gt; rx_size) ? rx_size : len;
-
-    <span class="comment">// copy the data from the rx buffer into the input buffer</span>
-    <span class="comment">// does the data cross the end of the buffer?</span>
-    <span class="keywordflow">if</span> ((rx_start + rx_size) &gt;= <a class="code" href="hardware_8h.html#a63e46c67d118f74da8f5cf4ea5092599">MAX_UART_RX_BUF_CNT</a>)
-    {
-        <span class="comment">// break up the copy into two parts</span>
-        <span class="comment">// from start index to the end of the buffer</span>
-        memmove(in,
-               (rx_buf + rx_start),
-               (<a class="code" href="hardware_8h.html#a63e46c67d118f74da8f5cf4ea5092599">MAX_UART_RX_BUF_CNT</a> - rx_start));
-        <span class="comment">// from the beginning of the buffer to the end index</span>
-        memmove(in + (<a class="code" href="hardware_8h.html#a63e46c67d118f74da8f5cf4ea5092599">MAX_UART_RX_BUF_CNT</a> - rx_start),
-               rx_buf,
-               (len_to_read - (<a class="code" href="hardware_8h.html#a63e46c67d118f74da8f5cf4ea5092599">MAX_UART_RX_BUF_CNT</a> - rx_start)));
-    }
-    <span class="keywordflow">else</span>
-    {
-        memmove(in, rx_buf + rx_start, len_to_read);
-    }
-
-    <span class="comment">// adjust the start index</span>
-    <span class="keywordflow">if</span>((rx_start + rx_size) &gt;= <a class="code" href="hardware_8h.html#a63e46c67d118f74da8f5cf4ea5092599">MAX_UART_RX_BUF_CNT</a>)
-    {
-        rx_start = ((rx_start + len_to_read) - <a class="code" href="hardware_8h.html#a63e46c67d118f74da8f5cf4ea5092599">MAX_UART_RX_BUF_CNT</a>);
-    }
-    <span class="keywordflow">else</span>
-    {
-        rx_start = (rx_start + len_to_read);
-    }
-
-    <span class="comment">// adjust the size</span>
-    rx_size -= len_to_read;
-
-    _EINT();
-    <span class="keywordflow">return</span> len_to_read;
-error:
-    _EINT();
-    <span class="keywordflow">return</span> (0);
-}
-</pre></div>
-</div>
-</div>
-<a class="anchor" id="abf0bcd299654dc45edff357876635f14"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="global_8h.html#aef44329758059c91c76d334e8fc09700">int8_t</a> <a class="el" href="uart_8c.html#abf0bcd299654dc45edff357876635f14">RxBufferEnqueue</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a>&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Enqueue data into the rx buffer. </p>
-<p>Take data from the hardware rx buffer and enqueue it in a circular buffer for retrieval. </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>data to enqueue </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns:</dt><dd>0 for success -1 for failure </dd></dl>
-
-<p>Definition at line <a class="el" href="uart_8c_source.html#l00124">124</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
-<div class="fragment"><pre class="fragment">{
-    <span class="comment">// is the buffer full?</span>
-    <span class="keywordflow">if</span> (rx_size == <a class="code" href="hardware_8h.html#a63e46c67d118f74da8f5cf4ea5092599">MAX_UART_RX_BUF_CNT</a>)
-    {
-        <span class="keywordflow">goto</span> error;
-    }
-
-    <span class="comment">// stuff the data</span>
-    <span class="keywordflow">if</span>((rx_start + rx_size) &gt;= <a class="code" href="hardware_8h.html#a63e46c67d118f74da8f5cf4ea5092599">MAX_UART_RX_BUF_CNT</a>)
-    {
-        rx_buf[(rx_start + rx_size) - <a class="code" href="hardware_8h.html#a63e46c67d118f74da8f5cf4ea5092599">MAX_UART_RX_BUF_CNT</a>] = data;
-    }
-    <span class="keywordflow">else</span>
-    {
-        rx_buf[(rx_start + rx_size)] = data;
-    }
-
-    <span class="comment">// adjust the buf size</span>
-    rx_size++;
-
-    <span class="keywordflow">return</span> (0);
-error:
-    <span class="keywordflow">return</span> (-1);
-}
-</pre></div>
-</div>
-</div>
-<a class="anchor" id="af6888b94959a921ae8ff29952df28462"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> <a class="el" href="uart_8h.html#af6888b94959a921ae8ff29952df28462">UartBufEmpty</a> </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Check to see if rx buffer is empty. </p>
-<p>Check rx_size to see if any data is pending </p>
-<dl class="section return"><dt>Returns:</dt><dd>1 if empty, 0 if not empty </dd></dl>
-
-<p>Definition at line <a class="el" href="uart_8c_source.html#l00541">541</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
-<div class="fragment"><pre class="fragment">{
-    <span class="keywordflow">return</span> !(rx_size);
-}
-</pre></div>
-</div>
-</div>
 <a class="anchor" id="af40579990e2a31d25a57dc24f2f048dd"></a>
 <div class="memitem">
 <div class="memproto">
@@ -372,7 +197,8 @@ error:
 <div class="fragment"><pre class="fragment">{
 <span class="preprocessor">#ifdef NON_BLOCKING_UART_RX</span>
 <span class="preprocessor"></span>    <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> buf = 0;
-    <a class="code" href="uart_8c.html#a9e8df6c118f41ae2a77b8bdafa1d4dfa" title="Remove data from the rx buffer and place it into the provided address.">RxBufferDequeue</a>(&amp;buf,1);
+    <span class="keywordflow">while</span>(<a class="code" href="uart_8h.html#af6888b94959a921ae8ff29952df28462" title="Check to see if rx buffer is empty.">UartBufEmpty</a>());
+    RxBufferDequeue(&amp;buf,1);
     <span class="keywordflow">return</span> buf;
 <span class="preprocessor">#else</span>
 <span class="preprocessor"></span>    <span class="keywordflow">while</span> (!(UART_INT_FLAG &amp; UCA0RXIFG));    <span class="comment">// RX a byte?</span>
@@ -584,7 +410,7 @@ bad_fmt:
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="uart_8c_source.html#l00520">520</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
+<p>Definition at line <a class="el" href="uart_8c_source.html#l00521">521</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
 <span class="preprocessor">#ifdef NON_BLOCKING_UART_TX</span>
 <span class="preprocessor"></span>    TxBufferEnqueue(data);
@@ -684,7 +510,7 @@ bad_fmt:
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="uart_8c_source.html#l00531">531</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
+<p>Definition at line <a class="el" href="uart_8c_source.html#l00532">532</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
     <span class="keywordflow">while</span>(*s)
     {
@@ -733,7 +559,7 @@ bad_fmt:
 <p>Definition at line <a class="el" href="uart_8c_source.html#l00481">481</a> of file <a class="el" href="uart_8c_source.html">uart.c</a>.</p>
 <div class="fragment"><pre class="fragment">{
 <span class="preprocessor">#ifdef NON_BLOCKING_UART_RX</span>
-<span class="preprocessor"></span>    <span class="keywordflow">return</span> <a class="code" href="uart_8c.html#a9e8df6c118f41ae2a77b8bdafa1d4dfa" title="Remove data from the rx buffer and place it into the provided address.">RxBufferDequeue</a>(in, len);
+<span class="preprocessor"></span>    <span class="keywordflow">return</span> RxBufferDequeue(in, len);
 <span class="preprocessor">#else</span>
 <span class="preprocessor"></span>    in[0] = <a class="code" href="uart_8c.html#af40579990e2a31d25a57dc24f2f048dd" title="Read a single byte from the uart.">UartGetC</a>();
     <span class="keywordflow">return</span> (1);
@@ -798,7 +624,7 @@ bad_fmt:
     <ul>
       <li class="navelem"><a class="el" href="uart_8c.html">uart.c</a>      </li>
 
-    <li class="footer">Generated on Sun Apr 8 2012 16:56:54 for LaunchLib by
+    <li class="footer">Generated on Wed Apr 11 2012 23:43:45 for LaunchLib by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.0 </li>
    </ul>

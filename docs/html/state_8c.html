@@ -328,7 +328,7 @@ Functions</h2></td></tr>
     <a class="code" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> i = 0;
     <a class="code" href="state_8h.html#a73296dcaec5ad45548632021a1e68528" title="function pointer to a state function that accepts an event variable">State</a> ret_state = state;
     <span class="comment">// if the event is idle or enter/exit just return state)</span>
-    <span class="keywordflow">if</span> (event != <a class="code" href="state_8c.html#a6e06d4f4914d3d22da439a47a8fa4675afd6a0e4343048b10646dd2976cc5ad18">IDLE</a> &amp;&amp; event != <a class="code" href="state_8c.html#a6e06d4f4914d3d22da439a47a8fa4675a951ab68bb8f7daafb78951107080904e">ENTER</a> &amp;&amp; state != <a class="code" href="state_8c.html#a6e06d4f4914d3d22da439a47a8fa4675a7a10b5d68d31711288e1fe0fa17dbf4f">EXIT</a>)
+    <span class="keywordflow">if</span> (event != <a class="code" href="state_8c.html#a6e06d4f4914d3d22da439a47a8fa4675afd6a0e4343048b10646dd2976cc5ad18">IDLE</a> &amp;&amp; event != <a class="code" href="state_8c.html#a6e06d4f4914d3d22da439a47a8fa4675a951ab68bb8f7daafb78951107080904e">ENTER</a> &amp;&amp; event != <a class="code" href="state_8c.html#a6e06d4f4914d3d22da439a47a8fa4675a7a10b5d68d31711288e1fe0fa17dbf4f">EXIT</a>)
     {
         <span class="comment">// if event is a new event find the transition</span>
         <span class="keywordflow">for</span>(i = 0;i &lt; transition_table_size;i++)
@@ -505,7 +505,7 @@ Functions</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="state_8c.html">state.c</a>      </li>
 
-    <li class="footer">Generated on Sun Apr 8 2012 16:56:54 for LaunchLib by
+    <li class="footer">Generated on Wed Apr 11 2012 23:43:44 for LaunchLib by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.0 </li>
    </ul>

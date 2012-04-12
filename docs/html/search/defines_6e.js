@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['non_5fblocking_5fuart_5frx',['NON_BLOCKING_UART_RX',['../hardware_8h.html#acd1e0bb38a89747a30909b2dbdcead39',1,'hardware.h']]],
   ['note_5fa1',['NOTE_A1',['../tone_8h.html#ae7263a79e9675b3bae2b73d2c8b7d0f8',1,'tone.h']]],
   ['note_5fa2',['NOTE_A2',['../tone_8h.html#ad8c52bd098530d4253e7433c8cc29ee9',1,'tone.h']]],
   ['note_5fa3',['NOTE_A3',['../tone_8h.html#a934b0ccc182054ca8da5c67c0e78a04c',1,'tone.h']]],

@@ -132,14 +132,6 @@ Functions</h2></td></tr>
 <tr class="memdesc:ac15b0a99fc1614c891b16cc874f32aa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attach function to GPIO pin edge interrupt.  <a href="#ac15b0a99fc1614c891b16cc874f32aa8"></a><br/></td></tr>
 <tr class="memitem:a42028d8e6598a35743081ec83dce7167"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a42028d8e6598a35743081ec83dce7167">InterruptDetach</a> (<a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> port, <a class="el" href="global_8h.html#aba7bc1797add20fe3efdf37ced1182c5">uint8_t</a> pin)</td></tr>
 <tr class="memdesc:a42028d8e6598a35743081ec83dce7167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detach function from GPIO pin interrupt.  <a href="#a42028d8e6598a35743081ec83dce7167"></a><br/></td></tr>
-<tr class="memitem:a5bdc84178e450f885a181e2848532f71"><td class="memItemLeft" align="right" valign="top">__interrupt void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a5bdc84178e450f885a181e2848532f71">Port1</a> (void)</td></tr>
-<tr class="memdesc:a5bdc84178e450f885a181e2848532f71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port 1 interrupt service routine.  <a href="#a5bdc84178e450f885a181e2848532f71"></a><br/></td></tr>
-<tr class="memitem:a635c67d4a49a7da65aecafcfb826d9b6"><td class="memItemLeft" align="right" valign="top">__interrupt void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a635c67d4a49a7da65aecafcfb826d9b6">Port2</a> (void)</td></tr>
-<tr class="memdesc:a635c67d4a49a7da65aecafcfb826d9b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port 2 interrupt service routine.  <a href="#a635c67d4a49a7da65aecafcfb826d9b6"></a><br/></td></tr>
-<tr class="memitem:ae06e1af27a77b84763a999de6d189fb6"><td class="memItemLeft" align="right" valign="top">__interrupt void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#ae06e1af27a77b84763a999de6d189fb6">Port3</a> (void)</td></tr>
-<tr class="memdesc:ae06e1af27a77b84763a999de6d189fb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port 3 interrupt service routine.  <a href="#ae06e1af27a77b84763a999de6d189fb6"></a><br/></td></tr>
-<tr class="memitem:aa7c3e2d8a860c73eb586cb113d91160b"><td class="memItemLeft" align="right" valign="top">__interrupt void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#aa7c3e2d8a860c73eb586cb113d91160b">Port4</a> (void)</td></tr>
-<tr class="memdesc:aa7c3e2d8a860c73eb586cb113d91160b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port 4 interrupt service routine.  <a href="#aa7c3e2d8a860c73eb586cb113d91160b"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Definitions, data structues and prototypes for GPIO interrupt handler. </p>
@@ -301,103 +293,13 @@ Functions</h2></td></tr>
 </pre></div>
 </div>
 </div>
-<a class="anchor" id="a5bdc84178e450f885a181e2848532f71"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">__interrupt void <a class="el" href="interrupt_8h.html#a5bdc84178e450f885a181e2848532f71">Port1</a> </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Port 1 interrupt service routine. </p>
-<p>Go through each bit in the interrupt flag to see if it is set. If it is run the corresponding function. </p>
-
-<p>Definition at line <a class="el" href="interrupt_8c_source.html#l00121">121</a> of file <a class="el" href="interrupt_8c_source.html">interrupt.c</a>.</p>
-<div class="fragment"><pre class="fragment">{
-    <a class="code" href="interrupt_8c.html#a3da3cee7c974de9f423e39145590ebe5" title="Search interrupt function pointer lists and run functions corresponding to the interrupt that fired...">InterruptRunOnPort</a>(1);
-}
-</pre></div>
-</div>
-</div>
-<a class="anchor" id="a635c67d4a49a7da65aecafcfb826d9b6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">__interrupt void <a class="el" href="interrupt_8h.html#a635c67d4a49a7da65aecafcfb826d9b6">Port2</a> </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Port 2 interrupt service routine. </p>
-<p>Go through each bit in the interrupt flag to see if it is set. If it is run the corresponding function. </p>
-
-<p>Definition at line <a class="el" href="interrupt_8c_source.html#l00127">127</a> of file <a class="el" href="interrupt_8c_source.html">interrupt.c</a>.</p>
-<div class="fragment"><pre class="fragment">{
-    <a class="code" href="interrupt_8c.html#a3da3cee7c974de9f423e39145590ebe5" title="Search interrupt function pointer lists and run functions corresponding to the interrupt that fired...">InterruptRunOnPort</a>(2);
-}
-</pre></div>
-</div>
-</div>
-<a class="anchor" id="ae06e1af27a77b84763a999de6d189fb6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">__interrupt void <a class="el" href="interrupt_8h.html#ae06e1af27a77b84763a999de6d189fb6">Port3</a> </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Port 3 interrupt service routine. </p>
-<p>Go through each bit in the interrupt flag to see if it is set. If it is run the corresponding function. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa7c3e2d8a860c73eb586cb113d91160b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">__interrupt void <a class="el" href="interrupt_8h.html#aa7c3e2d8a860c73eb586cb113d91160b">Port4</a> </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Port 4 interrupt service routine. </p>
-<p>Go through each bit in the interrupt flag to see if it is set. If it is run the corresponding function. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="interrupt_8h.html">interrupt.h</a>      </li>
 
-    <li class="footer">Generated on Sun Apr 8 2012 16:56:54 for LaunchLib by
+    <li class="footer">Generated on Wed Apr 11 2012 23:43:44 for LaunchLib by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.0 </li>
    </ul>
