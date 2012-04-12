@@ -64,7 +64,7 @@ static uint8_t RxBufferDequeue(uint8_t *in, uint16_t len);
 /**
 @brief Interrupt routine to enqueue received data
 */
-__interrupt void UartRxInt(void);
+static __interrupt void UartRxInt(void);
 
 /**
 @brief Enqueue data into the tx buffer
@@ -87,7 +87,7 @@ static uint8_t TxBufferDequeue(void);
 @brief Interrupt routine indicating transmit is complete and we can dequeue
 more data.
 */
-__interrupt void UartTxInt(void);
+static __interrupt void UartTxInt(void);
 
 /**
 @brief Convert int to string and transmit

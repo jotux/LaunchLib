@@ -1,10 +1,4 @@
-#include "launchlib/global.h"
-#include "launchlib/hardware.h"
-#include "launchlib/schedule.h"
-#include "launchlib/uart.h"
-#include "launchlib/state.h"
-#include "launchlib/adc.h"
-#include "launchlib/clock.h"
+#include "launchlib.h"
 
 // Event generating functions
 void TimerTick(void);
@@ -31,12 +25,12 @@ void state_read_adc(uint8_t event);
 //Rules
 Transition rules[] =
 {
-    {state_idle,        GO_BLINK_LED1,  state_blink_1    },
-    {state_idle,        GO_BLINK_LED2,  state_blink_2    },
-    {state_idle,        GO_READ_ADC,    state_read_adc   },
-    {state_blink_1,     RETURN_TO_IDLE, state_idle       },
-    {state_blink_2,     RETURN_TO_IDLE, state_idle       },
-    {state_read_adc,    RETURN_TO_IDLE, state_idle       },
+    {state_idle,     GO_BLINK_LED1,  state_blink_1 },
+    {state_idle,     GO_BLINK_LED2,  state_blink_2 },
+    {state_idle,     GO_READ_ADC,    state_read_adc},
+    {state_blink_1,  RETURN_TO_IDLE, state_idle    },
+    {state_blink_2,  RETURN_TO_IDLE, state_idle    },
+    {state_read_adc, RETURN_TO_IDLE, state_idle    },
 };
 
 // Current state pointer
@@ -72,10 +66,10 @@ void main(void)
     StateMachineInit(rules, sizeof(rules));
 
     // register receive polling callback
-    CallbackRegister(UartRxPoll, 50ul * _millisecond);
+    CallbackRegister(UartRxPoll, 50ul * _MILLISECOND);
     CallbackMode(UartRxPoll, ENABLED);
     // register timer tick callback (for led blinking)
-    CallbackRegister(TimerTick, 100ul * _millisecond);
+    CallbackRegister(TimerTick, 100ul * _MILLISECOND);
 
     _EINT();
     while (1)

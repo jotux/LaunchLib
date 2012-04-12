@@ -46,7 +46,7 @@ static void InterruptRunOnPort(uint8_t port);
 Go through each bit in the interrupt flag to see if it is set. If it is run the
 corresponding function.
 */
-__interrupt void Port1(void);
+static __interrupt void Port1(void);
 
 /**
 @brief Port 2 interrupt service routine
@@ -54,7 +54,7 @@ __interrupt void Port1(void);
 Go through each bit in the interrupt flag to see if it is set. If it is run the
 corresponding function.
 */
-__interrupt void Port2(void);
+static __interrupt void Port2(void);
 
 /**
 @brief Port 3 interrupt service routine
@@ -62,7 +62,7 @@ __interrupt void Port2(void);
 Go through each bit in the interrupt flag to see if it is set. If it is run the
 corresponding function.
 */
-__interrupt void Port3(void);
+static __interrupt void Port3(void);
 
 /**
 @brief Port 4 interrupt service routine
@@ -70,6 +70,6 @@ __interrupt void Port3(void);
 Go through each bit in the interrupt flag to see if it is set. If it is run the
 corresponding function.
 */
-__interrupt void Port4(void);
+static __interrupt void Port4(void);
 
 #endif // INTERRUPT_H

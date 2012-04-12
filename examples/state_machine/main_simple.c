@@ -1,9 +1,4 @@
-#include "launchlib/global.h"
-#include "launchlib/hardware.h"
-#include "launchlib/schedule.h"
-#include "launchlib/interrupt.h"
-#include "launchlib/state.h"
-#include "launchlib/clock.h"
+#include "launchlib.h"
 
 // Event generating functions
 void QueueButton(void);
@@ -49,7 +44,7 @@ void main(void)
     HardwareInit();
 
     InterruptAttach(SW1_PORT, SW1_PIN, QueueButton, FALLING_EDGE);
-    CallbackRegister(TimerTick, 500ul * _millisecond);
+    CallbackRegister(TimerTick, 500ul * _MILLISECOND);
     StateMachineInit(rules, sizeof(rules));
     _EINT();
 

@@ -299,8 +299,8 @@ __interrupt void UartTxInt(void)
 #elif __MSP430FR5739__
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 #if defined NON_BLOCKING_UART_RX || defined NON_BLOCKING_UART_TX
-#pragma vector=USCI_A0_VECTOR
-__interrupt void USCI_A0_ISR(void)
+#pragma vector=UART_INT_VECTOR
+__interrupt void UartInt(void)
 {
     switch(__even_in_range(UCA0IV,0x08))
     {
@@ -507,6 +507,7 @@ uint8_t UartGetC(void)
 {
 #ifdef NON_BLOCKING_UART_RX
     uint8_t buf = 0;
+    while(UartBufEmpty());
     RxBufferDequeue(&buf,1);
     return buf;
 #else

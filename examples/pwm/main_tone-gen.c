@@ -1,10 +1,4 @@
-#include "launchlib/global.h"
-#include "launchlib/hardware.h"
-#include "launchlib/pwm.h"
-#include "launchlib/clock.h"
-#include "launchlib/tone.h"
-#include "launchlib/delay.h"
-#include "launchlib/schedule.h"
+#include "launchlib.h"
 
 uint16_t tempo = 100;
 

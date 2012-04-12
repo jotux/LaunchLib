@@ -1,8 +1,4 @@
-#include "launchlib/global.h"
-#include "launchlib/hardware.h"
-#include "launchlib/delay.h"
-#include "launchlib/uart.h"
-#include "launchlib/clock.h"
+#include "launchlib.h"
 
 void HardwareInit(void)
 {
@@ -26,7 +22,7 @@ void main(void)
     UartInit(115200);
 
     _EINT();
-    
+
     UartPrintf("\n\nThis is %s\n",        "a string");
     UartPrintf("Hex number(16): 0x%x\n",  60000);
     UartPrintf("Hex number(32): 0x%x\n",  100000);

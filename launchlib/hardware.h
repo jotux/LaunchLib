@@ -52,7 +52,7 @@
 // tx_buf_cnt very large, or put delays between messages to allow the buffer to
 // be emptied.
 //#define NON_BLOCKING_UART_TX
-#define NON_BLOCKING_UART_RX
+//#define NON_BLOCKING_UART_RX
 #define MAX_UART_RX_BUF_CNT 20
 #define MAX_UART_TX_BUF_CNT 200
 
@@ -94,11 +94,11 @@
 // PWM
 #define NUM_PWM_CHANNELS    2
 
-#define PWM0_PORT          1
-#define PWM0_PIN           2
+#define PWM0_PORT           1
+#define PWM0_PIN            2
 
-#define PWM1_PORT          2
-#define PWM1_PIN           1
+#define PWM1_PORT           2
+#define PWM1_PIN            1
 
 // interrupt config
 #define NUM_P1_INTS         8

@@ -1,7 +1,4 @@
-#include "launchlib/global.h"
-#include "launchlib/hardware.h"
-#include "launchlib/interrupt.h"
-#include "launchlib/clock.h"
+#include "launchlib.h"
 
 void ToggleLed1(void);
 
