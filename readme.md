@@ -1,3 +1,5 @@
+/** @mainpage
+
 ##An easy-to-use library to help kickstart your launchpad development.
 ![Pew Pew Pew](http://jotux.github.com/LaunchLib/logo.png)
 
@@ -11,7 +13,7 @@
  - Clone the Code
  - Create a new CCS project
  - Copy launchlib into your project
- - Copy examples files to the top level directory and rename to main.c
+ - Use example as a guide
  - Enjoy
 
 ##Current Features:
@@ -56,3 +58,5 @@ All code is released under the supplied (MIT) license unless otherwise stated.
  - More hardware support
 
 Code compatible with CCS and IAR.
+
+*/
