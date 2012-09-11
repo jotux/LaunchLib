@@ -4,28 +4,68 @@
 @author Joe Brown
 */
 #include "global.h"
-#include "hardware.h"
 #include "state.h"
 
-/** @brief A pointer to the transition table */
-static Transition* transition_table;
-/** @brief The size of the transrition table */
-static uint8_t transition_table_size;
-
-// The event queue is a FIFO implemented as a circular buffer
-/** @brief beginning index of the circular buffer holding events */
-static uint8_t start;
-/** @brief number of events in the circular event buffer */
-static uint8_t size;
-/** @brief published events are stored here */
-static uint8_t queue[MAX_EVENT_CNT];
-
-
-/** @brief event queue (published events are stored here) */
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//                            __                        __
+//                           / /   ____   _____ ____ _ / /
+//                          / /   / __ \ / ___// __ `// /
+//                         / /___/ /_/ // /__ / /_/ // /
+//                        /_____/\____/ \___/ \__,_//_/
+//
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+/** @brief Default events not enqueued by users */
 enum LocalDefaults {DEFAULT_EVENTS};
 
-/** @brief indicator kept to store EXIT/ENTER events */
-static uint8_t transition_event = IDLE;
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+/**
+@brief Dequeue an event from the event queue
+@details
+Removes an event from the event queue and passes it to the current state.
+@param[in] s A pointer to the state machine to dequeue an event from
+@return The next event to be processed by the current state
+*/
+static uint8_t DequeueEvent(StateMachine* s);
+
+/**
+@brief Check the event queue for changes.
+@details If we are in the IDLE state and a state transition is going to take
+place (detected by using LookupTransition) we will return EXIT. If no transition
+will take then we simple dequeue the next event.
+
+If we are currently processing an EXIT event this means the next transition in
+the queue will cause a state transition, so we dequeue that event and return it
+to the new state but save the transition_event as ENTER to force an ENTER event
+to be sent after the event is complete.
+
+Once the transition-causing event has been processed we return an ENTER event
+to allow state initialization in the new state.
+@param[in] s A pointer to the state machine to check for events in
+@return The event to be run by the current state
+*/
+static uint8_t CheckEventQueue(StateMachine* s);
+
+/**
+@brief Peek at the event queue to see what the next event will be
+@details
+Peek at the queue without dequeuing the next item. We use this so check if a
+state transition will be coming so we can pass EXIT and ENTER events.
+@param[in] s A pointer to the state machine to check for events in
+@return If there are no events in the queue, IDLE. If there is a pending event in the
+queue we will return it.
+*/
+static uint8_t QueuePeek(StateMachine* s);
+
+/**
+@brief Get the next state from the transition table
+@details
+Get the next state from the transition table based on the current state and the
+most recent event dequeued from the event queue.
+@param[in] s A pointer to the state machine to look for transitions in
+@param[in] event The next event dequeue from the event queue
+@return The next state to be run based on transition rules
+*/
+static State LookupTransition(StateMachine* s, uint8_t event);
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //                            ____        _  __
@@ -35,122 +75,141 @@ static uint8_t transition_event = IDLE;
 //                        /___//_/ /_//_/ \__/
 //
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-void StateMachineInit(Transition *state_transitions, uint8_t t_size)
+StateMachine StateMachineCreate(Transition* rules, uint8_t t_size, State state)
 {
-    // save a pointer to the state transition table
-    transition_table = state_transitions;
-    // save it's size so we can search it
-    transition_table_size = (t_size / sizeof(Transition));
-    // enqueue an enter event to start the idle state
-    StateMachinePublishEvent(ENTER);
+    StateMachine s;
+    s.start = 0;
+    s.event_cnt = 0;
+    s.transitions = rules;
+    s.transition_table_size = (t_size / sizeof(Transition));
+    s.transition_event = IDLE;
+    s.state = state;
+    StateMachinePublishEvent(&s, ENTER);
+    return (s);
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-uint8_t CheckEventQueue(State state)
+uint8_t CheckEventQueue(StateMachine* s)
 {
     uint8_t ret_event = IDLE;
 
-    _DINT();
-    switch (transition_event)
+    switch (s->transition_event)
     {
         case IDLE:
+        {
             // get the next event without dequeuing and peek at the table to see
             // if this event will cause a transition
-            if (state != LookupTransition(state, QueuePeek()))
+            if (s->state != LookupTransition(s, QueuePeek(s)))
             {
                 // if a transition will happen, return the EXIT event
-                ret_event = transition_event = EXIT;
+                ret_event = s->transition_event = EXIT;
             }
             else
             {
                 // if a transition will not happen, dequeue events normally
-                ret_event = DequeueEvent();
+                ret_event = DequeueEvent(s);
             }
+
             break;
+        }
         case ENTER:
+        {
             // return ENTER and switch transition event to IDLE
             ret_event = ENTER;
-            transition_event = IDLE;
+            s->transition_event = IDLE;
             break;
+        }
         case EXIT:
-            // switch transition event to ENTER but return queued event
-            transition_event = ENTER;
-            ret_event = DequeueEvent();
+        {
+            // Return ENTER event
+            s->transition_event = ENTER;
+            // dequeue the event that causes the transition
+            // This event isn't processed by the state but used to look up the
+            // transition it will cause
+            ret_event = DequeueEvent(s);
             break;
+        }
     }
-    _EINT();
     return ret_event;
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-uint8_t QueuePeek(void)
+uint8_t QueuePeek(StateMachine* s)
 {
-    return size ? queue[start] : IDLE;
+    return s->event_cnt ? s->event_queue[s->start] : IDLE;
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-int8_t StateMachinePublishEvent(uint8_t event)
+int8_t StateMachinePublishEvent(StateMachine* s, uint8_t event)
 {
-    int8_t ret = -1;
-    // event queue full?
-    if (size < MAX_EVENT_CNT)
+    int8_t ret = FAILURE;
+
+    if (s->event_cnt < MAX_EVENT_CNT)
     {
-        // add event to queue
-        queue[((start + size) == MAX_EVENT_CNT) ? 0 : (start + size)] = event;
-        // adjust the size
-        size++;
-        // return success
-        ret = 0;
+        if (s->start + s->event_cnt == MAX_EVENT_CNT)
+        {
+            s->event_queue[0] = event;
+        }
+        else
+        {
+            s->event_queue[s->start + s->event_cnt] = event;
+        }
+        s->event_cnt++;
     }
     return ret;
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-uint8_t DequeueEvent(void)
+uint8_t DequeueEvent(StateMachine* s)
 {
-    int8_t ret = IDLE;
-    // are there any events?
-    if (size)
+    uint8_t ret = IDLE;
+    if (s->event_cnt)
     {
-        // save the value we will return
-        ret = queue[start];
-        // adjust the start
-        start = (start == (MAX_EVENT_CNT - 1)) ? 0 : (start + 1);
-        // adjust the size
-        size--;
+        ret = s->event_queue[s->start];
+        if (s->start == MAX_EVENT_CNT - 1)
+        {
+            s->start = 0;
+        }
+        else
+        {
+            s->start += 1;
+        }
+        s->event_cnt -= 1;
     }
     return ret;
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-State LookupTransition(State state, uint8_t event)
+State LookupTransition(StateMachine* s, uint8_t event)
 {
     uint8_t i = 0;
-    State ret_state = state;
+    State ret_state = s->state;
+
     // if the event is idle or enter/exit just return state)
     if (event != IDLE && event != ENTER && event != EXIT)
     {
         // if event is a new event find the transition
-        for(i = 0;i < transition_table_size;i++)
+        for (i = 0; i < s->transition_table_size; i++)
         {
-            if (transition_table[i].current_state == state &&
-                transition_table[i].event_code    == event)
+            if (s->transitions[i].current_state == s->state &&
+                s->transitions[i].event_code    == event)
             {
-                ret_state = transition_table[i].next_state;
+                ret_state = s->transitions[i].next_state;
                 break;
             }
         }
     }
+
     return ret_state;
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-void StateMachineRun(State* state)
+void StateMachineRun(StateMachine* s)
 {
     // get the next event
-    uint8_t event = CheckEventQueue(*state);
+    uint8_t event = CheckEventQueue(s);
     // run the state
-    (*state)(event);
+    (s->state)(event);
     // check for state transitions
-    *state = LookupTransition(*state, event);
+    s->state = LookupTransition(s, event);
 }

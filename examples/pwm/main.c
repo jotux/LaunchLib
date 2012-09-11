@@ -1,15 +1,69 @@
-#include "launchlib.h"
+#include "../../launchlib.h"
+#include "../../hw.h"
+#include "../../launchlib/tone.h"
+
+#define SIMPLE_EXAMPLE
+#define TONE_EXAMPLE
+
+#if defined(SIMPLE_EXAMPLE)
+
+void HardwareInit(void)
+{
+    IO_DIRECTION(SW1,GPIO_INPUT);
+
+    IO_DIRECTION(PWM0,GPIO_OUTPUT);
+    IO_FUNCTION(PWM0,GPIO_FUN_SPECIAL);
+
+    IO_DIRECTION(PWM1,GPIO_OUTPUT);
+    IO_FUNCTION(PWM1,GPIO_FUN_SPECIAL);
+}
+
+void main(void)
+{
+    WD_STOP();
+    ClockConfig(16);
+    HardwareInit();
+
+    // Init PWM channel 0 (P1.2). Pwm output pins are specific to the device
+    // therefore we reference the channel number instead of the pin name
+    PwmInit(0);
+
+    // Configure period (Hz) and duty cycle (%) for the channel
+    PwmSetFrequency(0,10);
+    PwmSetDuty(0,50);
+
+    _EINT();
+
+    uint32_t cnt = 0;
+    while(1)
+    {
+        // if P1.3 switch is down sweep frequency up to 100kHz while maintaining
+        // 50% duty cycle
+        if (IO_IN(SW1) && cnt < 100000)
+        {
+            cnt++;
+        }
+        // if P1.3 is up, sweep back to 10kHz while maintaining duty cycle
+        else if (cnt > 10000)
+        {
+            cnt--;
+        }
+        PwmSetFrequency(0,cnt);
+    }
+}
+
+#elif defined(TONE_EXAMPLE)
 
 uint16_t tempo = 100;
 
 enum NOTE_TYPE
 {
     THIRTYSECOND = 32,
-    SIXTEENTH = 16,
-    EIGHTH    = 8,
-    QUARTER   = 4,
-    HALF      = 2,
-    WHOLE     = 1
+    SIXTEENTH    = 16,
+    EIGHTH       = 8,
+    QUARTER      = 4,
+    HALF         = 2,
+    WHOLE        = 1
 };
 
 void Rest(enum NOTE_TYPE type)
@@ -22,21 +76,21 @@ void PlayNote(uint16_t note, enum NOTE_TYPE type)
     // min/max freq = 122Hz/80KHz so lowest note will be B2
     PwmSetFrequency(0,note);
     // for effect
-    LED_ON(1);
+    LED1_ON();
     // The length of one measure is (4 / TEMPO) minutes = (4000 / TEMPO) ms
     Rest(type);
     PwmSetFrequency(0,0);
-    LED_OFF(1);
+    LED1_OFF();
 }
 
 void HardwareInit(void)
 {
-    IO_DIRECTION(LED1,OUTPUT);
-    LED_OFF(1);
-    IO_DIRECTION(LED2,OUTPUT);
-    LED_OFF(2);
-    IO_DIRECTION(PWM0,OUTPUT);
-    IO_FUNCTION(PWM0,SPECIAL);
+    IO_DIRECTION(LED1,GPIO_OUTPUT);
+    LED1_OFF();
+    IO_DIRECTION(LED2,GPIO_OUTPUT);
+    LED2_OFF();
+    IO_DIRECTION(PWM0,GPIO_OUTPUT);
+    IO_FUNCTION(PWM0,GPIO_FUN_SPECIAL);
 }
 
 void main(void)
@@ -266,3 +320,5 @@ void main(void)
         PlayNote(NOTE_G4,QUARTER);
     }
 }
+
+#endif

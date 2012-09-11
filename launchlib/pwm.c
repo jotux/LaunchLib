@@ -5,7 +5,7 @@
 */
 #include "global.h"
 #include "pwm.h"
-#include "hardware.h"
+#include "../hw.h"
 
 /** @brief table of channel configurations */
 static PwmOutput pwm_out[NUM_PWM_CHANNELS];

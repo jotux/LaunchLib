@@ -28,11 +28,13 @@ void ClockConfig(uint8_t mhz)
         CLOCK_CASE(12);
         CLOCK_CASE(16);
         default:
+        {
             while(1)
             {
                 // If you're here the clock was configured incorrectly
                 _NOP();
             }
+        }
     }
 
 #elif __MSP430FR5739__
@@ -42,24 +44,34 @@ void ClockConfig(uint8_t mhz)
     CSCTL0_H = FR5739_CLOCK_PASSWORD;
     switch(mhz)
     {
-       case 8:
+        case 8:
+        {
            CSCTL1 = DCOFSEL0 + DCOFSEL1;
            break;
-       case 16:
+        }
+        case 16:
+        {
            CSCTL1 = DCORSEL;
            break;
-       case 20:
+        }
+        case 20:
+        {
            CSCTL1 = DCORSEL + DCOFSEL0;
            break;
-       case 24:
+        }
+        case 24:
+        {
            CSCTL1 = DCORSEL + DCOFSEL0 + DCOFSEL1;
            break;
+        }
         default:
+        {
             while(1)
             {
                 // If you're here the clock was configured incorrectly
                 _NOP();
             }
+        }
     }
     /** @todo Add more control over ACLK, currently only set to VLO */
     // ACLK source = VLO
@@ -77,7 +89,7 @@ void ClockConfig(uint8_t mhz)
 #endif
     g_clock_speed = mhz * 1000000;
 
-#ifndef DO_NOT_ADJUST_SCHEDULER_ON_CLOCK_CONFIG
+#ifdef ADJUST_SCHEDULER_ON_CLOCK_CONFIG
     ScheduleTimerInit();
 #endif
 }

@@ -13,3 +13,10 @@ void Delay(uint32_t delay_time)
     uint32_t start_time = g_now;
     while(g_now < (start_time + delay_time));
 }
+
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+void DumbDelay(uint32_t delay_time)
+{
+    volatile uint32_t cnt = 0;
+    while(cnt++ < delay_time);
+}

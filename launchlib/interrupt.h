@@ -6,7 +6,15 @@
 #ifndef INTERRUPT_H
 #define INTERRUPT_H
 
+enum IntEdgeType
+{
+    FALLING,
+    RISING
+};
+
 typedef void (*InterruptFn)(void);
+
+#define GPIO(name) name##_PORT,name##_PIN
 
 /**
 @brief Attach function to GPIO pin edge interrupt
@@ -19,7 +27,7 @@ corresponds to the index into that array.
 @param[in] func function pointer to attach
 @param[in] type rising or falling edge
 */
-extern void InterruptAttach(uint8_t port, uint8_t pin, InterruptFn func, enum IoEdge type);
+extern void InterruptAttach(uint8_t port, uint8_t pin, InterruptFn func, enum IntEdgeType type);
 
 /**
 @brief Detach function from GPIO pin interrupt

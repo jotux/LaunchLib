@@ -6,13 +6,8 @@
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
 
-#ifdef __MSP430G2553__
-    #define WDT_INT_ENABLE IE1
-#elif __MSP430FR5739__
-    #define WDT_INT_ENABLE SFRIE1
-#endif
-
-#define SCHEDULE_VECTOR WDT_VECTOR
+#include "hardware_init.h"
+#include "config.h"
 
 /** @brief timing multiplier to allow regular interval scheduling with varying
 clock speeds */
@@ -23,9 +18,6 @@ extern volatile uint8_t g_timing_multiplier;
 // divisors. For that reason we will multiply _SECOND by slightly less than 1000
 // to account for it and make subsequent multipliers slightly more accurate
 #define _MILLISECOND        g_timing_multiplier
-#define _SECOND             (_MILLISECOND * 977)
-#define _MINUTE             (_SECOND * 60)
-#define _HOUR               (_MINUTE * 60)
 
 /** @brief function pointer to a callback*/
 typedef void (*CallbackFn)(void);
@@ -42,60 +34,22 @@ typedef struct
     uint32_t   next_run_time;
 } CallbackEvent;
 
-/** @brief Congiruation for callout which holds the function pointer and next
-time it will run.*/
-typedef struct
+enum ScheduleMode
 {
-    CalloutFn func;
-    uint32_t run_time;
-} CalloutEvent;
+    ENABLED  = 1,
+    DISABLED = 0
+};
 
 /** @brief global time accessible by everyone */
 extern volatile uint32_t g_now;
 
 /**
-@brief Check the callback list for functions that are ready to run
-@details
-Search the callback store for functions that enabled with a time that is equal
-to the current global time. If we find the function call it and reset the
-run_time based on the stored value.
-@param[in] current_time current global time from now variable
-*/
-static void CallbackService(uint32_t current_time);
-
-/**
-@brief Check the callout list for functions that are ready to run
-@details
-Search the callout store for functions that enabled with a time that is equal
-to the current global time. If we find the function call it and vacate the slot
-in the map.
-@param[in] current_time current global time from now variable
-*/
-static void CalloutService(uint32_t current_time);
-
-/**
-@brief Interrupt routine run by overflow of watchdog timer
-@details
-When the interrupt fires increment the global time and service the call*s.
-*/
-__interrupt void ScheduleTimerOverflow(void);
-
-/**
-@brief Return the number of occupied slots in the callout map (pending callouts)
-@details
-Use K&R method to run through the callout map and count the number of bits. This
-represents the number of slot occupied in the callout store.
-@return the number of functions pending in the callout map
-*/
-static uint8_t get_callout_map_size(void);
-
-/**
 @brief Initialize the schedule timer used to check callouts and callbacks
 @details
-Configure the watchdog timer to periodically wake up and execute. We currently
-use a 2ms period and the timing in hardware.h for _millisecond, _second, and the
-like are based on this time. If the period configured in this function is
-changed the defintions in hardware.h will also need to be changed.
+Configure the watchdog timer to periodically wake up and service the scheduler
+tasks. We currently use a 0.5 ms period and save the multiplier to
+g_timing_multiplier. This is used in the definition of _MILLISECOND to give
+flexible timing.
 */
 extern void ScheduleTimerInit(void);
 
@@ -107,8 +61,9 @@ set the enabled flag to false to keep us from accidentally calling a function
 before it is expected.
 @param[in] func function pointer registered to callback
 @param[in] run_time period on which to run the callback function
+@return SUCCESS if callback registered successfully, FAILURE otherwise
 */
-extern void CallbackRegister(CallbackFn func, uint32_t run_time);
+extern int8_t CallbackRegister(CallbackFn func, uint32_t run_time);
 
 /**
 @brief Enable or disable a function callback
@@ -118,7 +73,7 @@ based on the mode passed in.
 @param[in] func callback function to configure
 @param[in] mode enabled or disabled
 */
-extern void CallbackMode(CallbackFn func, enum IoMode mode);
+extern void CallbackMode(CallbackFn func, enum ScheduleMode mode);
 
 /**
 @brief Add a callout to the store for one-time execution
@@ -129,6 +84,7 @@ find an empty slot (0 in the bit array) and set it. That bit corresponds to the
 index of the callout store the function pointer is stored at.
 @param[in] func function pointer registered to callout slot
 @param[in] run_time Specific time in which to run the function
+@return SUCCESS if callback registered successfully, FAILURE otherwise
 */
 extern int8_t CalloutRegister(CalloutFn func, uint32_t run_time);
 

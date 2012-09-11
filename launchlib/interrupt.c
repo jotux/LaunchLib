@@ -4,8 +4,8 @@
 @author Joe Brown
 */
 #include "global.h"
+#include "../hw.h"
 #include "interrupt.h"
-#include "hardware.h"
 
 /** @brief table of function pointers attached to port1 GPIO pins*/
 static InterruptFn p1_int_table[NUM_P1_INTS];
@@ -23,7 +23,7 @@ static InterruptFn p4_int_table[NUM_P4_INTS];
 // Note: functions called from GPIO interrupts have no access to timer-based
 // facilities (like the global "g_now" variable used for timing). The current
 // Delay() implementation will also not work as it relies on timers.
-void InterruptAttach(uint8_t port, uint8_t pin, InterruptFn func, enum IoEdge type)
+void InterruptAttach(uint8_t port, uint8_t pin, InterruptFn func, enum IntEdgeType type)
 {
 
 #define ATTACH_CASE(x)                                                  \
@@ -31,7 +31,7 @@ void InterruptAttach(uint8_t port, uint8_t pin, InterruptFn func, enum IoEdge ty
         p##x##_int_table[pin] = func;   /* save the function pointer */ \
         P##x##IFG &= ~_BV(pin);                                         \
         P##x##IE |= _BV(pin);           /* interrupt enabled */         \
-        if (type == FALLING_EDGE)                                       \
+        if (type == FALLING)                                            \
         {                                                               \
             P##x##IES |= _BV(pin);                                      \
         }                                                               \

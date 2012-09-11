@@ -5,7 +5,23 @@
 */
 #include "global.h"
 #include "schedule.h"
-#include "hardware.h"
+
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//                            __                        __
+//                           / /   ____   _____ ____ _ / /
+//                          / /   / __ \ / ___// __ `// /
+//                         / /___/ /_/ // /__ / /_/ // /
+//                        /_____/\____/ \___/ \__,_//_/
+//
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+#ifdef __MSP430G2553__
+    #define WDT_INT_ENABLE IE1
+#elif __MSP430FR5739__
+    #define WDT_INT_ENABLE SFRIE1
+#endif
+
+#define SCHEDULE_VECTOR WDT_VECTOR
 
 // global time
 volatile uint32_t g_now = 0;
@@ -19,11 +35,56 @@ static uint8_t event_count;
 static CallbackEvent callback_store[MAX_CALLBACK_CNT];
 
 /** @brief bit array represending occupied or vacant callouts*/
-static uint8_t callout_map;
+static uint16_t callout_map;
+
+/** @brief Congiruation for callout which holds the function pointer and next
+time it will run.*/
+typedef struct
+{
+    CalloutFn func;
+    uint32_t run_time;
+} CalloutEvent;
+
 /** @brief Array of function callouts. If a callout is enabled it will have a
 function pointer stored and if it is disabled the pointer will be replaced
 with a null*/
 static CalloutEvent callout_store[MAX_CALLOUT_CNT];
+
+/**
+@brief Check the callback list for functions that are ready to run
+@details
+Search the callback store for functions that enabled with a time that is equal
+to the current global time. If we find the function call it and reset the
+run_time based on the stored value.
+@param[in] current_time current global time from now variable
+*/
+static void CallbackService(uint32_t current_time);
+
+/**
+@brief Check the callout list for functions that are ready to run
+@details
+Search the callout store for functions that enabled with a time that is equal
+to the current global time. If we find the function call it and vacate the slot
+in the map.
+@param[in] current_time current global time from now variable
+*/
+static void CalloutService(uint32_t current_time);
+
+/**
+@brief Interrupt routine run by overflow of watchdog timer
+@details
+When the interrupt fires increment the global time and service the call*s.
+*/
+static __interrupt void ScheduleTimerOverflow(void);
+
+/**
+@brief Return the number of occupied slots in the callout map (pending callouts)
+@details
+Use K&R method to run through the callout map and count the number of bits. This
+represents the number of slot occupied in the callout store.
+@return the number of functions pending in the callout map
+*/
+static uint8_t get_callout_map_size(void);
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //                            ____        _  __
@@ -66,7 +127,7 @@ __interrupt void ScheduleTimerOverflow(void)
 //            \____/ \__,_//_//_//_.___/ \__,_/ \___//_/|_|
 //
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-void CallbackRegister(CallbackFn func, uint32_t run_time)
+int8_t CallbackRegister(CallbackFn func, uint32_t run_time)
 {
     if (event_count < sizeof(callback_store)/sizeof(CallbackFn))
     {
@@ -76,7 +137,9 @@ void CallbackRegister(CallbackFn func, uint32_t run_time)
         callback_store[event_count].run_time      = run_time - 1;
         callback_store[event_count].next_run_time = g_now + run_time;
         event_count++;
+        return (SUCCESS);
     }
+    return (FAILURE);
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -107,7 +170,7 @@ service_complete:
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-void CallbackMode(CallbackFn func, enum IoMode mode)
+void CallbackMode(CallbackFn func, enum ScheduleMode mode)
 {
     uint8_t i = 0;
     for (i = 0;i < event_count;i++)
@@ -135,7 +198,6 @@ void CallbackMode(CallbackFn func, enum IoMode mode)
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 int8_t CalloutRegister(CalloutFn func, uint32_t run_time)
 {
-    int8_t ret = -1;
     // event queue full?
     if (get_callout_map_size() != MAX_CALLOUT_CNT)
     {
@@ -151,12 +213,11 @@ int8_t CalloutRegister(CalloutFn func, uint32_t run_time)
                 callout_store[i].func = func;
                 callout_store[i].run_time = g_now + run_time;
                 // return success
-                ret = 0;
-                break;
+                return (SUCCESS);
             }
         }
     }
-    return ret;
+    return (FAILURE);
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -179,7 +240,7 @@ void CalloutCancel(CalloutFn func)
 uint8_t get_callout_map_size(void)
 {
     uint8_t sum = 0;
-    uint8_t map = callout_map;
+    uint16_t map = callout_map;
     for (sum = 0; map; sum++)
     {
         map &= map - 1;
@@ -193,7 +254,7 @@ void CalloutService(uint32_t current_time)
     uint8_t i = 0;
     // get the number of callouts
     uint8_t callouts_remaining = get_callout_map_size();
-    // if there are none to service exit
+    // if there are none to service
     if (!callouts_remaining)
     {
         goto service_complete;

@@ -1,12 +1,13 @@
-#include "launchlib.h"
-
-void ToggleLed1(void);
+#include "../../launchlib.h"
+#include "../../hw.h"
 
 void HardwareInit(void)
 {
-    IO_DIRECTION(LED1,OUTPUT);
-    IO_DIRECTION(SW1,INPUT);
+    IO_DIRECTION(LED1,GPIO_OUTPUT);
+    IO_DIRECTION(SW1,GPIO_INPUT);
 }
+
+void ToggleLed1(void);
 
 void main(void)
 {
@@ -15,7 +16,7 @@ void main(void)
     HardwareInit();
 
     // attach function to SW1 falling edge interrupt
-    InterruptAttach(SW1_PORT,SW1_PIN,ToggleLed1,FALLING_EDGE);
+    InterruptAttach(GPIO(SW1),ToggleLed1,FALLING);
 
     _EINT();
     LPM0;
@@ -23,5 +24,5 @@ void main(void)
 
 void ToggleLed1(void)
 {
-    LED_TOGGLE(1);
+    LED1_TOGGLE();
 }

@@ -1,9 +1,10 @@
-#include "launchlib.h"
+#include "../../launchlib.h"
+#include "../../hw.h"
 
 void HardwareInit(void)
 {
-    IO_DIRECTION(LED1,OUTPUT);
-    IO_DIRECTION(SW1,INPUT);
+    IO_DIRECTION(LED1,GPIO_OUTPUT);
+    IO_DIRECTION(SW1,GPIO_INPUT);
 }
 
 void main(void)
@@ -12,19 +13,18 @@ void main(void)
     ClockConfig(16);
     HardwareInit();
 
-    // Init P1.5 as ADC channel
-    AdcInit(5);
+    AdcInit();
     _EINT();
 
     while(1)
     {
         if (AdcRead(5) > 512) // P1.5 > 1.25Vdc?
         {
-            LED_ON(1);
+            LED1_ON();
         }
         else
         {
-            LED_OFF(1);
+            LED1_OFF();
         }
     }
 }
