@@ -1,0 +1,12 @@
+<map id="global.h" name="global.h">
+<area shape="rect" id="node3" href="$adc_8c.html" title="Analog&#45;to&#45;digital conversion." alt="" coords="5,80,59,107"/>
+<area shape="rect" id="node5" href="$clock_8c.html" title="Clock config data and functions." alt="" coords="84,80,148,107"/>
+<area shape="rect" id="node7" href="$delay_8c.html" title="Simple delay using global timer." alt="" coords="172,80,236,107"/>
+<area shape="rect" id="node9" href="$interrupt_8c.html" title="GPIO interrupt handler." alt="" coords="260,80,340,107"/>
+<area shape="rect" id="node11" href="$pwm_8c.html" title="Hardware pulse width modulation handler." alt="" coords="365,80,424,107"/>
+<area shape="rect" id="node13" href="$schedule_8c.html" title="Generic scheduling mechanisms." alt="" coords="449,80,535,107"/>
+<area shape="rect" id="node15" href="$state_8c.html" title="Simple state machine handler." alt="" coords="559,80,621,107"/>
+<area shape="rect" id="node17" href="$uart_8c.html" title="Blocking and non&#45;blocking UART interface." alt="" coords="646,80,700,107"/>
+<area shape="rect" id="node19" href="$launchlib_8h.html" title="Includes all launchlib libraries." alt="" coords="725,80,808,107"/>
+<area shape="rect" id="node21" href="$main_8c.html" title="main.c" alt="" coords="736,155,797,181"/>
+</map>

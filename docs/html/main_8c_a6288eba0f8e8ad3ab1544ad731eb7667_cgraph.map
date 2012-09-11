@@ -1,0 +1,8 @@
+<map id="main" name="main">
+<area shape="rect" id="node3" href="$clock_8c.html#afa002073487babf6a0336e5aa9a9f624" title="Configure the clocks for use." alt="" coords="119,5,209,32"/>
+<area shape="rect" id="node5" href="$schedule_8c.html#a7cca52889a75eb770ca7a70cbf47a858" title="Initialize the schedule timer used to check callouts and callbacks." alt="" coords="272,31,397,57"/>
+<area shape="rect" id="node8" href="$main_8c.html#a8778931ee5a42f7718197aea3fbb6a3e" title="HardwareInit" alt="" coords="117,107,211,133"/>
+<area shape="rect" id="node10" href="$schedule_8c.html#a8d4536e2d00f3020b327fe6c3b46a6c6" title="Add a callback to the store for periodic execution." alt="" coords="104,157,224,184"/>
+<area shape="rect" id="node12" href="$main_8c.html#a3a2ceca42c8149883fc711af96da4d89" title="BlinkLeds" alt="" coords="125,208,203,235"/>
+<area shape="rect" id="node14" href="$schedule_8c.html#ab7bea75865706649e73af9520b966629" title="Enable or disable a function callback." alt="" coords="112,259,216,285"/>
+</map>

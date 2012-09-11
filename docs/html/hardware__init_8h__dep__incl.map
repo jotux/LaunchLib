@@ -1,0 +1,8 @@
+<map id="hardware_init.h" name="hardware_init.h">
+<area shape="rect" id="node3" href="$schedule_8h.html" title="Definitions, data structues and prototypes for generic scheduling mechanisms." alt="" coords="181,80,267,107"/>
+<area shape="rect" id="node11" href="$launchlib_8h.html" title="Includes all launchlib libraries." alt="" coords="291,155,375,181"/>
+<area shape="rect" id="node5" href="$clock_8c.html" title="Clock config data and functions." alt="" coords="5,155,69,181"/>
+<area shape="rect" id="node7" href="$delay_8c.html" title="Simple delay using global timer." alt="" coords="93,155,157,181"/>
+<area shape="rect" id="node9" href="$schedule_8c.html" title="Generic scheduling mechanisms." alt="" coords="181,155,267,181"/>
+<area shape="rect" id="node13" href="$main_8c.html" title="main.c" alt="" coords="303,229,364,256"/>
+</map>

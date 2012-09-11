@@ -1,0 +1,5 @@
+<map id="hw.h" name="hw.h">
+<area shape="rect" id="node3" href="$interrupt_8c.html" title="GPIO interrupt handler." alt="" coords="5,80,85,107"/>
+<area shape="rect" id="node5" href="$pwm_8c.html" title="Hardware pulse width modulation handler." alt="" coords="110,80,169,107"/>
+<area shape="rect" id="node7" href="$main_8c.html" title="main.c" alt="" coords="195,80,256,107"/>
+</map>

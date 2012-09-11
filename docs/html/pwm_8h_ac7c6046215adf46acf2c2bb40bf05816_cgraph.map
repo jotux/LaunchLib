@@ -1,0 +1,4 @@
+<map id="PwmSetFrequency" name="PwmSetFrequency">
+<area shape="rect" id="node3" href="$pwm_8c.html#ab60d04617af55996eab515c3a73f39ef" title="Initialize the PWM hardware channel." alt="" coords="202,5,270,32"/>
+<area shape="rect" id="node5" href="$pwm_8c.html#a39081d09530a640772f04056a4b073aa" title="Configure the duty cycle of the specified pwm channel." alt="" coords="187,56,285,83"/>
+</map>

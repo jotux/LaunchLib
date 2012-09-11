@@ -1,0 +1,15 @@
+<map id="main.c" name="main.c">
+<area shape="rect" id="node3" href="$launchlib_8h.html" title="Includes all launchlib libraries." alt="" coords="845,80,928,107"/>
+<area shape="rect" id="node42" href="$hw_8h.html" title="Definitions hardware config." alt="" coords="953,80,1001,107"/>
+<area shape="rect" id="node5" href="$global_8h.html" title="Definitions and data structures for general use in all files." alt="" coords="259,155,381,181"/>
+<area shape="rect" id="node21" href="$hardware__init_8h.html" title="Macros to init hardware." alt="" coords="653,230,781,271"/>
+<area shape="rect" id="node23" href="$adc_8h.html" title="Definitions, data structues and prototypes for analog&#45;to&#45;digital conversion." alt="" coords="763,155,872,181"/>
+<area shape="rect" id="node25" href="$clock_8h.html" title="Definitions for clock config helper macros." alt="" coords="897,155,1015,181"/>
+<area shape="rect" id="node27" href="$delay_8h.html" title="Definition of delay." alt="" coords="1039,155,1157,181"/>
+<area shape="rect" id="node29" href="$interrupt_8h.html" title="Definitions, data structues and prototypes for GPIO interrupt handler." alt="" coords="1182,155,1316,181"/>
+<area shape="rect" id="node31" href="$pwm_8h.html" title="Definitions, data structues and prototypes for pulse width modulation." alt="" coords="1341,155,1456,181"/>
+<area shape="rect" id="node33" href="$schedule_8h.html" title="Definitions, data structues and prototypes for generic scheduling mechanisms." alt="" coords="547,155,687,181"/>
+<area shape="rect" id="node37" href="$state_8h.html" title="Definitions, data structues and prototypes for state machine handling." alt="" coords="405,155,523,181"/>
+<area shape="rect" id="node40" href="$uart_8h.html" title="Definitions, data structues and prototypes for UART." alt="" coords="1481,155,1591,181"/>
+<area shape="rect" id="node19" href="$config_8h.html" title="config.h" alt="" coords="555,237,621,264"/>
+</map>
