@@ -90,6 +90,5 @@ var searchData=
   ['note_5fgs4',['NOTE_GS4',['../tone_8h.html#ac446a7c56b75b56451b6712833bfd31f',1,'tone.h']]],
   ['note_5fgs5',['NOTE_GS5',['../tone_8h.html#a1d0d4526c7554185499a7207359bda67',1,'tone.h']]],
   ['note_5fgs6',['NOTE_GS6',['../tone_8h.html#a97b306e8336c0e303e366ad2cdacbee0',1,'tone.h']]],
-  ['note_5fgs7',['NOTE_GS7',['../tone_8h.html#a2103012b7aab268027be083fb9527aef',1,'tone.h']]],
-  ['number_5fbase',['NUMBER_BASE',['../uart_8h.html#a361986379210db4bedbdf16eb780a8c0',1,'uart.h']]]
+  ['note_5fgs7',['NOTE_GS7',['../tone_8h.html#a2103012b7aab268027be083fb9527aef',1,'tone.h']]]
 ];

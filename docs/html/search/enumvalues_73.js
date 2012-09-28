@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['special',['SPECIAL',['../global_8h.html#a8022d1476b06f738a3f7637769369237aaa5259d84d06214a7b0503d636790465',1,'global.h']]]
+  ['success',['SUCCESS',['../global_8h.html#adf764cbdea00d65edcd07bb9953ad2b7ac7f69f7c9e5aea9b8f54cf02870e2bf8',1,'global.h']]]
 ];
