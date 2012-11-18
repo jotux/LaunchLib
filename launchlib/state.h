@@ -46,7 +46,6 @@ it needs.
 @param[in] rules Pointer to state transitions rules table
 @param[in] t_size The size of the transition rules table (not accounting for Transition struct size)
 @param[in] state The initial state of the state machine
-@param[in] event_cnt_max The max number of events in the event queue
 @return A pointer to the state machine struct
 */
 extern StateMachine StateMachineCreate(Transition* rules, uint8_t t_size, State state);
