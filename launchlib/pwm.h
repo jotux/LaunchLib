@@ -7,14 +7,6 @@
 #ifndef PWM_H
 #define PWM_H
 
-/** @brief A pwm output which stores the current frequency and duty cycle of each
-channel*/
-typedef struct
-{
-    uint32_t frequency;
-    uint8_t duty;
-} PwmOutput;
-
 /**
 @brief Initialize the PWM hardware channel
 @details

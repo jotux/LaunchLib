@@ -7,6 +7,14 @@
 #include "pwm.h"
 #include "../hw.h"
 
+/** @brief A pwm output which stores the current frequency and duty cycle of each
+channel*/
+typedef struct
+{
+    uint32_t frequency;
+    uint8_t duty;
+} PwmOutput;
+
 /** @brief table of channel configurations */
 static PwmOutput pwm_out[NUM_PWM_CHANNELS];
 

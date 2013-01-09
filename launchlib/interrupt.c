@@ -20,6 +20,49 @@ static InterruptFn p4_int_table[NUM_P4_INTS];
 #endif
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+/**
+@brief Search interrupt function pointer lists and run functions corresponding
+to the interrupt that fired
+@details
+Go through each bit in the interrupt flag to see if it is set. If it is run the
+corresponding function.
+@param[in] port port to search
+*/
+static void InterruptRunOnPort(uint8_t port);
+
+/**
+@brief Port 1 interrupt service routine
+@details
+Go through each bit in the interrupt flag to see if it is set. If it is run the
+corresponding function.
+*/
+static __interrupt void Port1(void);
+
+/**
+@brief Port 2 interrupt service routine
+@details
+Go through each bit in the interrupt flag to see if it is set. If it is run the
+corresponding function.
+*/
+static __interrupt void Port2(void);
+
+/**
+@brief Port 3 interrupt service routine
+@details
+Go through each bit in the interrupt flag to see if it is set. If it is run the
+corresponding function.
+*/
+static __interrupt void Port3(void);
+
+/**
+@brief Port 4 interrupt service routine
+@details
+Go through each bit in the interrupt flag to see if it is set. If it is run the
+corresponding function.
+*/
+static __interrupt void Port4(void);
+
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // Note: functions called from GPIO interrupts have no access to timer-based
 // facilities (like the global "g_now" variable used for timing). The current
 // Delay() implementation will also not work as it relies on timers.

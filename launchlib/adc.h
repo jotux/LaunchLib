@@ -6,10 +6,6 @@
 #ifndef ADC_H
 #define ADC_H
 
-#define ADC_INCH_SHIFT   12
-#define ADC_MASK         0x03FF
-#define ADC_CHANNEL_MASK 0x0F
-
 /**
 @brief Initialize the adc hardware
 @details

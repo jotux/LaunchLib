@@ -6,55 +6,6 @@
 #ifndef HARDWARE_H
 #define HARDWARE_H
 //http://patorjk.com/software/taag/
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//               _____        __   __   _
-//              / ___/ ___   / /_ / /_ (_)____   ____ _ _____
-//              \__ \ / _ \ / __// __// // __ \ / __ `// ___/
-//             ___/ //  __// /_ / /_ / // / / // /_/ /(__  )
-//            /____/ \___/ \__/ \__//_//_/ /_/ \__, //____/
-//                                            /____/
-//
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//           _____        __               __        __
-//          / ___/ _____ / /_   ___   ____/ /__  __ / /___   _____
-//          \__ \ / ___// __ \ / _ \ / __  // / / // // _ \ / ___/
-//         ___/ // /__ / / / //  __// /_/ // /_/ // //  __// /
-//        /____/ \___//_/ /_/ \___/ \__,_/ \__,_//_/ \___//_/
-//
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//#define DO_NOT_ADJUST_SCHEDULER_ON_CLOCK_CONFIG
-#define MAX_CALLBACK_CNT    3
-#define MAX_CALLOUT_CNT     6
-
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//    _____  __          __           __  ___              __     _
-//   / ___/ / /_ ____ _ / /_ ___     /  |/  /____ _ _____ / /_   (_)____   ___
-//   \__ \ / __// __ `// __// _ \   / /|_/ // __ `// ___// __ \ / // __ \ / _ \
-//  ___/ // /_ / /_/ // /_ /  __/  / /  / // /_/ // /__ / / / // // / / //  __/
-// /____/ \__/ \__,_/ \__/ \___/  /_/  /_/ \__,_/ \___//_/ /_//_//_/ /_/ \___/
-//
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-#define MAX_EVENT_CNT       10
-
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//                       __  __ ___     ____  ______
-//                      / / / //   |   / __ \/_  __/
-//                     / / / // /| |  / /_/ / / /
-//                    / /_/ // ___ | / _, _/ / /
-//                    \____//_/  |_|/_/ |_| /_/
-//
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-// When using non-blocking uart keep in mind the buffer can be filled very
-// quickly and cause problems. If you want to push a lot of data over the asynch
-// interface you'll need to either queue packets in software, make the
-// tx_buf_cnt very large, or put delays between messages to allow the buffer to
-// be emptied.
-//#define NON_BLOCKING_UART_TX
-//#define NON_BLOCKING_UART_RX
-#define MAX_UART_RX_BUF_CNT 20
-#define MAX_UART_TX_BUF_CNT 200
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //            __  __                  __
@@ -78,47 +29,47 @@
 //                \____/ /____//_____//_____/ /____/
 //
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-#define SW1_PORT            1
-#define SW1_PIN             3
+    #define SW1_PORT            1
+    #define SW1_PIN             3
 
-#define LED1_PORT           1
-#define LED1_PIN            0
-#define LED1_OFF()          IO_SET(LED1,LOW);
-#define LED1_ON()           IO_SET(LED1,HIGH);
+    #define LED1_PORT           1
+    #define LED1_PIN            0
+    #define LED1_OFF()          IO_SET(LED1,LOW);
+    #define LED1_ON()           IO_SET(LED1,HIGH);
 
-#define LED2_PORT           1
-#define LED2_PIN            6
-#define LED2_OFF()          IO_SET(LED2,LOW);
-#define LED2_ON()           IO_SET(LED2,HIGH);
+    #define LED2_PORT           1
+    #define LED2_PIN            6
+    #define LED2_OFF()          IO_SET(LED2,LOW);
+    #define LED2_ON()           IO_SET(LED2,HIGH);
 
-// PWM
-#define NUM_PWM_CHANNELS    2
+    // PWM
+    #define NUM_PWM_CHANNELS    2
 
-#define PWM0_PORT           1
-#define PWM0_PIN            2
+    #define PWM0_PORT           1
+    #define PWM0_PIN            2
 
-#define PWM1_PORT           2
-#define PWM1_PIN            1
+    #define PWM1_PORT           2
+    #define PWM1_PIN            1
 
-// interrupt config
-#define NUM_P1_INTS         8
-#define NUM_P2_INTS         6
+    // interrupt config
+    #define NUM_P1_INTS         8
+    #define NUM_P2_INTS         6
 
-// I2C
-#define I2C_ADDRESS         0x0F
+    // I2C
+    #define I2C_ADDRESS         0x0F
 
-#define I2C_DAT_PORT        1
-#define I2C_DAT_PIN         7
+    #define I2C_DAT_PORT        1
+    #define I2C_DAT_PIN         7
 
-#define I2C_CLK_PORT        1
-#define I2C_CLK_PIN         6
+    #define I2C_CLK_PORT        1
+    #define I2C_CLK_PIN         6
 
-// UART hardware
-#define UART_TX_PORT        1
-#define UART_TX_PIN         1
+    // UART hardware
+    #define UART_TX_PORT        1
+    #define UART_TX_PIN         1
 
-#define UART_RX_PORT        1
-#define UART_RX_PIN         2
+    #define UART_RX_PORT        1
+    #define UART_RX_PIN         2
 
 #elif __MSP430FR5739__
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

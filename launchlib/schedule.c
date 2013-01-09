@@ -5,6 +5,8 @@
 */
 #include "global.h"
 #include "schedule.h"
+#include "hardware_init.h"
+#include "config.h"
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //                            __                        __

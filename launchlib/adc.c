@@ -6,6 +6,10 @@
 #include "global.h"
 #include "adc.h"
 
+#define ADC_INCH_SHIFT   12
+#define ADC_MASK         0x03FF
+#define ADC_CHANNEL_MASK 0x0F
+
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //                            ____        _  __
 //                           /  _/____   (_)/ /_

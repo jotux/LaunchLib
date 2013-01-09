@@ -6,8 +6,6 @@
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
 
-#include "hardware_init.h"
-#include "config.h"
 
 /** @brief timing multiplier to allow regular interval scheduling with varying
 clock speeds */
