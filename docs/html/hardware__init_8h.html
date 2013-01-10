@@ -99,13 +99,17 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="hardware__init_8h__dep__incl.png" border="0" usemap="#hardware__init_8hdep" alt=""/></div>
 <map name="hardware__init_8hdep" id="hardware__init_8hdep">
-<area shape="rect" id="node3" href="schedule_8h.html" title="Definitions, data structues and prototypes for generic scheduling mechanisms." alt="" coords="181,80,267,107"/><area shape="rect" id="node11" href="launchlib_8h.html" title="Includes all launchlib libraries." alt="" coords="291,155,375,181"/><area shape="rect" id="node5" href="clock_8c.html" title="Clock config data and functions." alt="" coords="5,155,69,181"/><area shape="rect" id="node7" href="delay_8c.html" title="Simple delay using global timer." alt="" coords="93,155,157,181"/><area shape="rect" id="node9" href="schedule_8c.html" title="Generic scheduling mechanisms." alt="" coords="181,155,267,181"/><area shape="rect" id="node13" href="main_8c.html" title="main.c" alt="" coords="303,229,364,256"/></map>
+<area shape="rect" id="node3" href="schedule_8c.html" title="Generic scheduling mechanisms." alt="" coords="5,80,91,107"/><area shape="rect" id="node5" href="launchlib_8h.html" title="Includes all launchlib libraries." alt="" coords="115,80,199,107"/><area shape="rect" id="node7" href="main_8c.html" title="main.c" alt="" coords="127,155,188,181"/></map>
 </div>
 </div>
 <p><a href="hardware__init_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:addbe8fa280be7088dc4fef892325bb18"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(n)&#160;&#160;&#160;n##_PORT</td></tr>
+<tr class="separator:addbe8fa280be7088dc4fef892325bb18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a538c0a124f0fd6c5f88ce389b8117a9f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(n)&#160;&#160;&#160;n##_PIN</td></tr>
+<tr class="separator:a538c0a124f0fd6c5f88ce389b8117a9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d067386e33f9d834262ff6bef0b4e0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a8d067386e33f9d834262ff6bef0b4e0e">CLEAR_OP</a>&#160;&#160;&#160;&amp;=~</td></tr>
 <tr class="separator:a8d067386e33f9d834262ff6bef0b4e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7ca6962fac737341509821e3c3c74ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#af7ca6962fac737341509821e3c3c74ab">SET_OP</a>&#160;&#160;&#160;|=</td></tr>
@@ -116,17 +120,17 @@ Macros</h2></td></tr>
 <tr class="separator:a7be6a0cc9aa65da1d4ee5751b4085853"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0db9fe8a278e6ab7c5c6f14fe58e5eb1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a0db9fe8a278e6ab7c5c6f14fe58e5eb1">GPIO_OUTPUT</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#af7ca6962fac737341509821e3c3c74ab">SET_OP</a></td></tr>
 <tr class="separator:a0db9fe8a278e6ab7c5c6f14fe58e5eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28634c27f6e177383bf608011717b5dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a28634c27f6e177383bf608011717b5dd">IO_DIRECTION</a>(name, dir)&#160;&#160;&#160;_IO_DIRECTION(name##_PORT,name##_PIN,dir)</td></tr>
-<tr class="memdesc:a28634c27f6e177383bf608011717b5dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the direction of an IO pin as INPUT or OUTPUT.  <a href="#a28634c27f6e177383bf608011717b5dd"></a><br/></td></tr>
-<tr class="separator:a28634c27f6e177383bf608011717b5dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab979e3a514cda6aafea9cbf81b2ac5e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#ab979e3a514cda6aafea9cbf81b2ac5e7">IO_DIRECTION</a>(name, fun)&#160;&#160;&#160;_IO_DIRECTION(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td></tr>
+<tr class="memdesc:ab979e3a514cda6aafea9cbf81b2ac5e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the direction of an IO pin as INPUT or OUTPUT.  <a href="#ab979e3a514cda6aafea9cbf81b2ac5e7"></a><br/></td></tr>
+<tr class="separator:ab979e3a514cda6aafea9cbf81b2ac5e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb0259e3d28db5360002aa3436f4850b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#adb0259e3d28db5360002aa3436f4850b">GPIO_FUN_IO</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#a8d067386e33f9d834262ff6bef0b4e0e">CLEAR_OP</a></td></tr>
 <tr class="separator:adb0259e3d28db5360002aa3436f4850b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02a0a49507dcdc5781446aa23926b5ea"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a02a0a49507dcdc5781446aa23926b5ea">GPIO_FUN_SPECIAL</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#af7ca6962fac737341509821e3c3c74ab">SET_OP</a></td></tr>
 <tr class="separator:a02a0a49507dcdc5781446aa23926b5ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab79758b5fde6520f7fef836e5f9c8a15"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#ab79758b5fde6520f7fef836e5f9c8a15">IO_FUNCTION</a>(name, fun)&#160;&#160;&#160;_IO_FUNCTION(name##_PORT,name##_PIN,fun)</td></tr>
+<tr class="memitem:ab79758b5fde6520f7fef836e5f9c8a15"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#ab79758b5fde6520f7fef836e5f9c8a15">IO_FUNCTION</a>(name, fun)&#160;&#160;&#160;_IO_FUNCTION(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td></tr>
 <tr class="memdesc:ab79758b5fde6520f7fef836e5f9c8a15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set function of IO pin.  <a href="#ab79758b5fde6520f7fef836e5f9c8a15"></a><br/></td></tr>
 <tr class="separator:ab79758b5fde6520f7fef836e5f9c8a15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1281eaa5684d0ed095ce56347b3c4040"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a1281eaa5684d0ed095ce56347b3c4040">IO_AUX_FUNCTION</a>(name, fun)&#160;&#160;&#160;_IO_AUX_FUNCTION(name##_PORT,name##_PIN,fun)</td></tr>
+<tr class="memitem:a1281eaa5684d0ed095ce56347b3c4040"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a1281eaa5684d0ed095ce56347b3c4040">IO_AUX_FUNCTION</a>(name, fun)&#160;&#160;&#160;_IO_AUX_FUNCTION(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td></tr>
 <tr class="memdesc:a1281eaa5684d0ed095ce56347b3c4040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set auxilary function of IO pin.  <a href="#a1281eaa5684d0ed095ce56347b3c4040"></a><br/></td></tr>
 <tr class="separator:a1281eaa5684d0ed095ce56347b3c4040"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a088e681cae6659dfd317afdf4d61e302"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a088e681cae6659dfd317afdf4d61e302">GPIO_LOW</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#a8d067386e33f9d834262ff6bef0b4e0e">CLEAR_OP</a></td></tr>
@@ -135,16 +139,18 @@ Macros</h2></td></tr>
 <tr class="separator:a72520b0ab0d18377eb6a481029d0b01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a951da8b2ac107ae91bed2170657fd3ac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a951da8b2ac107ae91bed2170657fd3ac">GPIO_TOGGLE</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#a9d583a4539f745a6fa9b63e6323de430">TOGGLE_OP</a></td></tr>
 <tr class="separator:a951da8b2ac107ae91bed2170657fd3ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6027537d1e097c8aae035dc80b235374"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a6027537d1e097c8aae035dc80b235374">IO_SET</a>(name, dir)&#160;&#160;&#160;_IO_SET(name##_PORT,name##_PIN,dir)</td></tr>
-<tr class="memdesc:a6027537d1e097c8aae035dc80b235374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set state of IO pin.  <a href="#a6027537d1e097c8aae035dc80b235374"></a><br/></td></tr>
-<tr class="separator:a6027537d1e097c8aae035dc80b235374"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab29d354e89102e4e45bcae878efcb3e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#ab29d354e89102e4e45bcae878efcb3e4">IO_SET</a>(name, fun)&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#a7aaf6d695d1ba60207659848f4e70689">_IO_SET</a>(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td></tr>
+<tr class="memdesc:ab29d354e89102e4e45bcae878efcb3e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set state of IO pin.  <a href="#ab29d354e89102e4e45bcae878efcb3e4"></a><br/></td></tr>
+<tr class="separator:ab29d354e89102e4e45bcae878efcb3e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aaf6d695d1ba60207659848f4e70689"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a7aaf6d695d1ba60207659848f4e70689">_IO_SET</a>(port, pin, fun)&#160;&#160;&#160;_REG(port,OUT) fun <a class="el" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin)</td></tr>
+<tr class="separator:a7aaf6d695d1ba60207659848f4e70689"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a502812d9313243ea770a8d15c235d0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a5a502812d9313243ea770a8d15c235d0">GPIO_ENABLE</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#af7ca6962fac737341509821e3c3c74ab">SET_OP</a></td></tr>
 <tr class="separator:a5a502812d9313243ea770a8d15c235d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64c93bbe3bf552b915a92d0d5acec574"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a64c93bbe3bf552b915a92d0d5acec574">GPIO_DISABLE</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#a8d067386e33f9d834262ff6bef0b4e0e">CLEAR_OP</a></td></tr>
 <tr class="separator:a64c93bbe3bf552b915a92d0d5acec574"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c44ab11d225e8b1ff17eadc89297bb8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a1c44ab11d225e8b1ff17eadc89297bb8">IO_RESISTOR</a>(name, ren)&#160;&#160;&#160;_IO_RESISTOR(name##_PORT,name##_PIN,ren)</td></tr>
-<tr class="memdesc:a1c44ab11d225e8b1ff17eadc89297bb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set resistor pull up or down for IO pin.  <a href="#a1c44ab11d225e8b1ff17eadc89297bb8"></a><br/></td></tr>
-<tr class="separator:a1c44ab11d225e8b1ff17eadc89297bb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d1cd34a3390bb305146baec429add99"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a8d1cd34a3390bb305146baec429add99">IO_RESISTOR</a>(name, fun)&#160;&#160;&#160;_IO_RESISTOR(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td></tr>
+<tr class="memdesc:a8d1cd34a3390bb305146baec429add99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set resistor pull up or down for IO pin.  <a href="#a8d1cd34a3390bb305146baec429add99"></a><br/></td></tr>
+<tr class="separator:a8d1cd34a3390bb305146baec429add99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adec1802e074f3021d464da09cd66c7cf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#adec1802e074f3021d464da09cd66c7cf">GPIO_PULL_DOWN</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#a8d067386e33f9d834262ff6bef0b4e0e">CLEAR_OP</a></td></tr>
 <tr class="separator:adec1802e074f3021d464da09cd66c7cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa7921da231fd2b96575fa522e2c1970"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#aaa7921da231fd2b96575fa522e2c1970">GPIO_PULL_UP</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#af7ca6962fac737341509821e3c3c74ab">SET_OP</a></td></tr>
@@ -152,27 +158,27 @@ Macros</h2></td></tr>
 <tr class="memitem:ab5939c05cfd0af92aa0b1877517b76d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#ab5939c05cfd0af92aa0b1877517b76d4">IO_PULL</a>(name, up)</td></tr>
 <tr class="memdesc:ab5939c05cfd0af92aa0b1877517b76d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set resistor polarity (up or down) for IO pin.  <a href="#ab5939c05cfd0af92aa0b1877517b76d4"></a><br/></td></tr>
 <tr class="separator:ab5939c05cfd0af92aa0b1877517b76d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a202888a9ab5b474d03bea2771227d3a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a202888a9ab5b474d03bea2771227d3a5">IO_IN</a>(name)&#160;&#160;&#160;_IO_IN(name##_PORT,name##_PIN)</td></tr>
+<tr class="memitem:a202888a9ab5b474d03bea2771227d3a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a202888a9ab5b474d03bea2771227d3a5">IO_IN</a>(name)&#160;&#160;&#160;_IO_IN(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name))</td></tr>
 <tr class="memdesc:a202888a9ab5b474d03bea2771227d3a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read in state of IO pin.  <a href="#a202888a9ab5b474d03bea2771227d3a5"></a><br/></td></tr>
 <tr class="separator:a202888a9ab5b474d03bea2771227d3a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98758514dd269a8589df9b6a9ea9e446"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a98758514dd269a8589df9b6a9ea9e446">IO_INT_EN</a>(name, en)&#160;&#160;&#160;_IO_INT_EN(name##_PORT,name##_PIN,en)</td></tr>
-<tr class="memdesc:a98758514dd269a8589df9b6a9ea9e446"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sent interrupt enable for IO pin.  <a href="#a98758514dd269a8589df9b6a9ea9e446"></a><br/></td></tr>
-<tr class="separator:a98758514dd269a8589df9b6a9ea9e446"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab39369de38eb5b44fbf30eb65757fa1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#aab39369de38eb5b44fbf30eb65757fa1">IO_INT_EN</a>(name, fun)&#160;&#160;&#160;_IO_INT_EN(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td></tr>
+<tr class="memdesc:aab39369de38eb5b44fbf30eb65757fa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sent interrupt enable for IO pin.  <a href="#aab39369de38eb5b44fbf30eb65757fa1"></a><br/></td></tr>
+<tr class="separator:aab39369de38eb5b44fbf30eb65757fa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7f1524655feb8ef492ffa61e8325ead"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#ab7f1524655feb8ef492ffa61e8325ead">GPIO_RISING_EDGE</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#a8d067386e33f9d834262ff6bef0b4e0e">CLEAR_OP</a></td></tr>
 <tr class="separator:ab7f1524655feb8ef492ffa61e8325ead"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3f7c69a67f3780f8c6361df8418a36b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#ae3f7c69a67f3780f8c6361df8418a36b">GPIO_FALLING_EDGE</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#af7ca6962fac737341509821e3c3c74ab">SET_OP</a></td></tr>
 <tr class="separator:ae3f7c69a67f3780f8c6361df8418a36b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a577ea44f5a6da30d3424f865500ee969"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a577ea44f5a6da30d3424f865500ee969">IO_INT_EDGE</a>(name, ed)&#160;&#160;&#160;_IO_INT_EDGE(name##_PORT,name##_PIN,ed)</td></tr>
-<tr class="memdesc:a577ea44f5a6da30d3424f865500ee969"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set rising or falling edge interrupt for IO pin.  <a href="#a577ea44f5a6da30d3424f865500ee969"></a><br/></td></tr>
-<tr class="separator:a577ea44f5a6da30d3424f865500ee969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4073b56ec4885becf2d39b4e02f864ce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a4073b56ec4885becf2d39b4e02f864ce">IO_INT_EDGE</a>(name, fun)&#160;&#160;&#160;_IO_INT_EDGE(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td></tr>
+<tr class="memdesc:a4073b56ec4885becf2d39b4e02f864ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set rising or falling edge interrupt for IO pin.  <a href="#a4073b56ec4885becf2d39b4e02f864ce"></a><br/></td></tr>
+<tr class="separator:a4073b56ec4885becf2d39b4e02f864ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc518785abb18f57a18eec994af971d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#afc518785abb18f57a18eec994af971d5">GPIO_INT_SET</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#af7ca6962fac737341509821e3c3c74ab">SET_OP</a></td></tr>
 <tr class="separator:afc518785abb18f57a18eec994af971d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb1558a6e4983b114ffdd1f0c6826ffd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#afb1558a6e4983b114ffdd1f0c6826ffd">GPIO_INT_CLEAR</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#a8d067386e33f9d834262ff6bef0b4e0e">CLEAR_OP</a></td></tr>
 <tr class="separator:afb1558a6e4983b114ffdd1f0c6826ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4080a780c08c6a196b596d3f4ade163"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#ae4080a780c08c6a196b596d3f4ade163">IO_INT_FLAG</a>(name, fl)&#160;&#160;&#160;_IO_INT_FLAG(name##_PORT,name##_PIN,fl)</td></tr>
-<tr class="memdesc:ae4080a780c08c6a196b596d3f4ade163"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set IO pin interrupt status.  <a href="#ae4080a780c08c6a196b596d3f4ade163"></a><br/></td></tr>
-<tr class="separator:ae4080a780c08c6a196b596d3f4ade163"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a510f21084abb49c19bbd703b991a1f2d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a510f21084abb49c19bbd703b991a1f2d">IO_INT_STAT</a>(name)&#160;&#160;&#160;_IO_INT_STAT(name##_PORT,name##_PIN)</td></tr>
+<tr class="memitem:afc14f26358d44336e2f4a1473ed15896"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#afc14f26358d44336e2f4a1473ed15896">IO_INT_FLAG</a>(name, fun)&#160;&#160;&#160;_IO_INT_FLAG(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td></tr>
+<tr class="memdesc:afc14f26358d44336e2f4a1473ed15896"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set IO pin interrupt status.  <a href="#afc14f26358d44336e2f4a1473ed15896"></a><br/></td></tr>
+<tr class="separator:afc14f26358d44336e2f4a1473ed15896"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a510f21084abb49c19bbd703b991a1f2d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a510f21084abb49c19bbd703b991a1f2d">IO_INT_STAT</a>(name)&#160;&#160;&#160;_IO_INT_STAT(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name))</td></tr>
 <tr class="memdesc:a510f21084abb49c19bbd703b991a1f2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read IO pin interrupt status.  <a href="#a510f21084abb49c19bbd703b991a1f2d"></a><br/></td></tr>
 <tr class="separator:a510f21084abb49c19bbd703b991a1f2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -180,6 +186,70 @@ Macros</h2></td></tr>
 <div class="textblock"><p>Macros to init hardware. </p>
 <dl class="section author"><dt>Author</dt><dd>Joe Brown </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a7aaf6d695d1ba60207659848f4e70689"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _IO_SET</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">port, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">pin, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fun&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;_REG(port,OUT) fun <a class="el" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a538c0a124f0fd6c5f88ce389b8117a9f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _PIN</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">n</td><td>)</td>
+          <td>&#160;&#160;&#160;n##_PIN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="addbe8fa280be7088dc4fef892325bb18"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _PORT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">n</td><td>)</td>
+          <td>&#160;&#160;&#160;n##_PORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a8d067386e33f9d834262ff6bef0b4e0e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -391,7 +461,7 @@ Macros</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;_IO_AUX_FUNCTION(name##_PORT,name##_PIN,fun)</td>
+          <td></td><td>&#160;&#160;&#160;_IO_AUX_FUNCTION(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -400,7 +470,7 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a28634c27f6e177383bf608011717b5dd"></a>
+<a class="anchor" id="ab979e3a514cda6aafea9cbf81b2ac5e7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -414,12 +484,12 @@ Macros</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">dir&#160;</td>
+          <td class="paramname">fun&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;_IO_DIRECTION(name##_PORT,name##_PIN,dir)</td>
+          <td></td><td>&#160;&#160;&#160;_IO_DIRECTION(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -447,7 +517,7 @@ Macros</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;_IO_FUNCTION(name##_PORT,name##_PIN,fun)</td>
+          <td></td><td>&#160;&#160;&#160;_IO_FUNCTION(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -465,7 +535,7 @@ Macros</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">name</td><td>)</td>
-          <td>&#160;&#160;&#160;_IO_IN(name##_PORT,name##_PIN)</td>
+          <td>&#160;&#160;&#160;_IO_IN(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -474,7 +544,7 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a577ea44f5a6da30d3424f865500ee969"></a>
+<a class="anchor" id="a4073b56ec4885becf2d39b4e02f864ce"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -488,12 +558,12 @@ Macros</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">ed&#160;</td>
+          <td class="paramname">fun&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;_IO_INT_EDGE(name##_PORT,name##_PIN,ed)</td>
+          <td></td><td>&#160;&#160;&#160;_IO_INT_EDGE(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -502,7 +572,7 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a98758514dd269a8589df9b6a9ea9e446"></a>
+<a class="anchor" id="aab39369de38eb5b44fbf30eb65757fa1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -516,12 +586,12 @@ Macros</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">en&#160;</td>
+          <td class="paramname">fun&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;_IO_INT_EN(name##_PORT,name##_PIN,en)</td>
+          <td></td><td>&#160;&#160;&#160;_IO_INT_EN(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -530,7 +600,7 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae4080a780c08c6a196b596d3f4ade163"></a>
+<a class="anchor" id="afc14f26358d44336e2f4a1473ed15896"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -544,12 +614,12 @@ Macros</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">fl&#160;</td>
+          <td class="paramname">fun&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;_IO_INT_FLAG(name##_PORT,name##_PIN,fl)</td>
+          <td></td><td>&#160;&#160;&#160;_IO_INT_FLAG(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -567,7 +637,7 @@ Macros</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">name</td><td>)</td>
-          <td>&#160;&#160;&#160;_IO_INT_STAT(name##_PORT,name##_PIN)</td>
+          <td>&#160;&#160;&#160;_IO_INT_STAT(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -599,14 +669,14 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="hardware__init_8h.html#a1c44ab11d225e8b1ff17eadc89297bb8" title="Set resistor pull up or down for IO pin.">IO_RESISTOR</a>(name,<a class="code" href="schedule_8h.html#a86e22603a3d57c440c9ef54acb11b617a99788d1f27bac42d0c7bac63026c5959">ENABLED</a>);\</div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="hardware__init_8h.html#a8d1cd34a3390bb305146baec429add99" title="Set resistor pull up or down for IO pin.">IO_RESISTOR</a>(name,<a class="code" href="hardware__init_8h.html#a5a502812d9313243ea770a8d15c235d0">GPIO_ENABLE</a>);\</div>
 <div class="line">                                        IO_SET(name,up);</div>
 </div><!-- fragment -->
 <p>Set resistor polarity (up or down) for IO pin. </p>
 
 </div>
 </div>
-<a class="anchor" id="a1c44ab11d225e8b1ff17eadc89297bb8"></a>
+<a class="anchor" id="a8d1cd34a3390bb305146baec429add99"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -620,12 +690,12 @@ Macros</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">ren&#160;</td>
+          <td class="paramname">fun&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;_IO_RESISTOR(name##_PORT,name##_PIN,ren)</td>
+          <td></td><td>&#160;&#160;&#160;_IO_RESISTOR(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -634,7 +704,7 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6027537d1e097c8aae035dc80b235374"></a>
+<a class="anchor" id="ab29d354e89102e4e45bcae878efcb3e4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -648,12 +718,12 @@ Macros</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">dir&#160;</td>
+          <td class="paramname">fun&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;_IO_SET(name##_PORT,name##_PIN,dir)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#a7aaf6d695d1ba60207659848f4e70689">_IO_SET</a>(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -689,7 +759,7 @@ Macros</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 18:21:58 for LaunchLib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 9 2013 23:13:47 for LaunchLib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

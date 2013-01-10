@@ -93,23 +93,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef PWM_H</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define PWM_H</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="code" href="struct_pwm_output.html">   12</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="code" href="struct_pwm_output.html#ac7b02517bdfeeb1a965a08f293736658">   14</a></span>&#160;    uint32_t <a class="code" href="struct_pwm_output.html#ac7b02517bdfeeb1a965a08f293736658">frequency</a>;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="code" href="struct_pwm_output.html#a362f440a2ad5ae4f2c8d95533bd1fd2f">   15</a></span>&#160;    uint8_t <a class="code" href="struct_pwm_output.html#a362f440a2ad5ae4f2c8d95533bd1fd2f">duty</a>;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;} <a class="code" href="struct_pwm_output.html" title="A pwm output which stores the current frequency and duty cycle of each channel.">PwmOutput</a>;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="pwm_8c.html#ab60d04617af55996eab515c3a73f39ef" title="Initialize the PWM hardware channel.">PwmInit</a>(uint8_t channel);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="pwm_8c.html#ac7c6046215adf46acf2c2bb40bf05816" title="Configure the frequency of the specified pwm channel.">PwmSetFrequency</a>(uint8_t channel, uint32_t frequency);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="pwm_8c.html#a39081d09530a640772f04056a4b073aa" title="Configure the duty cycle of the specified pwm channel.">PwmSetDuty</a>(uint8_t channel, uint8_t duty);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif // PWM_H</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="pwm_8c.html#ab60d04617af55996eab515c3a73f39ef" title="Initialize the PWM hardware channel.">PwmInit</a>(uint8_t channel);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="pwm_8c.html#ac7c6046215adf46acf2c2bb40bf05816" title="Configure the frequency of the specified pwm channel.">PwmSetFrequency</a>(uint8_t channel, uint32_t frequency);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="pwm_8c.html#a39081d09530a640772f04056a4b073aa" title="Configure the duty cycle of the specified pwm channel.">PwmSetDuty</a>(uint8_t channel, uint8_t duty);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif // PWM_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 18:21:58 for LaunchLib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 9 2013 23:13:47 for LaunchLib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

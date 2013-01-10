@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['port1',['Port1',['../interrupt_8c.html#a5bdc84178e450f885a181e2848532f71',1,'interrupt.c']]],
-  ['port2',['Port2',['../interrupt_8c.html#a635c67d4a49a7da65aecafcfb826d9b6',1,'interrupt.c']]],
   ['port_5fcase',['PORT_CASE',['../interrupt_8c.html#a0056c30dd76c2af1029b78075cc82ef2',1,'interrupt.c']]],
   ['putchar',['putchar',['../uart_8c.html#af4de2514b7778805db3815e8dd6cf09a',1,'uart.c']]],
   ['pwm_2ec',['pwm.c',['../pwm_8c.html',1,'']]],

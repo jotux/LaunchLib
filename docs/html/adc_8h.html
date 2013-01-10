@@ -86,7 +86,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">adc.h File Reference</div>  </div>
@@ -105,15 +104,6 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="adc_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a11f8731140bae301a51407432b08d722"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="adc_8h.html#a11f8731140bae301a51407432b08d722">ADC_INCH_SHIFT</a>&#160;&#160;&#160;12</td></tr>
-<tr class="separator:a11f8731140bae301a51407432b08d722"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3416b39e4841b9e27bb2e8e490cecf5b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="adc_8h.html#a3416b39e4841b9e27bb2e8e490cecf5b">ADC_MASK</a>&#160;&#160;&#160;0x03FF</td></tr>
-<tr class="separator:a3416b39e4841b9e27bb2e8e490cecf5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac27a51b6463cc29161b78eddab440a24"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="adc_8h.html#ac27a51b6463cc29161b78eddab440a24">ADC_CHANNEL_MASK</a>&#160;&#160;&#160;0x0F</td></tr>
-<tr class="separator:ac27a51b6463cc29161b78eddab440a24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a5ac508fc2087ee41c1458b98f0f4e475"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="adc_8h.html#a5ac508fc2087ee41c1458b98f0f4e475">AdcInit</a> (void)</td></tr>
@@ -126,44 +116,7 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definitions, data structues and prototypes for analog-to-digital conversion. </p>
 <dl class="section author"><dt>Author</dt><dd>Joe Brown </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ac27a51b6463cc29161b78eddab440a24"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ADC_CHANNEL_MASK&#160;&#160;&#160;0x0F</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a11f8731140bae301a51407432b08d722"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ADC_INCH_SHIFT&#160;&#160;&#160;12</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a3416b39e4841b9e27bb2e8e490cecf5b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ADC_MASK&#160;&#160;&#160;0x03FF</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a5ac508fc2087ee41c1458b98f0f4e475"></a>
 <div class="memitem">
 <div class="memproto">
@@ -228,13 +181,13 @@ Functions</h2></td></tr>
 <div class="line"><span class="preprocessor">#ifdef __MSP430G2553__</span></div>
 <div class="line"><span class="preprocessor"></span>    ADC10CTL0 &amp;= ~ ENC;                     <span class="comment">// disable conversion</span></div>
 <div class="line">    ADC10AE0  |= <a class="code" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(channel);              <span class="comment">// enable the channel</span></div>
-<div class="line">    ADC10CTL1 |= channel &lt;&lt; <a class="code" href="adc_8h.html#a11f8731140bae301a51407432b08d722">ADC_INCH_SHIFT</a>; <span class="comment">// select channel</span></div>
+<div class="line">    ADC10CTL1 |= channel &lt;&lt; <a class="code" href="adc_8c.html#a11f8731140bae301a51407432b08d722">ADC_INCH_SHIFT</a>; <span class="comment">// select channel</span></div>
 <div class="line">    ADC10CTL0 |= ENC + ADC10SC;             <span class="comment">// Sampling and conversion start</span></div>
 <div class="line">    <span class="keywordflow">while</span> (ADC10CTL1 &amp; ADC10BUSY);          <span class="comment">// wait for finish</span></div>
 <div class="line">    ADC10AE0   = 0;                         <span class="comment">// clear the channel</span></div>
-<div class="line">    <span class="keywordflow">return</span> (ADC10MEM &amp; <a class="code" href="adc_8h.html#a3416b39e4841b9e27bb2e8e490cecf5b">ADC_MASK</a>);</div>
+<div class="line">    <span class="keywordflow">return</span> (ADC10MEM &amp; <a class="code" href="adc_8c.html#a3416b39e4841b9e27bb2e8e490cecf5b">ADC_MASK</a>);</div>
 <div class="line"><span class="preprocessor">#elif __MSP430FR5739__</span></div>
-<div class="line"><span class="preprocessor"></span>    ADC10MCTL0 |= channel &amp; <a class="code" href="adc_8h.html#ac27a51b6463cc29161b78eddab440a24">ADC_CHANNEL_MASK</a>;   <span class="comment">// select channel</span></div>
+<div class="line"><span class="preprocessor"></span>    ADC10MCTL0 |= channel &amp; <a class="code" href="adc_8c.html#ac27a51b6463cc29161b78eddab440a24">ADC_CHANNEL_MASK</a>;   <span class="comment">// select channel</span></div>
 <div class="line">    ADC10CTL0  |= ADC10ENC + ADC10SC;           <span class="comment">// start conversion</span></div>
 <div class="line">    <span class="keywordflow">while</span>(REFCTL0 &amp; REFGENBUSY);                <span class="comment">// If ref generator busy, WAIT</span></div>
 <div class="line">    <span class="keywordflow">while</span> (!(ADC10IFG &amp; ADC10IFG0));            <span class="comment">// wait for finish</span></div>
@@ -248,7 +201,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 18:21:58 for LaunchLib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 9 2013 23:13:47 for LaunchLib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
