@@ -16,7 +16,7 @@
 
 #define _PORT(n)     n##_PORT
 #define _PIN(n)      n##_PIN
-#Define _REG(n,type) P##n##type
+#define _REG(n,type) P##n##type
 
 #define CLEAR_OP    &=~
 #define SET_OP      |=
