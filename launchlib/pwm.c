@@ -41,6 +41,7 @@ void PwmInit(uint8_t channel)
         TA_INIT_CASE(0);
         TA_INIT_CASE(1);
     }
+#undef TA_INIT_CASE
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -97,6 +98,7 @@ void PwmSetFrequency(uint8_t channel, uint32_t frequency)
 
     // fix the duty cycle
     PwmSetDuty(channel,pwm_out[channel].duty);
+#undef TACCR0_CASE
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -120,4 +122,5 @@ void PwmSetDuty(uint8_t channel, uint8_t duty)
         TACCR1_CASE(0);
         TACCR1_CASE(1);
     }
+#undef TACCR1_CASE
 }

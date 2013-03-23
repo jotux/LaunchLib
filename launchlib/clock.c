@@ -36,6 +36,7 @@ void ClockConfig(uint8_t mhz)
             }
         }
     }
+#undef CLOCK_CASE
 
 #elif __MSP430FR5739__
     #define FR5739_CLOCK_PASSWORD 0xA5

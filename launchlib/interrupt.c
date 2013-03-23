@@ -93,6 +93,7 @@ void InterruptAttach(uint8_t port, uint8_t pin, InterruptFn func, enum IntEdgeTy
         ATTACH_CASE(4);
 #endif
     }
+#undef ATTACH_CASE
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -115,6 +116,7 @@ void InterruptDetach(uint8_t port, uint8_t pin)
         DETACH_CASE(4);
 #endif
     }
+#undef DETACH_CASE
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -123,7 +125,6 @@ void InterruptDetach(uint8_t port, uint8_t pin)
 // function is associated with it we will call the function.
 void InterruptRunOnPort(uint8_t port)
 {
-
 #define PORT_CASE(x)                                                    \
     case x:                                                             \
         {                                                               \
@@ -150,6 +151,7 @@ void InterruptRunOnPort(uint8_t port)
 #endif
     }
     _EINT();
+#undef PORT_CASE
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
