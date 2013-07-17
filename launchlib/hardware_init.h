@@ -80,7 +80,7 @@
 /**@brief Read in state of IO pin */
 #define IO_IN(name)                     _IO_IN(_PORT(name),_PIN(name))
 /** @cond IGNORE_DOC */
-#define _IO_IN(port,pin)                _REG(port,IN) & _BV(in)
+#define _IO_IN(port,pin)                _REG(port,IN) & _BV(pin)
 /** @endcond */
 
 /**@brief Sent interrupt enable for IO pin */
