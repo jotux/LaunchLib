@@ -28,24 +28,6 @@ Removes an event from the event queue and passes it to the current state.
 static uint8_t DequeueEvent(StateMachine* s);
 
 /**
-@brief Check the event queue for changes.
-@details If we are in the IDLE state and a state transition is going to take
-place (detected by using LookupTransition) we will return EXIT. If no transition
-will take then we simple dequeue the next event.
-
-If we are currently processing an EXIT event this means the next transition in
-the queue will cause a state transition, so we dequeue that event and return it
-to the new state but save the transition_event as ENTER to force an ENTER event
-to be sent after the event is complete.
-
-Once the transition-causing event has been processed we return an ENTER event
-to allow state initialization in the new state.
-@param[in] s A pointer to the state machine to check for events in
-@return The event to be run by the current state
-*/
-static uint8_t CheckEventQueue(StateMachine* s);
-
-/**
 @brief Peek at the event queue to see what the next event will be
 @details
 Peek at the queue without dequeuing the next item. We use this so check if a
@@ -86,51 +68,6 @@ StateMachine StateMachineCreate(Transition* rules, uint8_t t_size, State state)
     s.state = state;
     StateMachinePublishEvent(&s, ENTER);
     return (s);
-}
-
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-uint8_t CheckEventQueue(StateMachine* s)
-{
-    uint8_t ret_event = IDLE;
-
-    switch (s->transition_event)
-    {
-        case IDLE:
-        {
-            // get the next event without dequeuing and peek at the table to see
-            // if this event will cause a transition
-            if (s->state != LookupTransition(s, QueuePeek(s)))
-            {
-                // if a transition will happen, return the EXIT event
-                ret_event = s->transition_event = EXIT;
-            }
-            else
-            {
-                // if a transition will not happen, dequeue events normally
-                ret_event = DequeueEvent(s);
-            }
-
-            break;
-        }
-        case ENTER:
-        {
-            // return ENTER and switch transition event to IDLE
-            ret_event = ENTER;
-            s->transition_event = IDLE;
-            break;
-        }
-        case EXIT:
-        {
-            // Return ENTER event
-            s->transition_event = ENTER;
-            // dequeue the event that causes the transition
-            // This event isn't processed by the state but used to look up the
-            // transition it will cause
-            ret_event = DequeueEvent(s);
-            break;
-        }
-    }
-    return ret_event;
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -199,17 +136,23 @@ State LookupTransition(StateMachine* s, uint8_t event)
             }
         }
     }
-
     return ret_state;
 }
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void StateMachineRun(StateMachine* s)
 {
-    // get the next event
-    uint8_t event = CheckEventQueue(s);
-    // run the state
-    (s->state)(event);
-    // check for state transitions
-    s->state = LookupTransition(s, event);
+    // peek at the next event in the queue
+    uint8_t next_event = QueuePeek(s);
+    State next_state = LookupTransition(s, next_event);
+    // Will this cause a transition?
+    if (s->state != next_state)
+    {
+        // pop the event but don't pass it into the state
+        DequeueEvent(s);
+        (s->state)(EXIT);
+        s->state = next_state;
+        (s->state)(ENTER);
+    }
+    (s->state)(DequeueEvent(s));
 }

@@ -32,7 +32,6 @@ typedef struct
     uint8_t event_cnt;              /**< Number of events in the buffer */
     Transition* transitions;        /**< Pointer to transition table */
     uint8_t transition_table_size;  /**< Size of transition table */
-    uint8_t transition_event;       /**< Current transition event in the state machine */
     State state;                    /**< Current state of the state machine */
 } StateMachine;
 
