@@ -103,7 +103,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
 <div class="line"><a name="l00017"></a><span class="lineno"><a class="code" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">   17</a></span>&#160;<span class="preprocessor">#define _PORT(n)     n##_PORT</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno"><a class="code" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">   18</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _PIN(n)      n##_PIN</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#Define _REG(n,type) P##n##type</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="hardware__init_8h.html#a61fd62569476f4e9dfef63490404bbf2">   19</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _REG(n,type) P##n##type</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00021"></a><span class="lineno"><a class="code" href="hardware__init_8h.html#a8d067386e33f9d834262ff6bef0b4e0e">   21</a></span>&#160;<span class="preprocessor">#define CLEAR_OP    &amp;=~</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno"><a class="code" href="hardware__init_8h.html#af7ca6962fac737341509821e3c3c74ab">   22</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define SET_OP      |=</span></div>
@@ -157,7 +157,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00081"></a><span class="lineno"><a class="code" href="hardware__init_8h.html#a202888a9ab5b474d03bea2771227d3a5">   81</a></span>&#160;<span class="preprocessor">#define IO_IN(name)                     _IO_IN(_PORT(name),_PIN(name))</span></div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#define _IO_IN(port,pin)                _REG(port,IN) &amp; _BV(in)</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#define _IO_IN(port,pin)                _REG(port,IN) &amp; _BV(pin)</span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00087"></a><span class="lineno"><a class="code" href="hardware__init_8h.html#aab39369de38eb5b44fbf30eb65757fa1">   87</a></span>&#160;<span class="preprocessor">#define IO_INT_EN(name,fun)             _IO_INT_EN(_PORT(name),_PIN(name),fun)</span></div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor"></span></div>
@@ -185,7 +185,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 9 2013 23:13:47 for LaunchLib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 22 2014 23:51:17 for LaunchLib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

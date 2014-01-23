@@ -110,6 +110,8 @@ Macros</h2></td></tr>
 <tr class="separator:addbe8fa280be7088dc4fef892325bb18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a538c0a124f0fd6c5f88ce389b8117a9f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(n)&#160;&#160;&#160;n##_PIN</td></tr>
 <tr class="separator:a538c0a124f0fd6c5f88ce389b8117a9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61fd62569476f4e9dfef63490404bbf2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a61fd62569476f4e9dfef63490404bbf2">_REG</a>(n, type)&#160;&#160;&#160;P##n##type</td></tr>
+<tr class="separator:a61fd62569476f4e9dfef63490404bbf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d067386e33f9d834262ff6bef0b4e0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a8d067386e33f9d834262ff6bef0b4e0e">CLEAR_OP</a>&#160;&#160;&#160;&amp;=~</td></tr>
 <tr class="separator:a8d067386e33f9d834262ff6bef0b4e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7ca6962fac737341509821e3c3c74ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#af7ca6962fac737341509821e3c3c74ab">SET_OP</a>&#160;&#160;&#160;|=</td></tr>
@@ -142,7 +144,7 @@ Macros</h2></td></tr>
 <tr class="memitem:ab29d354e89102e4e45bcae878efcb3e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#ab29d354e89102e4e45bcae878efcb3e4">IO_SET</a>(name, fun)&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#a7aaf6d695d1ba60207659848f4e70689">_IO_SET</a>(<a class="el" href="hardware__init_8h.html#addbe8fa280be7088dc4fef892325bb18">_PORT</a>(name),<a class="el" href="hardware__init_8h.html#a538c0a124f0fd6c5f88ce389b8117a9f">_PIN</a>(name),fun)</td></tr>
 <tr class="memdesc:ab29d354e89102e4e45bcae878efcb3e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set state of IO pin.  <a href="#ab29d354e89102e4e45bcae878efcb3e4"></a><br/></td></tr>
 <tr class="separator:ab29d354e89102e4e45bcae878efcb3e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7aaf6d695d1ba60207659848f4e70689"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a7aaf6d695d1ba60207659848f4e70689">_IO_SET</a>(port, pin, fun)&#160;&#160;&#160;_REG(port,OUT) fun <a class="el" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin)</td></tr>
+<tr class="memitem:a7aaf6d695d1ba60207659848f4e70689"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a7aaf6d695d1ba60207659848f4e70689">_IO_SET</a>(port, pin, fun)&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#a61fd62569476f4e9dfef63490404bbf2">_REG</a>(port,OUT) fun <a class="el" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin)</td></tr>
 <tr class="separator:a7aaf6d695d1ba60207659848f4e70689"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a502812d9313243ea770a8d15c235d0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hardware__init_8h.html#a5a502812d9313243ea770a8d15c235d0">GPIO_ENABLE</a>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#af7ca6962fac737341509821e3c3c74ab">SET_OP</a></td></tr>
 <tr class="separator:a5a502812d9313243ea770a8d15c235d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -211,7 +213,7 @@ Macros</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;_REG(port,OUT) fun <a class="el" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="hardware__init_8h.html#a61fd62569476f4e9dfef63490404bbf2">_REG</a>(port,OUT) fun <a class="el" href="global_8h.html#a11643f271076024c395a93800b3d9546">_BV</a>(pin)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -244,6 +246,32 @@ Macros</h2></td></tr>
           <td class="paramtype">&#160;</td>
           <td class="paramname">n</td><td>)</td>
           <td>&#160;&#160;&#160;n##_PORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a61fd62569476f4e9dfef63490404bbf2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _REG</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">n, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;P##n##type</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -759,7 +787,7 @@ Macros</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 9 2013 23:13:47 for LaunchLib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 22 2014 23:51:18 for LaunchLib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

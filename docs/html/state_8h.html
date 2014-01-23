@@ -229,7 +229,7 @@ Functions</h2></td></tr>
 <div class="line">    s.<a class="code" href="struct_state_machine.html#ab71d8a0759b2795c071a8a90746dc2ef">event_cnt</a> = 0;</div>
 <div class="line">    s.<a class="code" href="struct_state_machine.html#a81c58106ca31cabdb81f5bb97c7e71fd">transitions</a> = rules;</div>
 <div class="line">    s.<a class="code" href="struct_state_machine.html#a1da707691c3417e78f230dd39d2ab96c">transition_table_size</a> = (t_size / <span class="keyword">sizeof</span>(<a class="code" href="struct_transition.html" title="A transition which holds a current state, an event, and the state that will be entered upon receiving...">Transition</a>));</div>
-<div class="line">    s.<a class="code" href="struct_state_machine.html#af25734e675a89bf131fd25737e27811b">transition_event</a> = <a class="code" href="state_8c.html#a6e06d4f4914d3d22da439a47a8fa4675afd6a0e4343048b10646dd2976cc5ad18">IDLE</a>;</div>
+<div class="line">    s.transition_event = <a class="code" href="state_8c.html#a6e06d4f4914d3d22da439a47a8fa4675afd6a0e4343048b10646dd2976cc5ad18">IDLE</a>;</div>
 <div class="line">    s.<a class="code" href="struct_state_machine.html#a884fb7f7728ae27ce55b59f0def7e38f">state</a> = state;</div>
 <div class="line">    <a class="code" href="state_8c.html#abea5d7b7721fc928b3a4362b0c76fe03" title="Queue a new event.">StateMachinePublishEvent</a>(&amp;s, <a class="code" href="state_8c.html#a6e06d4f4914d3d22da439a47a8fa4675a951ab68bb8f7daafb78951107080904e">ENTER</a>);</div>
 <div class="line">    <span class="keywordflow">return</span> (s);</div>
@@ -332,12 +332,19 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="comment">// get the next event</span></div>
-<div class="line">    uint8_t <span class="keyword">event</span> = CheckEventQueue(s);</div>
-<div class="line">    <span class="comment">// run the state</span></div>
-<div class="line">    (s-&gt;<a class="code" href="struct_state_machine.html#a884fb7f7728ae27ce55b59f0def7e38f">state</a>)(event);</div>
-<div class="line">    <span class="comment">// check for state transitions</span></div>
-<div class="line">    s-&gt;<a class="code" href="struct_state_machine.html#a884fb7f7728ae27ce55b59f0def7e38f">state</a> = LookupTransition(s, event);</div>
+<div class="line">    <span class="comment">// peek at the next event in the queue</span></div>
+<div class="line">    uint8_t next_event = QueuePeek(s);</div>
+<div class="line">    <a class="code" href="state_8h.html#a73296dcaec5ad45548632021a1e68528" title="function pointer to a state function that accepts an event variable">State</a> next_state = LookupTransition(s, next_event);</div>
+<div class="line">    <span class="comment">// Will this cause a transition?</span></div>
+<div class="line">    <span class="keywordflow">if</span> (s-&gt;<a class="code" href="struct_state_machine.html#a884fb7f7728ae27ce55b59f0def7e38f">state</a> != next_state)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="comment">// pop the event but don&#39;t pass it into the state</span></div>
+<div class="line">        DequeueEvent(s);</div>
+<div class="line">        (s-&gt;<a class="code" href="struct_state_machine.html#a884fb7f7728ae27ce55b59f0def7e38f">state</a>)(<a class="code" href="state_8c.html#a6e06d4f4914d3d22da439a47a8fa4675a7a10b5d68d31711288e1fe0fa17dbf4f">EXIT</a>);</div>
+<div class="line">        s-&gt;<a class="code" href="struct_state_machine.html#a884fb7f7728ae27ce55b59f0def7e38f">state</a> = next_state;</div>
+<div class="line">        (s-&gt;<a class="code" href="struct_state_machine.html#a884fb7f7728ae27ce55b59f0def7e38f">state</a>)(<a class="code" href="state_8c.html#a6e06d4f4914d3d22da439a47a8fa4675a951ab68bb8f7daafb78951107080904e">ENTER</a>);</div>
+<div class="line">    }</div>
+<div class="line">    (s-&gt;<a class="code" href="struct_state_machine.html#a884fb7f7728ae27ce55b59f0def7e38f">state</a>)(DequeueEvent(s));</div>
 <div class="line">}</div>
 </div><!-- fragment -->
 </div>
@@ -345,7 +352,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 9 2013 23:13:47 for LaunchLib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 22 2014 23:51:18 for LaunchLib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
