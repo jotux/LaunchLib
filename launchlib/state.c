@@ -143,16 +143,16 @@ State LookupTransition(StateMachine* s, uint8_t event)
 void StateMachineRun(StateMachine* s)
 {
     // peek at the next event in the queue
-    uint8_t next_event = QueuePeek(s);
+    uint8_t next_event = DequeueEvent(s);
     State next_state = LookupTransition(s, next_event);
     // Will this cause a transition?
     if (s->state != next_state)
     {
-        // pop the event but don't pass it into the state
-        DequeueEvent(s);
         (s->state)(EXIT);
         s->state = next_state;
         (s->state)(ENTER);
     }
-    (s->state)(DequeueEvent(s));
-}
+    else
+    {
+        (s->state)(next_event);
+    }
